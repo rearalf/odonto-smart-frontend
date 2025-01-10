@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router';
-import App from '../App';
-import Public from '../Layouts/public';
+
 import SignIn from '../page/auth/SignIn';
+import Public from '../Layouts/Public';
+import App from '../App';
 
 const router = createBrowserRouter([
   {
