@@ -58,6 +58,11 @@ const themeLight = createTheme({
           '& .MuiInputBase-root.MuiOutlinedInput-root:hover fieldset': {
             borderColor: '#19A7CE',
           },
+          '& .MuiInputBase-root.MuiOutlinedInput-root input:-webkit-autofill': {
+            boxShadow: '0 0 0 100px hsl(210, 25%, 91%) inset',
+            carretColor: '#333',
+            textFillColor: '#333',
+          },
           '& .MuiFormLabel-root.MuiInputLabel-root': {
             color: '#333',
           },
