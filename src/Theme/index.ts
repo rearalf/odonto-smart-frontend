@@ -53,18 +53,18 @@ const themeLight = createTheme({
       styleOverrides: {
         root: {
           '& fieldset': {
-            borderColor: '#333',
+            borderColor: '#0B1524',
           },
           '& .MuiInputBase-root.MuiOutlinedInput-root:hover fieldset': {
             borderColor: '#19A7CE',
           },
           '& .MuiInputBase-root.MuiOutlinedInput-root input:-webkit-autofill': {
             boxShadow: '0 0 0 100px hsl(210, 25%, 91%) inset',
-            carretColor: '#333',
-            textFillColor: '#333',
+            carretColor: '#0B1524',
+            textFillColor: '#0B1524',
           },
           '& .MuiFormLabel-root.MuiInputLabel-root': {
-            color: '#333',
+            color: '#0B1524',
           },
           '& .MuiFormLabel-root.MuiInputLabel-root.Mui-focused': {
             color: '#19A7CE',

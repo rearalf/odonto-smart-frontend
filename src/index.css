@@ -58,19 +58,15 @@
   --clr-primary-a40: #97cee4;
   --clr-primary-a50: #add8e9;
 
-  --clr-surface-a0: hsl(210, 25%, 95%);
-  --clr-surface-a10: hsl(213, 23%, 92%);
-  --clr-surface-a20: hsl(214, 12%, 90%);
-  --clr-surface-a30: hsl(216, 3%, 87%);
-  --clr-surface-a40: hsl(192, 10%, 85%);
-  --clr-surface-a50: hsl(218, 5%, 82%);
+  --clr-surface-a0: #eff2f5;
+  --clr-surface-a10: #e6eaef;
+  --clr-surface-a20: #e2e5e9;
+  --clr-surface-a30: #dddedf;
+  --clr-surface-a40: #ccd4d7;
+  --clr-surface-a50: #c7cfd1;
 
-  --clr-text-a0: #18090e;
-  --clr-text-a10: #1d1013;
-  --clr-text-a20: #24191b;
-  --clr-text-a30: #2b2525;
-  --clr-text-a40: #333333;
-  --clr-text-a50: #525252;
+  --clr-text-a0: #0b1524;
+  --clr-text-a50: #3c474d;
 }
 
 * {
@@ -80,7 +76,7 @@
 }
 
 body {
-  color: var(--clr-text-a40);
+  color: var(--clr-text-a0);
   background: var(--clr-surface-a0);
 
   font-size: 1rem;
@@ -89,7 +85,7 @@ body {
 }
 
 h1 {
-  font-size: 2.25rem;
+  font-size: 3rem;
   font-weight: 700;
   color: var(--clr-text-a0);
   text-transform: uppercase;
@@ -97,15 +93,15 @@ h1 {
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: 2.25rem;
   font-weight: 600;
-  color: var(--clr-text-a10);
+  color: var(--clr-text-a0);
 }
 
 h3 {
-  font-size: 1.375rem;
+  font-size: 1.75rem;
   font-weight: 600;
-  color: var(--clr-text-a20);
+  color: var(--clr-text-a0);
 }
 
 a {

@@ -20,6 +20,7 @@ function SignIn() {
               id="email"
               type="email"
               label="Correo"
+              placeholder="correo@gmail.com"
               value={hook.email}
               onChange={hook.handleOnChange}
             />
