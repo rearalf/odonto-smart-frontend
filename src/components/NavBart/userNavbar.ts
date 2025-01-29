@@ -1,8 +1,9 @@
 import { MouseEvent, useState } from 'react';
+import useSidebarStore from '../../stores/useSidebarStore';
 
 function useNavbar() {
+  const sidebarStore = useSidebarStore();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const [openSidebar, setOpenSidebar] = useState<boolean>(false);
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -11,12 +12,9 @@ function useNavbar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleSidebar = () => setOpenSidebar(!openSidebar);
-
   return {
-    openSidebar,
+    sidebarStore,
     anchorElUser,
-    handleSidebar,
     handleOpenUserMenu,
     handleCloseUserMenu,
   };

@@ -1,19 +1,17 @@
+import useSidebarStore from '../../stores/useSidebarStore';
+import { FiChevronsLeft, FiUsers } from 'react-icons/fi';
 import { Drawer, IconButton } from '@mui/material';
 import { NavLink } from 'react-router';
-import { FiChevronsLeft, FiUsers } from 'react-icons/fi';
 
 import './styles.css';
 
-interface ISideBarProps {
-  open: boolean;
-  handleSidebar: () => void;
-}
+const SideBar = () => {
+  const sidebarStore = useSidebarStore();
 
-const SideBar = (props: ISideBarProps) => {
   return (
     <Drawer
       variant="permanent"
-      className={`sidebar ${props.open ? 'drawer-open' : 'drawer-close'}`}
+      className={`sidebar ${sidebarStore.open ? 'drawer-open' : 'drawer-close'}`}
     >
       <div className="container">
         <NavLink to="/" className="brand">
@@ -36,7 +34,10 @@ const SideBar = (props: ISideBarProps) => {
         </div>
       </div>
 
-      <IconButton className="btn-sidebar" onClick={props.handleSidebar}>
+      <IconButton
+        className="btn-sidebar"
+        onClick={sidebarStore.handleOpenState}
+      >
         <FiChevronsLeft />
       </IconButton>
     </Drawer>

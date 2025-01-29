@@ -1,3 +1,23 @@
+@media screen and (min-width: 1025px) {
+  .navbar.sidebar-close {
+    padding-left: 4rem;
+    transition: padding-left 0.2s ease-in-out;
+  }
+  .navbar.sidebar-open {
+    padding-left: 12rem;
+    transition: padding-left 0.2s ease-in-out;
+  }
+
+  .navbar .btn-menu {
+    display: none;
+  }
+
+  .navbar .brand {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
 .navbar .nav {
   justify-content: space-between;
 }
