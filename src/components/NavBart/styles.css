@@ -1,0 +1,16 @@
+.navbar .nav {
+  justify-content: space-between;
+}
+
+.navbar .brand {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.navbar .brand .logo {
+  width: 2.6rem;
+  height: 2.6rem;
+}

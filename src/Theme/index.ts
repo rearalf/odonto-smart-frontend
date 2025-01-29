@@ -79,6 +79,27 @@ const themeLight = createTheme({
         },
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#e6eaef',
+          color: '#0b1524',
+          boxShadow: '0 4px 4px 0 #00000040',
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#e6eaef',
+          '& .MuiDrawer-paper': {
+            backgroundColor: '#e6eaef',
+            borderRight: 'none',
+            boxShadow: '4px 0 4px 0 #00000040',
+          },
+        },
+      },
+    },
   },
 });
 

@@ -1,0 +1,122 @@
+@media screen and (max-width: 1024px) {
+  .sidebar.drawer-close .MuiDrawer-paper {
+    transform: translateX(-1000px);
+    transition: transform 0.2s ease-in-out;
+  }
+  .sidebar.drawer-open .MuiDrawer-paper {
+    transform: translateX(0px);
+    transition: transform 0.2s ease-in-out;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .sidebar.drawer-close .MuiDrawer-paper {
+    width: 6vw;
+    transition: width 0.2s ease-in-out;
+  }
+
+  .sidebar.drawer-open .MuiDrawer-paper {
+    width: 24vw;
+    transition: width 0.2s ease-in-out;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .sidebar.drawer-open .MuiDrawer-paper {
+    width: 14vw;
+  }
+}
+
+.sidebar.drawer-close .container .content-navbar .link .text,
+.sidebar.drawer-close .MuiDrawer-paper .brand .text {
+  opacity: 0;
+  min-width: 0;
+  position: absolute;
+  z-index: -1;
+  transition:
+    opacity 0.2s ease-in-out,
+    position 1s ease-in-out;
+}
+
+.sidebar.drawer-open .container .content-navbar .link .text,
+.sidebar.drawer-open .MuiDrawer-paper .brand .text {
+  opacity: 1;
+  position: relative;
+  transition:
+    opacity 0.2s ease-in-out,
+    position 1s ease-in-out;
+}
+
+.sidebar .MuiDrawer-paper {
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.sidebar .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  gap: 1rem;
+  width: 100%;
+}
+
+.sidebar .container .brand {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  width: 100%;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.sidebar .container .brand .logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.sidebar .container .content-navbar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.6rem;
+}
+.sidebar .container .content-navbar .link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  gap: 1rem;
+  font-size: 1.2rem;
+}
+.sidebar.drawer-open .container .content-navbar .link {
+  padding: 0.6rem 1rem;
+}
+
+.sidebar .container .content-navbar .link:hover {
+  background-color: var(--clr-surface-a30);
+  color: var(--color-primary-500);
+}
+.sidebar.drawer-close .container .content-navbar .link .icon {
+  padding: 0.3rem 0.6rem;
+  border-radius: 50%;
+  font-size: 1.4rem;
+}
+
+.sidebar .btn-sidebar {
+  margin: 1rem 0;
+}
+
+.sidebar.drawer-close .btn-sidebar {
+  transform: rotate(180deg);
+  transition: transform 0.5s ease-in-out;
+}
+
+.sidebar.drawer-open .btn-sidebar {
+  transform: rotate(0deg);
+  transition: transform 0.5s ease-in-out;
+  align-self: flex-start;
+  margin-left: 1rem;
+}
