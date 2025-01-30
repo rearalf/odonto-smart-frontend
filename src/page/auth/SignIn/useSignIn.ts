@@ -1,29 +1,40 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormikHelpers } from 'formik';
+import { useState } from 'react';
+import * as Yup from 'yup';
+
+interface ISignInForm {
+  email: string;
+  password: string;
+}
 
 function useSignIn() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [password, setPassword] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+
+  const SignInSchema = Yup.object().shape({
+    email: Yup.string()
+      .email('Correo invalido.')
+      .required('El correo es obligatorio.'),
+    password: Yup.string().min(8, 'Deben de ser mínimo 8 caracteres.'),
+  });
+
+  const initialValues = { email: '', password: '' };
 
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.id === 'password') setPassword(e.target.value);
-    if (e.target.id === 'email') setEmail(e.target.value);
-  };
-
-  const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setPassword('');
-    setEmail('');
+  const handleOnSubmit = async (
+    _values: ISignInForm,
+    { setSubmitting }: FormikHelpers<ISignInForm>,
+  ) => {
+    setTimeout(() => {
+      setSubmitting(false);
+    }, 4000);
   };
 
   return {
-    email,
-    password,
+    SignInSchema,
     showPassword,
+    initialValues,
     handleOnSubmit,
-    handleOnChange,
     handleShowPassword,
   };
 }
