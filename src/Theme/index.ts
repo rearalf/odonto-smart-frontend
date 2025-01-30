@@ -58,6 +58,10 @@ const themeLight = createTheme({
           '& .MuiInputBase-root.MuiOutlinedInput-root:hover fieldset': {
             borderColor: '#19A7CE',
           },
+          '& .MuiInputBase-root.MuiOutlinedInput-root.Mui-error:hover fieldset':
+            {
+              borderColor: '#a21732',
+            },
           '& .MuiInputBase-root.MuiOutlinedInput-root input:-webkit-autofill': {
             boxShadow: '0 0 0 100px hsl(210, 25%, 91%) inset',
             carretColor: '#0B1524',
@@ -66,8 +70,14 @@ const themeLight = createTheme({
           '& .MuiFormLabel-root.MuiInputLabel-root': {
             color: '#0B1524',
           },
+          '& .MuiFormLabel-root.MuiInputLabel-root.Mui-error': {
+            color: '#e22f32',
+          },
           '& .MuiFormLabel-root.MuiInputLabel-root.Mui-focused': {
             color: '#19A7CE',
+          },
+          '& .MuiFormLabel-root.MuiInputLabel-root.Mui-focused.Mui-error': {
+            color: '#a21732',
           },
         },
       },

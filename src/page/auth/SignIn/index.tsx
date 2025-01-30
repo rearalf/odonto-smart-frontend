@@ -38,6 +38,8 @@ function SignIn() {
                   disabled={props.isSubmitting}
                   onChange={props.handleChange}
                   placeholder="correo@gmail.com"
+                  helperText={props.errors.email}
+                  error={props.errors.email !== undefined}
                 />
                 <TextFieldBasic
                   id="password"
@@ -47,6 +49,8 @@ function SignIn() {
                   value={props.values.password}
                   onChange={props.handleChange}
                   showPassword={hook.showPassword}
+                  helperText={props.errors.password}
+                  error={props.errors.password !== undefined}
                   handleShowPassword={hook.handleShowPassword}
                 />
               </div>
