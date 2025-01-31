@@ -1,10 +1,13 @@
 import { Outlet } from 'react-router';
-import { Navbar } from '../components';
-import SideBar from '../components/SideBar';
+
+import useAuthentication from '../hooks/useAuthentication';
 import useSidebarStore from '../stores/useSidebarStore';
+import { Navbar, SideBar } from '../components';
 
 function Private() {
+  useAuthentication();
   const sidebarStore = useSidebarStore();
+
   return (
     <>
       <Navbar />

@@ -1,10 +1,10 @@
-import { isAxiosError } from 'axios';
-import axiosInstance from '../axios/axiosInstance';
+import { axiosInstanceWithAuth } from '../axios/axiosInstance';
 import { userEndpoints } from '../endpoints';
+import { isAxiosError } from 'axios';
 
 export const getUsers = async () => {
   try {
-    const response = await axiosInstance.get(userEndpoints.getAUsers);
+    const response = await axiosInstanceWithAuth.get(userEndpoints.getAUsers);
     return {
       data: response.data,
       status: response.status,
@@ -26,7 +26,7 @@ export const getUsers = async () => {
 
 export const getUser = async (id: number) => {
   try {
-    const response = await axiosInstance.get(userEndpoints.getUser(id));
+    const response = await axiosInstanceWithAuth.get(userEndpoints.getUser(id));
     return {
       data: response.data,
       status: response.status,

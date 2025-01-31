@@ -1,11 +1,10 @@
-import { isAxiosError } from 'axios';
-import axiosInstance from '../axios/axiosInstance';
+import { axiosInstance, axiosInstanceWithAuth } from '../axios/axiosInstance';
 import { authEndpoints } from '../endpoints';
+import { isAxiosError } from 'axios';
 
-export const signin = async (credentials: {
-  email: string;
-  password: string;
-}) => {
+export const signin = async (
+  credentials: ISignInForm,
+): Promise<IApiResponse<ISignIn>> => {
   try {
     const response = await axiosInstance.post(
       authEndpoints.signin,
@@ -14,38 +13,45 @@ export const signin = async (credentials: {
     return {
       data: response.data,
       status: response.status,
+      success: true,
     };
   } catch (error) {
     if (isAxiosError(error)) {
       return {
-        status: error.status,
+        success: false,
+        status: error.status ? error.status : 500,
         message: error.message,
         error,
       };
     }
     return {
+      success: false,
       status: 500,
       error,
     };
   }
 };
 
-export const logout = async () => {
+export const logout = async (): Promise<IApiResponse<{ message: string }>> => {
   try {
-    const response = await axiosInstance.post(authEndpoints.logout);
+    const response = await axiosInstanceWithAuth.post(authEndpoints.logout, {});
+
     return {
+      success: true,
       data: response.data,
       status: response.status,
     };
   } catch (error) {
     if (isAxiosError(error)) {
       return {
-        status: error.status,
+        success: false,
+        status: error.status ? error.status : 500,
         message: error.message,
         error,
       };
     }
     return {
+      success: false,
       status: 500,
       error,
     };
