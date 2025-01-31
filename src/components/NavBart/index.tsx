@@ -61,9 +61,7 @@ const Navbar = () => {
               horizontal: 'right',
             }}
           >
-            <MenuItem onClick={hook.handleCloseUserMenu}>
-              Cerrar sesión
-            </MenuItem>
+            <MenuItem onClick={hook.handleLogOut}>Cerrar sesión</MenuItem>
           </Menu>
         </Box>
       </Toolbar>
