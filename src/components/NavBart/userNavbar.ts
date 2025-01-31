@@ -1,9 +1,12 @@
 import { MouseEvent, useState } from 'react';
+
 import useSidebarStore from '../../stores/useSidebarStore';
-import { authService } from '../../api/services';
 import useUserStore from '../../stores/useUserStore';
+import { authService } from '../../api/services';
+import useLoadingStore from '../../stores/useLoadingStore';
 
 function useNavbar() {
+  const loadingState = useLoadingStore();
   const sidebarStore = useSidebarStore();
   const { logOut } = useUserStore();
 
@@ -17,8 +20,13 @@ function useNavbar() {
   };
 
   const handleLogOut = async () => {
-    await authService.logout();
-    logOut();
+    try {
+      loadingState.handleLoading();
+      await authService.logout();
+      logOut();
+    } finally {
+      loadingState.handleLoading();
+    }
   };
 
   return {

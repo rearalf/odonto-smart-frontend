@@ -2,10 +2,12 @@ import { FormikHelpers } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
-import { authService } from '../../../api/services/';
+import useLoadingStore from '../../../stores/useLoadingStore';
 import useUserStore from '../../../stores/useUserStore';
+import { authService } from '../../../api/services/';
 
 function useSignIn() {
+  const loadingState = useLoadingStore();
   const authState = useUserStore();
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -25,12 +27,17 @@ function useSignIn() {
     values: ISignInForm,
     { setSubmitting }: FormikHelpers<ISignInForm>,
   ) => {
-    const response = await authService.signin(values);
-    if (response.status === 201 && response.data) {
-      authState.signIn({ ...response.data });
-      localStorage.setItem('access_token', response.data.access_token);
+    try {
+      loadingState.handleLoading();
+      const response = await authService.signin(values);
+      if (response.status === 201 && response.data) {
+        authState.signIn({ ...response.data });
+        localStorage.setItem('access_token', response.data.access_token);
+      }
+      setSubmitting(false);
+    } finally {
+      loadingState.handleLoading();
     }
-    setSubmitting(false);
   };
 
   return {
