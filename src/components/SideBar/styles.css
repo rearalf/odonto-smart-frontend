@@ -11,12 +11,12 @@
 
 @media screen and (min-width: 1025px) {
   .sidebar.drawer-close .MuiDrawer-paper {
-    width: 5rem;
+    width: 4rem;
     transition: width 0.2s ease-in-out;
   }
 
   .sidebar.drawer-open .MuiDrawer-paper {
-    width: 13rem;
+    width: 12rem;
     transition: width 0.2s ease-in-out;
   }
 }
@@ -63,12 +63,12 @@
   font-size: 1.2rem;
   width: 100%;
   justify-content: center;
-  padding: 1rem;
+  padding: 1rem 0.8rem;
 }
 
 .sidebar .container .brand .logo {
-  width: 2rem;
-  height: 2rem;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 .sidebar .container .content-navbar {
