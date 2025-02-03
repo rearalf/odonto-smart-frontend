@@ -17,7 +17,7 @@ const useNotificationStore = create<IUseNotificationStore>((set) => ({
   handleClearNotification() {
     set((states) => ({
       ...states,
-      ...NOTIFICATION,
+      show: false,
     }));
   },
 }));

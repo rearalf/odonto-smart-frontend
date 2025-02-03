@@ -4,7 +4,7 @@ import { isAxiosError } from 'axios';
 
 export const signin = async (
   credentials: ISignInForm,
-): Promise<IApiResponse<ISignIn>> => {
+): Promise<IApiResponse<ISignIn & IApiErrorData>> => {
   try {
     const response = await axiosInstance.post(
       authEndpoints.signin,
@@ -20,6 +20,7 @@ export const signin = async (
       return {
         success: false,
         status: error.status ? error.status : 500,
+        data: error.response?.data,
         message: error.message,
         error,
       };

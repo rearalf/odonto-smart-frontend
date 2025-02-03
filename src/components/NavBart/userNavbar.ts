@@ -1,14 +1,18 @@
 import { MouseEvent, useState } from 'react';
 
-import useSidebarStore from '../../stores/useSidebarStore';
-import useUserStore from '../../stores/useUserStore';
 import { authService } from '../../api/services';
-import useLoadingStore from '../../stores/useLoadingStore';
+import {
+  useUserStore,
+  useSidebarStore,
+  useLoadingStore,
+  useNotificationStore,
+} from '../../stores';
 
 function useNavbar() {
   const loadingState = useLoadingStore();
   const sidebarStore = useSidebarStore();
   const { logOut } = useUserStore();
+  const notificationStore = useNotificationStore();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -23,7 +27,19 @@ function useNavbar() {
     try {
       loadingState.handleLoading();
       await authService.logout();
+      notificationStore.handleShowNotification({
+        severity: 'success',
+        show: true,
+        text: 'Has cerrado sesión correctamente.',
+      });
       logOut();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      notificationStore.handleShowNotification({
+        severity: 'warning',
+        show: true,
+        text: 'Has cerrado sesión, pero no pudimos comunicarnos con el servidor.',
+      });
     } finally {
       loadingState.handleLoading();
     }

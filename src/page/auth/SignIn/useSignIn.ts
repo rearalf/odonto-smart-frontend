@@ -2,13 +2,17 @@ import { FormikHelpers } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
-import useLoadingStore from '../../../stores/useLoadingStore';
-import useUserStore from '../../../stores/useUserStore';
+import {
+  useUserStore,
+  useLoadingStore,
+  useNotificationStore,
+} from '../../../stores';
 import { authService } from '../../../api/services/';
 
 function useSignIn() {
   const loadingState = useLoadingStore();
   const authState = useUserStore();
+  const notificationStore = useNotificationStore();
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -33,7 +37,27 @@ function useSignIn() {
       if (response.status === 201 && response.data) {
         authState.signIn({ ...response.data });
         localStorage.setItem('access_token', response.data.access_token);
+        notificationStore.handleShowNotification({
+          severity: 'success',
+          show: true,
+          text: 'Bienvenido de nuevo.',
+        });
+      } else {
+        if (response.data && response.data.message) {
+          notificationStore.handleShowNotification({
+            severity: 'error',
+            show: true,
+            text: response.data.message,
+          });
+        } else {
+          notificationStore.handleShowNotification({
+            severity: 'error',
+            show: true,
+            text: 'Error al autenticarte.',
+          });
+        }
       }
+
       setSubmitting(false);
     } finally {
       loadingState.handleLoading();

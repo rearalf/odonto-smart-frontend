@@ -1,19 +1,26 @@
 import { useEffect } from 'react';
 import useUserStore from '../stores/useUserStore';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import { useNotificationStore } from '../stores';
 
 function useAuthentication() {
-  const state = useUserStore();
+  const { access_token } = useUserStore();
+  const { handleShowNotification } = useNotificationStore();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (state.access_token) {
-      navigate('/');
-    } else {
+    if (access_token && location.pathname.startsWith('/auth')) navigate('/');
+    else if (!access_token && location.pathname !== '/auth') {
       navigate('/auth');
+      handleShowNotification({
+        show: true,
+        severity: 'info',
+        text: 'Debes iniciar sesión.',
+      });
     }
-  }, [navigate, state.access_token]);
+  }, [navigate, access_token, location, handleShowNotification]);
 }
 
 export default useAuthentication;
