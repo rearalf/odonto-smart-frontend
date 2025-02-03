@@ -7,3 +7,9 @@ export const USER_STORE = {
   roles: [],
   access_token: '',
 };
+
+export const NOTIFICATION: IContentNotification = {
+  show: false,
+  severity: 'info',
+  text: '',
+};

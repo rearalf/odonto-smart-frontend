@@ -110,6 +110,18 @@ const themeLight = createTheme({
         },
       },
     },
+    MuiAlert: {
+      styleOverrides: {
+        root: {
+          '& .MuiAlert-icon': {
+            color: '#FFF',
+          },
+          '& .MuiAlert-message ': {
+            color: '#FFF',
+          },
+        },
+      },
+    },
   },
 });
 
