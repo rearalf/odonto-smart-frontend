@@ -13,11 +13,23 @@ function useListUsers() {
       const response = await getUsers();
       if (response.success) {
         if (Array.isArray(response.data)) setUsers(response.data);
+      } else if (response.status === 401) {
+        notificationStore.handleShowNotification({
+          show: true,
+          severity: 'error',
+          text:
+            response.data && response.data.message
+              ? response.data.message
+              : 'Error al cargar los datos',
+        });
       } else {
         notificationStore.handleShowNotification({
           show: true,
           severity: 'error',
-          text: 'Error al cargar los datos',
+          text:
+            response.data && response.data.message
+              ? response.data.message
+              : 'Error al cargar los datos',
         });
       }
     } finally {

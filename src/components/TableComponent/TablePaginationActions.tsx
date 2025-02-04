@@ -46,32 +46,36 @@ const TablePaginationActions = (props: ITablePaginationActionsProps) => {
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
       <IconButton
-        onClick={handleFirstPageButtonClick}
         disabled={page === 0}
+        title="Primera página"
         aria-label="Primera página"
+        onClick={handleFirstPageButtonClick}
       >
-        <LuChevronFirst />
+        <LuChevronFirst title="Primera página" />
       </IconButton>
       <IconButton
-        onClick={handleBackButtonClick}
         disabled={page === 0}
+        title="Página previa"
         aria-label="Página previa"
+        onClick={handleBackButtonClick}
       >
-        <LuChevronLeft />
+        <LuChevronLeft title="Página previa" />
       </IconButton>
       <IconButton
+        title="Siguiente página"
+        aria-label="Siguiente página"
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="Siguiente página"
       >
-        <LuChevronRight />
+        <LuChevronRight title="Siguiente página" />
       </IconButton>
       <IconButton
+        title="Última página"
+        aria-label="Última página"
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="Última página"
       >
-        <LuChevronLast />
+        <LuChevronLast title="Última página" />
       </IconButton>
     </Box>
   );

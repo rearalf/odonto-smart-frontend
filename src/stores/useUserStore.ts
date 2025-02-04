@@ -6,6 +6,18 @@ const useUserStore = create<IUseUserStore>()(
   persist(
     (set, _get) => ({
       ...USER_STORE,
+      setUpdateAccessToken(token) {
+        set((state) => ({
+          ...state,
+          access_token: token,
+        }));
+      },
+      setShowAuthenticatedModa(value) {
+        set((state) => ({
+          ...state,
+          showAuthenticatedModa: value,
+        }));
+      },
       signIn(value) {
         set({
           access_token: value.access_token,
@@ -15,6 +27,7 @@ const useUserStore = create<IUseUserStore>()(
             last_name: value.last_name,
             name: value.name,
           },
+          isAuthenticated: true,
         });
       },
       logOut() {

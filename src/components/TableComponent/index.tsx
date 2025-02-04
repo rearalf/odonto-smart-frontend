@@ -56,8 +56,8 @@ const TableComponent = (props: ITableComponent) => {
             <TablePagination
               page={props.page}
               count={props.totalData}
-              rowsPerPage={props.rowsPerPage}
               slotProps={slotPropsConst}
+              rowsPerPage={props.rowsPerPage}
               onPageChange={handleChangePage}
               labelRowsPerPage="Filas por página:"
               ActionsComponent={TablePaginationActions}

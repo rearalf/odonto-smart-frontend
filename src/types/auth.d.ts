@@ -14,6 +14,10 @@ interface ISignIn {
   access_token: string;
 }
 
+interface IRefresToken {
+  access_token: string;
+}
+
 interface IUseUserStore {
   user: {
     name: string;
@@ -25,6 +29,10 @@ interface IUseUserStore {
     name: string;
   }[];
   access_token: string;
-  signIn: (value: ISignIn) => void;
+  isAuthenticated: boolean;
+  showAuthenticatedModa: boolean;
   logOut: () => void;
+  signIn: (value: ISignIn) => void;
+  setShowAuthenticatedModa: (value: boolean) => void;
+  setUpdateAccessToken: (token: string) => void;
 }

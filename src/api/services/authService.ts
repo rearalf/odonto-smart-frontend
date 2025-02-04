@@ -58,3 +58,32 @@ export const logout = async (): Promise<IApiResponse<{ message: string }>> => {
     };
   }
 };
+
+export const refreshToken = async (): Promise<IApiResponse<IRefresToken>> => {
+  try {
+    const response = await axiosInstanceWithAuth.post(
+      authEndpoints.refreshToken,
+      {},
+    );
+
+    return {
+      success: true,
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return {
+        success: false,
+        status: error.status ? error.status : 500,
+        message: error.message,
+        error,
+      };
+    }
+    return {
+      success: false,
+      status: 500,
+      error,
+    };
+  }
+};

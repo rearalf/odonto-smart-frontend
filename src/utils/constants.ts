@@ -6,6 +6,8 @@ export const USER_STORE = {
   },
   roles: [],
   access_token: '',
+  isAuthenticated: true,
+  showAuthenticatedModa: false,
 };
 
 export const NOTIFICATION: IContentNotification = {
