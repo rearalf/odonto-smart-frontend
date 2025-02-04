@@ -25,11 +25,11 @@ const SideBar = () => {
         </NavLink>
 
         <div className="content-navbar">
-          <NavLink to="/" className="link">
+          <NavLink to="/user" className="link">
             <i className="icon">
               <FiUsers />
             </i>
-            <span className="text">Pacientes</span>
+            <span className="text">Usuarios</span>
           </NavLink>
         </div>
       </div>

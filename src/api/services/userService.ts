@@ -2,22 +2,28 @@ import { axiosInstanceWithAuth } from '../axios/axiosInstance';
 import { userEndpoints } from '../endpoints';
 import { isAxiosError } from 'axios';
 
-export const getUsers = async () => {
+export const getUsers = async (): Promise<
+  IApiResponse<IUsers[] & IApiErrorData>
+> => {
   try {
     const response = await axiosInstanceWithAuth.get(userEndpoints.getAUsers);
     return {
+      success: true,
       data: response.data,
       status: response.status,
     };
   } catch (error) {
     if (isAxiosError(error)) {
       return {
-        status: error.status,
-        message: error.message,
         error,
+        success: false,
+        message: error.message,
+        data: error.response?.data,
+        status: error.status ? error.status : 500,
       };
     }
     return {
+      success: false,
       status: 500,
       error,
     };

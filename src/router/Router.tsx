@@ -1,10 +1,12 @@
 import { createBrowserRouter } from 'react-router';
 
 import SignIn from '../page/auth/SignIn';
-import Public from '../Layouts/Public';
-import App from '../App';
-import Private from '../Layouts/Private';
+
 import Dashboard from '../page/dashboard';
+import Private from '../Layouts/Private';
+import Public from '../Layouts/public';
+import Users from '../page/Users/List';
+import App from '../App';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,16 @@ const router = createBrowserRouter([
           {
             path: '',
             element: <Dashboard />,
+          },
+        ],
+      },
+      {
+        path: 'user',
+        element: <Private />,
+        children: [
+          {
+            path: '',
+            element: <Users />,
           },
         ],
       },
