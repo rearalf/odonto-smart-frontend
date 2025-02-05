@@ -6,8 +6,8 @@ import {
   useUserStore,
   useLoadingStore,
   useNotificationStore,
-} from '../../../stores';
-import { authService } from '../../../api/services/';
+} from '@stores/index';
+import { authService } from '@api/services';
 
 function useSignIn() {
   const loadingState = useLoadingStore();

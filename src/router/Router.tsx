@@ -1,11 +1,10 @@
 import { createBrowserRouter } from 'react-router';
 
-import SignIn from '../page/auth/SignIn';
-
-import Dashboard from '../page/dashboard';
-import Private from '../Layouts/Private';
-import Public from '../Layouts/public';
-import Users from '../page/Users/List';
+import Dashboard from '@pages/dashboard';
+import SignIn from '@pages/auth/SignIn';
+import Private from '@layouts/Private';
+import Users from '@pages/Users/List';
+import Public from '@layouts/Public';
 import App from '../App';
 
 const router = createBrowserRouter([

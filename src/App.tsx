@@ -2,7 +2,11 @@ import { ThemeProvider } from '@emotion/react';
 import { THEME_ID } from '@mui/material';
 import { Outlet } from 'react-router';
 
-import { ExpiredSession, LoadingProgress, Notification } from './components';
+import {
+  Notification,
+  ExpiredSession,
+  LoadingProgress,
+} from '@components/index';
 import themeLight from './Theme';
 
 function App() {

@@ -2,9 +2,8 @@ import { Box, Button, Container } from '@mui/material';
 import { Link } from 'react-router';
 import { Formik } from 'formik';
 
-import TextFieldBasic from '../../../components/TextFieldBasic';
+import TextFieldBasic from '@components/TextFieldBasic';
 import useSignIn from './useSignIn';
-
 import './styles.css';
 
 function SignIn() {

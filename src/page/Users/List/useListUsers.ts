@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getUsers } from '../../../api/services/userService';
-import { useLoadingStore, useNotificationStore } from '../../../stores';
+
+import { useLoadingStore, useNotificationStore } from '@stores/index';
+import { getUsers } from '@api/services/userService';
 
 function useListUsers() {
   const notificationStore = useNotificationStore();
