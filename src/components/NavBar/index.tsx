@@ -42,6 +42,7 @@ const Navbar = () => {
             aria-haspopup="true"
             aria-controls="menu-appbar"
             aria-label="Cuenta de usuario"
+            className="btn-user"
             onClick={hook.handleOpenUserMenu}
           >
             <FiUser />

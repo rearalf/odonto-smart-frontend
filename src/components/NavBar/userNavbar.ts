@@ -1,17 +1,18 @@
 import { MouseEvent, useState } from 'react';
+import { useNavigate } from 'react-router';
 
-import { authService } from '../../api/services';
+// import { authService } from '../../api/services';
 import {
-  useUserStore,
   useSidebarStore,
   useLoadingStore,
   useNotificationStore,
 } from '../../stores';
 
 function useNavbar() {
+  const navigate = useNavigate();
   const loadingState = useLoadingStore();
   const sidebarStore = useSidebarStore();
-  const { logOut } = useUserStore();
+  // const { logOut } = useUserStore();
   const notificationStore = useNotificationStore();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -26,13 +27,14 @@ function useNavbar() {
   const handleLogOut = async () => {
     try {
       loadingState.handleLoading();
-      await authService.logout();
+      // await authService.logout();
       notificationStore.handleShowNotification({
         severity: 'success',
         show: true,
         text: 'Has cerrado sesión correctamente.',
       });
-      logOut();
+      navigate('/auth');
+      // logOut();
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       notificationStore.handleShowNotification({
