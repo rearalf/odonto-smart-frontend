@@ -1,7 +1,7 @@
 .notification {
   position: fixed;
   bottom: 2rem;
-  left: -50vw;
+  left: -100vw;
   max-width: 75vw;
   z-index: 9999;
 }
