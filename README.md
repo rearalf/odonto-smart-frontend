@@ -22,7 +22,7 @@ export default tseslint.config({
       tsconfigRootDir: import.meta.dirname,
     },
   },
-})
+});
 ```
 
 - Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
@@ -31,7 +31,7 @@ export default tseslint.config({
 
 ```js
 // eslint.config.js
-import react from 'eslint-plugin-react'
+import react from 'eslint-plugin-react';
 
 export default tseslint.config({
   // Set the react version
@@ -46,5 +46,55 @@ export default tseslint.config({
     ...react.configs.recommended.rules,
     ...react.configs['jsx-runtime'].rules,
   },
-})
+});
+```
+
+# Project structure
+
+```plaintext
+frontend/
+├── public/
+├── src/
+│   ├── api/                   # Configuring Axios and services by module
+│   │   ├── axios.ts           # Axios main instance (with interceptors, baseURL, etc.)
+│   │   └── user.api.ts        # Example of service for users
+│
+│   ├── components/            # Reusable components (buttons, inputs, etc.)
+│   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   └── styles.ts
+│   │   └── ...
+│
+│   ├── hooks/                 # Custom hooks (useDebounce, useAuth, etc.)
+│
+│   ├── pages/                 # App pages (if you use React Router)
+│   │   ├── Home/
+│   │   ├── Login/
+│   │   └── ...
+│
+│   ├── router/                # Definición de rutas
+│   │   └── index.tsx
+│
+│   ├── store/                 # General overall status (Zustand stores general)
+│   │   └── auth.store.ts
+│
+│   ├── types/                 # Global types (interfaces, enums)
+│   │   └── index.ts
+│
+│   ├── utils/                 # Utility functions, helpers
+│   │   └── formatDate.ts
+│
+│   ├── constants/             # Global constants (route names, messages, etc.)
+│   │   └── routes.ts
+│
+│   ├── theme/                 # Theme settings if you use Material UI or similar
+│   │   └── index.ts
+│
+│   ├── App.tsx
+│   └── main.tsx
+│
+├── .env
+├── tsconfig.json
+├── vite.config.ts
+└── package.json
 ```
