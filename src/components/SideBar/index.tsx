@@ -1,6 +1,7 @@
 import useSidebarStore from '../../stores/useSidebarStore';
-import { FiChevronsLeft, FiUsers } from 'react-icons/fi';
 import { Drawer, IconButton } from '@mui/material';
+import { FiChevronsLeft } from 'react-icons/fi';
+import { CiMedicalMask } from 'react-icons/ci';
 import { NavLink } from 'react-router';
 
 import './styles.css';
@@ -30,11 +31,11 @@ const SideBar = () => {
           </NavLink>
 
           <div className="content-navbar">
-            <NavLink to="/user" className="link">
+            <NavLink to="/doctor" className="link">
               <i className="icon">
-                <FiUsers />
+                <CiMedicalMask />
               </i>
-              <span className="text">Usuarios</span>
+              <span className="text">Doctores</span>
             </NavLink>
           </div>
         </div>
