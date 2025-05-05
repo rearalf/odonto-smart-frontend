@@ -5,3 +5,9 @@ interface IContentNotification {
   show: boolean;
   severity: Severity;
 }
+
+interface IBasicIdNameDescrip {
+  id: number;
+  name: string;
+  description?: string;
+}

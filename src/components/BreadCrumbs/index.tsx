@@ -7,7 +7,7 @@ const BreadCrumbs = (props: IBreadCrumbsProps) =>
       {props.links.length > 0 ? (
         props.links.map((link, index) =>
           index === props.links.length - 1 ? (
-            <Typography sx={{ color: 'text.primary' }}>
+            <Typography sx={{ color: 'text.primary' }} key={link.link_name}>
               {link.link_name}
             </Typography>
           ) : (
