@@ -4,7 +4,7 @@ import Dashboard from '@pages/Dashboard';
 import SignIn from '@pages/auth/SignIn';
 import Private from '@layouts/Private';
 import Public from '@layouts/public';
-import Doctor from '@pages/Doctor';
+import Doctor from '@pages/Doctor/List';
 import App from '../App';
 
 const router = createBrowserRouter([

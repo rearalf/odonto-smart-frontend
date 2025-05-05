@@ -31,8 +31,9 @@ const TableComponent = (props: ITableComponent) => {
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    const value = parseInt(event.target.value, 10);
     props.handleSetPage(0);
-    props.handleSetRowsPerPage(parseInt(event.target.value, 10));
+    props.handleSetRowsPerPage(value);
   };
 
   const slotPropsConst = {
