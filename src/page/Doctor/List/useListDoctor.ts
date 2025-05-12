@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
 function useListDoctor() {
-  const [doctor, setDoctor] = useState<IListDoctor[]>([]);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
+  const [doctor, setDoctor] = useState<IListDoctor[]>([]);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
   const breadCrumbs = [
@@ -15,6 +16,10 @@ function useListDoctor() {
       link_to: '/doctor',
     },
   ];
+
+  const handleShowDeleteModal = () => {
+    setOpenDeleteModal(!openDeleteModal);
+  };
 
   const handleSetPage = (newPage: number) => {
     setPage(newPage);
@@ -43,9 +48,11 @@ function useListDoctor() {
     page,
     doctor,
     rowsPerPage,
+    openDeleteModal,
     breadCrumbs,
     handleSetPage,
     handleSetRowsPerPage,
+    handleShowDeleteModal,
   };
 }
 

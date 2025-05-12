@@ -1,7 +1,11 @@
 import { Button, IconButton, TableCell, TableRow } from '@mui/material';
 import { FiEdit, FiTrash, FiUser } from 'react-icons/fi';
 
-import { BreadCrumbs, TableComponent } from '@components/index';
+import {
+  BreadCrumbs,
+  TableComponent,
+  DialogComponent,
+} from '@components/index';
 import useListDoctor from './useListDoctor';
 
 import './styles.css';
@@ -61,7 +65,11 @@ function Doctor() {
                   <IconButton color="secondary" title="Editar usuario">
                     <FiEdit title="Editar usuario" size={18} />
                   </IconButton>
-                  <IconButton color="error" title="Eliminar usuario">
+                  <IconButton
+                    color="error"
+                    title="Eliminar usuario"
+                    onClick={hook.handleShowDeleteModal}
+                  >
                     <FiTrash title="Eliminar usuario" size={18} />
                   </IconButton>
                 </>
@@ -70,6 +78,35 @@ function Doctor() {
           </TableRow>
         ))}
       ></TableComponent>
+
+      <DialogComponent
+        fullWidth
+        maxWidth="xs"
+        titleId="delete-doctor-dialog-title"
+        labelledby="delete-doctor-dialog-title"
+        dialogTitle="¿Seguro que quiere eliminar al doctor?"
+        open={hook.openDeleteModal}
+        handleClose={hook.handleShowDeleteModal}
+      >
+        <DialogComponent.Body>
+          <p>
+            ¿Estás seguro que deseas continuar? Esta acción no se puede
+            deshacer.
+          </p>
+        </DialogComponent.Body>
+        <DialogComponent.Footer>
+          <Button
+            color="error"
+            variant="outlined"
+            onClick={hook.handleShowDeleteModal}
+          >
+            Cancelar
+          </Button>
+          <Button color="success" variant="contained">
+            Confirmar
+          </Button>
+        </DialogComponent.Footer>
+      </DialogComponent>
     </main>
   );
 }
