@@ -7,6 +7,11 @@
   align-items: center;
 }
 
+.list-doctor .header .btn {
+  display: flex;
+  gap: 0.4rem;
+}
+
 @media screen and (min-width: 425px) {
   .list-doctor .header {
     justify-content: space-between;

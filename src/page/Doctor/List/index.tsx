@@ -1,5 +1,7 @@
 import { Button, IconButton, TableCell, TableRow } from '@mui/material';
 import { FiEdit, FiTrash, FiUser } from 'react-icons/fi';
+import { LiaNotesMedicalSolid } from 'react-icons/lia';
+import { Link } from 'react-router';
 
 import { BreadCrumbs, TableComponent } from '@components/index';
 import useListDoctor from './useListDoctor';
@@ -14,9 +16,11 @@ function Doctor() {
 
       <header className="header">
         <h1>Doctores</h1>
-        <Button variant="contained" type="button">
-          Nuevo doctor
-        </Button>
+        <Link to="new-doctor">
+          <Button variant="contained" type="button" className="btn">
+            <LiaNotesMedicalSolid size={20} /> Nuevo doctor
+          </Button>
+        </Link>
       </header>
 
       <TableComponent

@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router';
 
+import { Doctor, NewDoctor } from '@pages/Doctor';
 import Dashboard from '@pages/Dashboard';
 import SignIn from '@pages/auth/SignIn';
 import Private from '@layouts/Private';
 import Public from '@layouts/public';
-import Doctor from '@pages/Doctor/List';
 import App from '../App';
 
 const router = createBrowserRouter([
@@ -30,15 +30,20 @@ const router = createBrowserRouter([
             path: '',
             element: <Dashboard />,
           },
-        ],
-      },
-      {
-        path: 'doctor',
-        element: <Private />,
-        children: [
           {
-            path: '',
-            element: <Doctor />,
+            id: 'doctor',
+            path: 'doctor',
+            children: [
+              {
+                id: 'list-doctor',
+                path: '',
+                element: <Doctor />,
+              },
+              {
+                path: 'new-doctor',
+                element: <NewDoctor />,
+              },
+            ],
           },
         ],
       },
