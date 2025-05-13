@@ -1,5 +1,6 @@
 export { default as LoadingProgress } from './LoadingProgress';
 export { default as SelectComponent } from './SelectComponent';
+export { default as DialogComponent } from './DialogComponent';
 export { default as TableComponent } from './TableComponent';
 export { default as TextFieldBasic } from './TextFieldBasic';
 export { default as ExpiredSession } from './ExpiredSession';
