@@ -58,12 +58,12 @@
   --clr-primary-a40: #97cee4;
   --clr-primary-a50: #add8e9;
 
-  --clr-surface-a0: #eff2f5;
-  --clr-surface-a10: #e6eaef;
-  --clr-surface-a20: #e2e5e9;
-  --clr-surface-a30: #dddedf;
-  --clr-surface-a40: #ccd4d7;
-  --clr-surface-a50: #c7cfd1;
+  --clr-surface-a0: hsl(220, 9%, 100%);
+  --clr-surface-a10: hsl(213, 22%, 92%);
+  --clr-surface-a20: hsl(214, 14%, 90%);
+  --clr-surface-a30: hsl(210, 3%, 87%);
+  --clr-surface-a40: hsl(196, 12%, 82%);
+  --clr-surface-a50: hsl(220, 9%, 87%);
 
   --clr-text-a0: #0b1524;
   --clr-text-a50: #3c474d;

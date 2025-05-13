@@ -15,7 +15,7 @@ import './styles.css';
 function Doctor() {
   const hook = useListDoctor();
   return (
-    <main className="list-doctor">
+    <div className="list-doctor">
       <BreadCrumbs links={hook.breadCrumbs} loading={false} />
 
       <header className="header">
@@ -45,7 +45,7 @@ function Doctor() {
           </>
         }
         body={hook.doctor.map((row) => (
-          <TableRow key={row.email}>
+          <TableRow hover key={row.email}>
             <TableCell align="left">{row.fullName}</TableCell>
             <TableCell align="center">{row.email}</TableCell>
             <TableCell align="center">{row.specialty}</TableCell>
@@ -111,7 +111,7 @@ function Doctor() {
           </Button>
         </DialogComponent.Footer>
       </DialogComponent>
-    </main>
+    </div>
   );
 }
 
