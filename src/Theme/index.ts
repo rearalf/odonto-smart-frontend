@@ -47,7 +47,7 @@ const themeLight = createTheme({
       '800': '#2e6506',
       '900': '#215304',
     },
-  },
+  }, //.MuiFormControl-root.MuiTextField-root .MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-multiline textarea
   components: {
     MuiTextField: {
       styleOverrides: {
@@ -58,6 +58,13 @@ const themeLight = createTheme({
           '& .MuiInputBase-root.MuiOutlinedInput-root:hover fieldset': {
             borderColor: '#19A7CE',
           },
+          '& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-multiline textarea':
+            {
+              width: '100%',
+              height: '100% !important',
+              overflowY: 'auto !important',
+              minHeight: '6.25rem',
+            },
           '& .MuiInputBase-root.MuiOutlinedInput-root.Mui-error:hover fieldset':
             {
               borderColor: '#a21732',

@@ -1,0 +1,34 @@
+.new-doctor .header {
+  margin: 1rem 0;
+}
+
+.new-doctor .steps-components {
+  margin-bottom: 2rem;
+  min-width: 320px;
+  overflow-x: auto;
+}
+
+.new-doctor .form .form-step-1 {
+  display: grid;
+  gap: 2rem;
+}
+
+.new-doctor .form .btn-group {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .new-doctor .form .form-step-1 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .new-doctor .form .form-step-1 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

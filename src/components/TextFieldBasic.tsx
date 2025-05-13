@@ -7,13 +7,16 @@ interface ITextFieldBasicProps {
   error?: boolean;
   required?: boolean;
   disabled?: boolean;
+  ariaLabel?: string;
   helperText?: string;
   multiline?: boolean;
   placeholder?: string;
+  autoComplete?: string;
   value: string | number;
   type: React.HTMLInputTypeAttribute;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   showPassword?: boolean;
+  handleOnBlur?: () => void;
   handleShowPassword?: () => void;
 }
 
@@ -29,9 +32,12 @@ const TextFieldBasic = (props: ITextFieldBasicProps) => (
     disabled={props.disabled}
     required={props.required}
     onChange={props.onChange}
+    onBlur={props.handleOnBlur}
     multiline={props.multiline}
+    aria-label={props.ariaLabel}
     helperText={props.helperText}
     placeholder={props.placeholder}
+    autoComplete={props.autoComplete}
     type={props.showPassword ? 'text' : props.type}
     InputProps={{
       minRows: 1,
