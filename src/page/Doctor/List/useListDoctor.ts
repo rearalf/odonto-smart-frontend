@@ -31,7 +31,6 @@ function useListDoctor() {
   };
 
   useEffect(() => {
-    doctor.push();
     setDoctor([
       {
         fullName: 'Nombre 1',
@@ -40,8 +39,14 @@ function useListDoctor() {
         specialty: 'Odonto',
         role: [{ id: 1, name: 'Rol' }],
       },
+      {
+        id: 2,
+        fullName: 'Nombre 1',
+        email: 'reasdfas',
+        specialty: 'Odonto',
+        role: [{ id: 1, name: 'Rol' }],
+      },
     ]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {

@@ -45,7 +45,7 @@ const Navbar = () => {
             className="btn-user"
             onClick={hook.handleOpenUserMenu}
           >
-            <FiUser />
+            <FiUser size="20" />
           </IconButton>
           <Menu
             keepMounted

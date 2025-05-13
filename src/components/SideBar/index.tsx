@@ -33,7 +33,7 @@ const SideBar = () => {
           <div className="content-navbar">
             <NavLink to="/doctor" className="link">
               <i className="icon">
-                <CiMedicalMask />
+                <CiMedicalMask size="26" />
               </i>
               <span className="text">Doctores</span>
             </NavLink>
@@ -44,7 +44,7 @@ const SideBar = () => {
           className="btn-sidebar"
           onClick={sidebarStore.handleOpenState}
         >
-          <FiChevronsLeft />
+          <FiChevronsLeft size="20" />
         </IconButton>
       </Drawer>
     </>
