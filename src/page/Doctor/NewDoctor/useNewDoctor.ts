@@ -1,9 +1,15 @@
+import { FormikProps } from 'formik';
 import { useState } from 'react';
-import * as Yup from 'yup';
+
+import {
+  doctorSchemaStepOne,
+  doctorSchemaStepTwo,
+} from './validation/newDoctor.schema';
+import { INewDoctorFormValues } from './types/newDoctor.types';
+import { exampleToSpecialties } from './constants/newDoctor';
 
 function useNewDoctor() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeStep, _setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [skipped, _setSkipped] = useState(new Set<number>());
 
@@ -11,86 +17,21 @@ function useNewDoctor() {
   const [isShowConfirmPassword, setIsShowConfirmPassword] =
     useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [specialties, _setSpecialties] = useState<IBasicIdNameDescrip[]>([
-    {
-      id: 1,
-      name: '$',
-    },
-    {
-      id: 2,
-      name: '€',
-    },
-    {
-      id: 3,
-      name: '฿',
-    },
-    {
-      id: 4,
-      name: '¥',
-    },
-  ]);
+  const [specialties, _setSpecialties] =
+    useState<IBasicIdNameDescription[]>(exampleToSpecialties);
 
-  const formSchema = Yup.object().shape({
-    first_name: Yup.string()
-      .trim()
-      .required('El primer nombre es obligatorio.'),
-    middle_name: Yup.string().trim(),
-    last_name: Yup.string().trim().required('Los apellidos son obligatorios.'),
-    qualification: Yup.string().trim(),
-    email: Yup.string()
-      .trim()
-      .email('Correo invalido.')
-      .required('El correo es obligatorio.'),
-    password: Yup.string()
-      .trim()
-      .min(1, 'Deben de ser mínimo 8 caracteres.')
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
-        'Contraseña inválida',
-      )
-      .test('is-strong', 'Contraseña inválida', function (value) {
-        if (!value) return false;
-        if (value.length < 8) return false;
-      })
-      .required('La contraseña es requerida.'),
-    confirmPassword: Yup.string()
-      .trim()
-      .min(1, 'Deben de ser mínimo 8 caracteres.')
-      .required('La contraseña es requerida.')
-      .oneOf([Yup.ref('password')], 'Las contraseñas deben de ser iguales'),
-    specialty: Yup.number().required('El doctor debe tener una especialidad.'),
-  });
+  const [specialtiesBySelect, setSpecialtiesBySelect] = useState<
+    (number | string)[]
+  >([1, 2, 3]);
 
-  const initialValues = {
-    first_name: '',
-    middle_name: '',
-    last_name: '',
-    qualification: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    specialty: '',
-  };
-
-  const steps = [
-    'Formulario principal',
-    'Agregar especialidades y contactos',
-    'Agregar roles y permisos',
-  ];
-  const breadCrumbs: ILink[] = [
-    {
-      link_name: 'Dashboard',
-      link_to: '/',
-    },
-    {
-      link_name: 'Doctores',
-      link_to: '/doctor',
-    },
-    {
-      link_name: 'Nuevo doctor',
-      link_to: 'new-doctor',
-    },
-  ];
+  function getValidationSchema(step: number) {
+    switch (step) {
+      case 0:
+        return doctorSchemaStepOne;
+      case 1:
+        return doctorSchemaStepTwo;
+    }
+  }
 
   const handleShowPassword = () => setIsShowPassword(!isShowPassword);
   const handleShowConfirmPassword = () =>
@@ -100,18 +41,33 @@ function useNewDoctor() {
     return skipped.has(step);
   };
 
+  const handlePrevStep = () => {
+    if (activeStep > 0) setActiveStep((prev) => prev - 1);
+  };
+
+  const handleNextStep = async (formik: FormikProps<INewDoctorFormValues>) => {
+    const isValid = await formik.validateForm();
+    if (Object.keys(isValid).length === 0) {
+      setActiveStep((prev) => prev + 1);
+    }
+  };
+
+  const handleSetSpecialtiesBySelect = (newSet: (number | string)[]) =>
+    setSpecialtiesBySelect(newSet);
+
   return {
     activeStep,
     specialties,
     isShowPassword,
+    specialtiesBySelect,
     isShowConfirmPassword,
-    steps,
-    formSchema,
-    breadCrumbs,
-    initialValues,
+    getValidationSchema,
     isStepSkipped,
+    handlePrevStep,
+    handleNextStep,
     handleShowPassword,
     handleShowConfirmPassword,
+    handleSetSpecialtiesBySelect,
   };
 }
 

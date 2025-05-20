@@ -6,7 +6,7 @@ interface IContentNotification {
   severity: Severity;
 }
 
-interface IBasicIdNameDescrip {
+interface IBasicIdNameDescription {
   id: number;
   name: string;
   description?: string;

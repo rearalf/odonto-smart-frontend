@@ -3,22 +3,25 @@ import { Formik } from 'formik';
 
 import { BreadCrumbs } from '@components/index';
 import useNewDoctor from './useNewDoctor';
-import FomrStepOne from './FomrStepOne';
+import FormStepTwo from './components/FormStepTwo';
+import FormStepOne from './components/FormStepOne';
 
 import './styles.css';
+import { breadCrumbs, steps } from './constants/newDoctor';
+import { doctorInitialValues } from './validation/newDoctor.schema';
 
 function NewDoctor() {
   const hook = useNewDoctor();
   return (
     <Box component="div" className="new-doctor">
-      <BreadCrumbs links={hook.breadCrumbs} loading={false} />
+      <BreadCrumbs links={breadCrumbs} loading={false} />
 
       <header className="header">
         <h1>Nuevo doctor</h1>
       </header>
 
       <Stepper activeStep={hook.activeStep} className="steps-components">
-        {hook.steps.map((label, index) => {
+        {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: {
             optional?: React.ReactNode;
@@ -35,16 +38,18 @@ function NewDoctor() {
       </Stepper>
 
       <Formik
-        initialValues={hook.initialValues}
-        validationSchema={hook.formSchema}
+        initialValues={doctorInitialValues}
+        validationSchema={hook.getValidationSchema(hook.activeStep)}
         onSubmit={(_values, formikHelpers) => {
           formikHelpers.setSubmitting(true);
         }}
+        validateOnChange={false}
+        validateOnBlur={false}
       >
         {(props) => (
           <Box component="form" className="form" onSubmit={props.handleSubmit}>
             {hook.activeStep === 0 ? (
-              <FomrStepOne
+              <FormStepOne
                 formikProps={props}
                 specialties={hook.specialties}
                 isShowPassword={hook.isShowPassword}
@@ -52,14 +57,22 @@ function NewDoctor() {
                 handleShowPassword={hook.handleShowPassword}
                 handleShowConfirmPassword={hook.handleShowConfirmPassword}
               />
-            ) : null}
+            ) : (
+              <FormStepTwo
+                formikProps={props}
+                specialties={hook.specialties}
+                specialtiesBySelect={hook.specialtiesBySelect}
+                handleSetSpecialtiesBySelect={hook.handleSetSpecialtiesBySelect}
+              />
+            )}
             <div className="btn-group">
               <Button
-                color="secondary"
+                color="inherit"
                 type="button"
-                variant="outlined"
+                variant="text"
                 aria-label="Regresar"
                 disabled={hook.activeStep === 0}
+                onClick={hook.handlePrevStep}
               >
                 Regresar
               </Button>
@@ -67,15 +80,17 @@ function NewDoctor() {
               <Button
                 color="primary"
                 variant="contained"
+                disabled={!props.isValid || !props.dirty}
+                onClick={(e) =>
+                  hook.activeStep === steps.length - 1
+                    ? e.preventDefault()
+                    : hook.handleNextStep(props)
+                }
                 type={
-                  hook.activeStep === hook.steps.length - 1
-                    ? 'submit'
-                    : 'button'
+                  hook.activeStep === steps.length - 1 ? 'submit' : 'button'
                 }
               >
-                {hook.activeStep === hook.steps.length - 1
-                  ? 'Guardar'
-                  : 'Siguiente'}
+                {hook.activeStep === steps.length - 1 ? 'Guardar' : 'Siguiente'}
               </Button>
             </div>
           </Box>

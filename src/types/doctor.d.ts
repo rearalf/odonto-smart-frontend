@@ -3,5 +3,5 @@ interface IListDoctor {
   fullName: string;
   specialty: string;
   email: string;
-  role: IBasicIdNameDescrip[];
+  role: IBasicIdNameDescription[];
 }
