@@ -1,3 +1,4 @@
+export { default as TransferListComponent } from './TransferListComponent';
 export { default as LoadingProgress } from './LoadingProgress';
 export { default as SelectComponent } from './SelectComponent';
 export { default as DialogComponent } from './DialogComponent';

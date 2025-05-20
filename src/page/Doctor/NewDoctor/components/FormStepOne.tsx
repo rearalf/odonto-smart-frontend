@@ -1,27 +1,19 @@
 import { SelectComponent, TextFieldBasic } from '@components/index';
+import { INewDoctorFormValues } from '../types/newDoctor.types';
 
 import { Box } from '@mui/material';
 import { FormikProps } from 'formik';
 
-interface IFomrStepOneProps {
+interface IFormStepOneProps {
   isShowPassword: boolean;
   isShowConfirmPassword: boolean;
-  specialties: IBasicIdNameDescrip[];
-  formikProps: FormikProps<{
-    first_name: string;
-    middle_name: string;
-    last_name: string;
-    qualification: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    specialty: string;
-  }>;
+  specialties: IBasicIdNameDescription[];
+  formikProps: FormikProps<INewDoctorFormValues>;
   handleShowPassword: () => void;
   handleShowConfirmPassword: () => void;
 }
 
-const FomrStepOne = (props: IFomrStepOneProps) => {
+const FormStepOne = (props: IFormStepOneProps) => {
   return (
     <Box component="div" className="form-step-1">
       <TextFieldBasic
@@ -66,8 +58,19 @@ const FomrStepOne = (props: IFomrStepOneProps) => {
         value={props.formikProps.values.last_name}
         disabled={props.formikProps.isSubmitting}
         onChange={props.formikProps.handleChange}
-        helperText={props.formikProps.errors.last_name}
-        error={props.formikProps.errors.last_name !== undefined}
+        handleOnBlur={() => {
+          props.formikProps.setFieldTouched('last_name', true);
+          props.formikProps.validateField('last_name');
+        }}
+        helperText={
+          props.formikProps.touched.last_name
+            ? props.formikProps.errors.last_name
+            : ''
+        }
+        error={
+          props.formikProps.touched.last_name &&
+          Boolean(props.formikProps.errors.last_name)
+        }
       />
 
       <TextFieldBasic
@@ -103,9 +106,20 @@ const FomrStepOne = (props: IFomrStepOneProps) => {
         value={props.formikProps.values.password}
         onChange={props.formikProps.handleChange}
         showPassword={props.isShowPassword}
-        helperText={props.formikProps.errors.password}
-        error={props.formikProps.errors.password !== undefined}
         handleShowPassword={props.handleShowPassword}
+        handleOnBlur={() => {
+          props.formikProps.setFieldTouched('password', true);
+          props.formikProps.validateField('password');
+        }}
+        helperText={
+          props.formikProps.touched.password
+            ? props.formikProps.errors.password
+            : ''
+        }
+        error={
+          props.formikProps.touched.password &&
+          Boolean(props.formikProps.errors.password)
+        }
       />
 
       <TextFieldBasic
@@ -118,9 +132,20 @@ const FomrStepOne = (props: IFomrStepOneProps) => {
         onChange={props.formikProps.handleChange}
         value={props.formikProps.values.confirmPassword}
         showPassword={props.isShowConfirmPassword}
-        helperText={props.formikProps.errors.confirmPassword}
-        error={props.formikProps.errors.confirmPassword !== undefined}
         handleShowPassword={props.handleShowConfirmPassword}
+        handleOnBlur={() => {
+          props.formikProps.setFieldTouched('confirmPassword', true);
+          props.formikProps.validateField('confirmPassword');
+        }}
+        helperText={
+          props.formikProps.touched.confirmPassword
+            ? props.formikProps.errors.confirmPassword
+            : ''
+        }
+        error={
+          props.formikProps.touched.confirmPassword &&
+          Boolean(props.formikProps.errors.confirmPassword)
+        }
       />
 
       <SelectComponent
@@ -131,6 +156,19 @@ const FomrStepOne = (props: IFomrStepOneProps) => {
         options={props.specialties}
         value={props.formikProps.values.specialty}
         onChange={props.formikProps.handleChange}
+        handleOnBlur={() => {
+          props.formikProps.setFieldTouched('specialty', true);
+          props.formikProps.validateField('specialty');
+        }}
+        helperText={
+          props.formikProps.touched.specialty
+            ? props.formikProps.errors.specialty
+            : ''
+        }
+        error={
+          props.formikProps.touched.specialty &&
+          Boolean(props.formikProps.errors.specialty)
+        }
       />
 
       <TextFieldBasic
@@ -148,4 +186,4 @@ const FomrStepOne = (props: IFomrStepOneProps) => {
   );
 };
 
-export default FomrStepOne;
+export default FormStepOne;

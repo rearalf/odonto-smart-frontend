@@ -3,11 +3,12 @@
 }
 
 .new-doctor .steps-components {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   min-width: 320px;
   overflow-x: auto;
 }
 
+.new-doctor .form .form-step-2,
 .new-doctor .form .form-step-1 {
   display: grid;
   gap: 2rem;
@@ -22,13 +23,17 @@
 }
 
 @media screen and (min-width: 768px) {
+  .new-doctor .form .form-step-2,
   .new-doctor .form .form-step-1 {
+    padding: 0 2rem;
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media screen and (min-width: 1024px) {
+  .new-doctor .form .form-step-2,
   .new-doctor .form .form-step-1 {
+    padding: 0 3rem;
     grid-template-columns: repeat(3, 1fr);
   }
 }
