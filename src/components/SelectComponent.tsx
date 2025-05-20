@@ -9,30 +9,45 @@ interface ISelectComponentProps {
   required?: boolean;
   disabled?: boolean;
   ariaLabel?: string;
-  options: IBasicIdNameDescrip[];
+  options: IBasicIdNameDescription[];
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+  handleOnBlur?: () => void;
 }
 
-const SelectComponent = (props: ISelectComponentProps) => (
-  <TextField
-    select
-    id={props.id}
-    label={props.label}
-    error={props.error}
-    onChange={props.onChange}
-    required={props.required}
-    helperText={props.helperText}
-    value={props.value}
-  >
-    <MenuItem value="">
-      <em>Seleccionar una opción</em>
-    </MenuItem>
-    {props.options.map((option) => (
-      <MenuItem key={option.id} value={option.id}>
-        {option.name}
+const SelectComponent = (props: ISelectComponentProps) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.onChange({
+      ...event,
+      target: {
+        ...event.target,
+        name: props.id,
+      },
+    });
+  };
+
+  return (
+    <TextField
+      select
+      id={props.id}
+      name={props.id}
+      label={props.label}
+      error={props.error}
+      onChange={handleChange}
+      required={props.required}
+      helperText={props.helperText}
+      onBlur={props.handleOnBlur}
+      value={props.value}
+    >
+      <MenuItem value="">
+        <em>Seleccionar una opción</em>
       </MenuItem>
-    ))}
-  </TextField>
-);
+      {props.options.map((option) => (
+        <MenuItem key={option.id} value={option.id}>
+          {option.name}
+        </MenuItem>
+      ))}
+    </TextField>
+  );
+};
 
 export default SelectComponent;
