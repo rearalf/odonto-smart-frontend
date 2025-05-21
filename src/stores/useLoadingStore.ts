@@ -2,12 +2,13 @@ import { create } from 'zustand';
 
 interface IUseLoadingStore {
   loading: boolean;
-  handleLoading: () => void;
+  handleLoading: (value?: boolean) => void;
 }
 
 const useLoadingStore = create<IUseLoadingStore>((set) => ({
   loading: false,
-  handleLoading: () => set((state) => ({ loading: !state.loading })),
+  handleLoading: (value) =>
+    set((state) => ({ loading: value || !state.loading })),
 }));
 
 export default useLoadingStore;

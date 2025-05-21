@@ -1,8 +1,11 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL + '/api/v1',
   withCredentials: true,
+  headers: {
+    'Content-type': 'application/json',
+  },
 });
 
 export const axiosInstanceWithAuth = axios.create({

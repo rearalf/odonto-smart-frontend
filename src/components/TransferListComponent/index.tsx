@@ -8,6 +8,7 @@ interface ITransferListComponentProps {
   items: IBasicIdNameDescription[];
   leftIds: (number | string)[];
   rightIds: (number | string)[];
+  isLoading?: boolean;
   onChange: (
     newLeftIds: (number | string)[],
     newRightIds: (number | string)[],
@@ -62,6 +63,7 @@ const TransferListComponent = (props: ITransferListComponentProps) => {
         items={leftItems}
         checkedIds={checkedIds}
         onToggle={toggleChecked}
+        isLoading={props.isLoading}
       />
       <Box component="div" className="tranfer-list-buttons">
         <Button
@@ -87,6 +89,7 @@ const TransferListComponent = (props: ITransferListComponentProps) => {
         items={rightItems}
         checkedIds={checkedIds}
         onToggle={toggleChecked}
+        isLoading={props.isLoading}
       />
     </Box>
   );

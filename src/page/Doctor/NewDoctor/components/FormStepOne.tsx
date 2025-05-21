@@ -29,7 +29,8 @@ const FormStepOne = (props: IFormStepOneProps) => {
           props.formikProps.validateField('first_name');
         }}
         helperText={
-          props.formikProps.touched.first_name
+          props.formikProps.touched.first_name &&
+          props.formikProps.errors.first_name
             ? props.formikProps.errors.first_name
             : ''
         }
