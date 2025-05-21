@@ -1,4 +1,11 @@
-import { Box, Button, Step, StepLabel, Stepper } from '@mui/material';
+import {
+  Box,
+  Button,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
+} from '@mui/material';
 import { Formik } from 'formik';
 
 import { BreadCrumbs } from '@components/index';
@@ -6,9 +13,9 @@ import useNewDoctor from './useNewDoctor';
 import FormStepTwo from './components/FormStepTwo';
 import FormStepOne from './components/FormStepOne';
 
-import './styles.css';
-import { breadCrumbs, steps } from './constants/newDoctor';
 import { doctorInitialValues } from './validation/newDoctor.schema';
+import { breadCrumbs, steps } from './constants/newDoctor';
+import './styles.css';
 
 function NewDoctor() {
   const hook = useNewDoctor();
@@ -26,6 +33,12 @@ function NewDoctor() {
           const labelProps: {
             optional?: React.ReactNode;
           } = {};
+          if (hook.isStepOptional(index)) {
+            labelProps.optional = (
+              <Typography variant="caption">Opcional</Typography>
+            );
+          }
+
           if (hook.isStepSkipped(index)) {
             stepProps.completed = false;
           }
@@ -40,9 +53,7 @@ function NewDoctor() {
       <Formik
         initialValues={doctorInitialValues}
         validationSchema={hook.getValidationSchema(hook.activeStep)}
-        onSubmit={(_values, formikHelpers) => {
-          formikHelpers.setSubmitting(true);
-        }}
+        onSubmit={(_values, formikHelpers) => formikHelpers.setSubmitting(true)}
         validateOnChange={false}
         validateOnBlur={false}
       >
@@ -57,14 +68,15 @@ function NewDoctor() {
                 handleShowPassword={hook.handleShowPassword}
                 handleShowConfirmPassword={hook.handleShowConfirmPassword}
               />
-            ) : (
+            ) : hook.activeStep === 1 ? (
               <FormStepTwo
                 formikProps={props}
                 specialties={hook.specialties}
+                isLoadingSpecialty={hook.isLoadingSpecialty}
                 specialtiesBySelect={hook.specialtiesBySelect}
                 handleSetSpecialtiesBySelect={hook.handleSetSpecialtiesBySelect}
               />
-            )}
+            ) : null}
             <div className="btn-group">
               <Button
                 color="inherit"
@@ -81,11 +93,7 @@ function NewDoctor() {
                 color="primary"
                 variant="contained"
                 disabled={!props.isValid || !props.dirty}
-                onClick={(e) =>
-                  hook.activeStep === steps.length - 1
-                    ? e.preventDefault()
-                    : hook.handleNextStep(props)
-                }
+                onClick={(e) => hook.handleNextStep(props, e)}
                 type={
                   hook.activeStep === steps.length - 1 ? 'submit' : 'button'
                 }
