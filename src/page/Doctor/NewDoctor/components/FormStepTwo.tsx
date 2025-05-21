@@ -7,6 +7,7 @@ import { TransferListComponent } from '@components/index';
 interface IFormStepTwoProps {
   specialties: IBasicIdNameDescription[];
   formikProps: FormikProps<INewDoctorFormValues>;
+  isLoadingSpecialty: boolean;
   specialtiesBySelect: (number | string)[];
   handleSetSpecialtiesBySelect: (newSet: (number | string)[]) => void;
 }
@@ -14,15 +15,18 @@ interface IFormStepTwoProps {
 const FormStepTwo = (props: IFormStepTwoProps) => {
   return (
     <Box component="div" className="form-step-2">
-      <TransferListComponent
-        items={props.specialties}
-        leftIds={props.specialtiesBySelect}
-        rightIds={props.formikProps.values.specialties}
-        onChange={(newLeftIds, newRightIds) => {
-          props.handleSetSpecialtiesBySelect(newLeftIds);
-          props.formikProps.setFieldValue('specialties', newRightIds);
-        }}
-      />
+      <Box component="div" className="first-part">
+        <TransferListComponent
+          items={props.specialties}
+          leftIds={props.specialtiesBySelect}
+          isLoading={props.isLoadingSpecialty}
+          rightIds={props.formikProps.values.specialties}
+          onChange={(newLeftIds, newRightIds) => {
+            props.handleSetSpecialtiesBySelect(newLeftIds);
+            props.formikProps.setFieldValue('specialties', newRightIds);
+          }}
+        />
+      </Box>
     </Box>
   );
 };
