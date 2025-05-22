@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import type { INewDoctorFormValues } from './types/newDoctor.types';
-import type { IBasicIdNameDescription } from 'src/types/common';
+import type { IBasicIdNameDescription } from 'src/types/common.types';
 import type { FormikProps } from 'formik';
 import type { MouseEvent } from 'react';
 
