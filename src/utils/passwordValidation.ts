@@ -1,4 +1,4 @@
-import { TestContext } from 'yup';
+import type { TestContext } from 'yup';
 
 export function validateStrongPassword(
   value: string | undefined,

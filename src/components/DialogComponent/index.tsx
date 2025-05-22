@@ -1,11 +1,13 @@
-import { ReactNode, isValidElement, Children } from 'react';
+import { isValidElement, Children } from 'react';
 import {
   Dialog,
   DialogTitle,
-  DialogProps,
   DialogActions,
   DialogContent,
 } from '@mui/material';
+
+import type { DialogProps } from '@mui/material';
+import type { ReactNode } from 'react';
 
 interface IDialogComponentProps {
   open: boolean;

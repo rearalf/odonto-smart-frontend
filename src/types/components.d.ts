@@ -1,9 +1,9 @@
-interface ILink {
+export interface ILink {
   link_name: string;
   link_to: string;
 }
 
-interface IBreadCrumbsProps {
+export interface IBreadCrumbsProps {
   loading: boolean;
   links: ILink[];
 }

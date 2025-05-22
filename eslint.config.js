@@ -42,6 +42,13 @@ export default tseslint.config(
           custom: { regex: '^I[A-Z]', match: true },
         },
       ],
+
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports', // Opción que obliga a usar `import type`
+        },
+      ],
     },
   },
 );

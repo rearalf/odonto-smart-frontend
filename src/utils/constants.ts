@@ -1,3 +1,5 @@
+import type { IContentNotification } from 'src/types/common';
+
 export const USER_STORE = {
   user: {
     email: '',

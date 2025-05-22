@@ -1,7 +1,8 @@
 import * as Yup from 'yup';
 
 import { validateStrongPassword } from '@utils/passwordValidation';
-import { INewDoctorFormValues } from '../types/newDoctor.types';
+
+import type { INewDoctorFormValues } from '../types/newDoctor.types';
 
 export const doctorSchemaStepOne = Yup.object().shape({
   first_name: Yup.string()

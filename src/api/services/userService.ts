@@ -1,6 +1,10 @@
+import { isAxiosError } from 'axios';
+
 import { axiosInstanceWithAuth } from '../axios/axiosInstance';
 import { userEndpoints } from '../endpoints';
-import { isAxiosError } from 'axios';
+
+import type { IApiErrorData, IApiResponse } from 'src/types/apiResponse';
+import type { IUsers } from 'src/types/user';
 
 export const getUsers = async (): Promise<
   IApiResponse<IUsers[] & IApiErrorData>

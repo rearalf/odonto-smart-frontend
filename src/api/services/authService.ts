@@ -2,6 +2,8 @@ import { axiosInstance, axiosInstanceWithAuth } from '../axios/axiosInstance';
 import { authEndpoints } from '../endpoints';
 import { isAxiosError } from 'axios';
 
+import type { IRefresToken, ISignIn, ISignInForm } from 'src/types/auth';
+
 export const signin = async (
   credentials: ISignInForm,
 ): Promise<IApiResponse<ISignIn & IApiErrorData>> => {
