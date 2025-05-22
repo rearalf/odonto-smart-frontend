@@ -1,8 +1,11 @@
-import { SelectComponent, TextFieldBasic } from '@components/index';
-import { INewDoctorFormValues } from '../types/newDoctor.types';
-
 import { Box } from '@mui/material';
-import { FormikProps } from 'formik';
+
+import type { FormikProps } from 'formik';
+
+import { SelectComponent, TextFieldBasic } from '@components/index';
+
+import type { INewDoctorFormValues } from '../types/newDoctor.types';
+import type { IBasicIdNameDescription } from 'src/types/common';
 
 interface IFormStepOneProps {
   isShowPassword: boolean;

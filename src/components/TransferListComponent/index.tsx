@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 
+import type { IBasicIdNameDescription } from 'src/types/common';
 import TransferListColumn from './TransferListColumn';
 import './styles.css';
 
@@ -60,6 +61,7 @@ const TransferListComponent = (props: ITransferListComponentProps) => {
   return (
     <Box component="div" className="tranfer-list-component">
       <TransferListColumn
+        placement="left"
         items={leftItems}
         checkedIds={checkedIds}
         onToggle={toggleChecked}
@@ -86,6 +88,7 @@ const TransferListComponent = (props: ITransferListComponentProps) => {
         </Button>
       </Box>
       <TransferListColumn
+        placement="right"
         items={rightItems}
         checkedIds={checkedIds}
         onToggle={toggleChecked}

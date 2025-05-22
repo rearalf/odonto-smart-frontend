@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import type { IListDoctor } from 'src/types/doctor';
+
 function useListDoctor() {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);

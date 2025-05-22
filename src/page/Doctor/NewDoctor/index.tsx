@@ -14,21 +14,21 @@ import FormStepTwo from './components/FormStepTwo';
 import FormStepOne from './components/FormStepOne';
 
 import { doctorInitialValues } from './validation/newDoctor.schema';
-import { breadCrumbs, steps } from './constants/newDoctor';
+import { BREADCRUMBS, STEPS } from './constants/newDoctor';
 import './styles.css';
 
 function NewDoctor() {
   const hook = useNewDoctor();
   return (
     <Box component="div" className="new-doctor">
-      <BreadCrumbs links={breadCrumbs} loading={false} />
+      <BreadCrumbs links={BREADCRUMBS} loading={false} />
 
       <header className="header">
         <h1>Nuevo doctor</h1>
       </header>
 
       <Stepper activeStep={hook.activeStep} className="steps-components">
-        {steps.map((label, index) => {
+        {STEPS.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: {
             optional?: React.ReactNode;
@@ -95,10 +95,10 @@ function NewDoctor() {
                 disabled={!props.isValid || !props.dirty}
                 onClick={(e) => hook.handleNextStep(props, e)}
                 type={
-                  hook.activeStep === steps.length - 1 ? 'submit' : 'button'
+                  hook.activeStep === STEPS.length - 1 ? 'submit' : 'button'
                 }
               >
-                {hook.activeStep === steps.length - 1 ? 'Guardar' : 'Siguiente'}
+                {hook.activeStep === STEPS.length - 1 ? 'Guardar' : 'Siguiente'}
               </Button>
             </div>
           </Box>

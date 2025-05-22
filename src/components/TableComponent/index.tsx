@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import TablePaginationActions from './TablePaginationActions';
 import {
   Table,
@@ -10,6 +9,8 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+
+import type { ReactNode } from 'react';
 
 interface ITableComponent {
   page: number;

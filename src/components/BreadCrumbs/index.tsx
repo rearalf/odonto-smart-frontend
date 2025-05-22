@@ -1,6 +1,8 @@
 import { Breadcrumbs, Skeleton, Typography } from '@mui/material';
 import { Link } from 'react-router';
 
+import type { IBreadCrumbsProps } from 'src/types/components';
+
 const BreadCrumbs = (props: IBreadCrumbsProps) =>
   !props.loading ? (
     <Breadcrumbs aria-label="breadcrumb">

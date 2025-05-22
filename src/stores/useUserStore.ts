@@ -1,5 +1,7 @@
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { create } from 'zustand';
+
+import type { IUseUserStore } from 'src/types/auth';
 import { USER_STORE } from '../utils/constants';
 
 const useUserStore = create<IUseUserStore>()(

@@ -1,9 +1,9 @@
-interface ISignInForm {
+export interface ISignInForm {
   email: string;
   password: string;
 }
 
-interface ISignIn {
+export interface ISignIn {
   name: string;
   last_name: string;
   email: string;
@@ -14,11 +14,11 @@ interface ISignIn {
   access_token: string;
 }
 
-interface IRefresToken {
+export interface IRefresToken {
   access_token: string;
 }
 
-interface IUseUserStore {
+export interface IUseUserStore {
   user: {
     name: string;
     last_name: string;

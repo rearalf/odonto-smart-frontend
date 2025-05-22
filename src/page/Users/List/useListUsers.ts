@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useLoadingStore, useNotificationStore } from '@stores/index';
 import { getUsers } from '@api/services/userService';
 
+import type { IUsers } from 'src/types/user';
+
 function useListUsers() {
   const notificationStore = useNotificationStore();
   const loadingStore = useLoadingStore();

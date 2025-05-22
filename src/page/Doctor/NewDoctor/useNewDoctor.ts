@@ -1,11 +1,14 @@
-import { FormikProps } from 'formik';
-import { useEffect, useState, MouseEvent } from 'react';
+import { useEffect, useState } from 'react';
+
+import type { INewDoctorFormValues } from './types/newDoctor.types';
+import type { IBasicIdNameDescription } from 'src/types/common';
+import type { FormikProps } from 'formik';
+import type { MouseEvent } from 'react';
 
 import {
   doctorSchemaStepOne,
   doctorSchemaStepTwo,
 } from './validation/newDoctor.schema';
-import { INewDoctorFormValues } from './types/newDoctor.types';
 
 import useGetSpecialtiesQuery from '@features/doctor/query/useSpecialtyQuery';
 import useNotificationStore from '@stores/useNotificationStore';

@@ -1,7 +1,9 @@
-import { FormikProps } from 'formik';
 import { Box } from '@mui/material';
 
-import { INewDoctorFormValues } from '../types/newDoctor.types';
+import type { INewDoctorFormValues } from '../types/newDoctor.types';
+import type { IBasicIdNameDescription } from 'src/types/common';
+import type { FormikProps } from 'formik';
+
 import { TransferListComponent } from '@components/index';
 
 interface IFormStepTwoProps {

@@ -1,8 +1,9 @@
-import { FormikHelpers } from 'formik';
+import type { FormikHelpers } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
 import { useLoadingStore, useNotificationStore } from '@stores/index';
+import type { ISignInForm } from 'src/types/auth';
 import { useNavigate } from 'react-router';
 
 function useSignIn() {
