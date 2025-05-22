@@ -1,4 +1,4 @@
-import type { IBasicIdNameDescription } from './common';
+import type { IBasicIdNameDescription } from './common.types';
 
 export interface IListDoctor {
   id: number;

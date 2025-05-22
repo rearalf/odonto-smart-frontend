@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import type { PopperPlacementType } from '@mui/material';
 
-import type { IBasicIdNameDescription } from 'src/types/common';
+import type { IBasicIdNameDescription } from '@types/common.types';
 
 interface ITransferListColumnProps {
   items: IBasicIdNameDescription[];

@@ -1,6 +1,6 @@
 import { MenuItem, TextField } from '@mui/material';
 
-import type { IBasicIdNameDescription } from 'src/types/common';
+import type { IBasicIdNameDescription } from 'src/types/common.types';
 
 interface ISelectComponentProps {
   id: string;
