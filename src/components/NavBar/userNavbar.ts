@@ -1,5 +1,7 @@
-import { MouseEvent, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
+
+import type { MouseEvent } from 'react';
 
 // import { authService } from '../../api/services';
 import {

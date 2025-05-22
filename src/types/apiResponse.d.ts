@@ -1,10 +1,10 @@
-interface IApiErrorData {
+export interface IApiErrorData {
   error: string;
   message: string;
   statusCode: number;
 }
 
-interface IApiResponse<T> {
+export interface IApiResponse<T> {
   data?: T;
   success: boolean;
   status: number;

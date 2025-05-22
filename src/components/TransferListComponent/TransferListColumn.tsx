@@ -1,19 +1,23 @@
 import {
   Box,
   List,
+  Tooltip,
+  Skeleton,
   Checkbox,
   ListItemIcon,
   ListItemText,
   ListItemButton,
-  Tooltip,
-  Skeleton,
 } from '@mui/material';
+import type { PopperPlacementType } from '@mui/material';
+
+import type { IBasicIdNameDescription } from 'src/types/common';
 
 interface ITransferListColumnProps {
   items: IBasicIdNameDescription[];
   checkedIds: (number | string)[];
   onToggle: (id: number | string) => void;
   isLoading?: boolean;
+  placement?: PopperPlacementType;
 }
 
 const TransferListColumn = (props: ITransferListColumnProps) => {
@@ -31,7 +35,7 @@ const TransferListColumn = (props: ITransferListColumnProps) => {
               <Tooltip
                 arrow
                 title={item.description || item.name}
-                placement="right"
+                placement={props.placement}
                 key={item.id}
               >
                 <ListItemButton
