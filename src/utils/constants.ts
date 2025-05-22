@@ -1,4 +1,4 @@
-import type { IContentNotification } from 'src/types/common';
+import type { IContentNotification } from 'src/types/common.types';
 
 export const USER_STORE = {
   user: {

@@ -1,10 +1,11 @@
 import { Box } from '@mui/material';
 
+import type { IBasicIdNameDescription } from 'src/types/common.types';
 import type { INewDoctorFormValues } from '../types/newDoctor.types';
-import type { IBasicIdNameDescription } from 'src/types/common';
 import type { FormikProps } from 'formik';
 
-import { TransferListComponent } from '@components/index';
+import { RadioButtonComponent, TransferListComponent } from '@components/index';
+import { CONTACT_TYPE } from '../constants/newDoctor';
 
 interface IFormStepTwoProps {
   specialties: IBasicIdNameDescription[];
@@ -29,6 +30,12 @@ const FormStepTwo = (props: IFormStepTwoProps) => {
           }}
         />
       </Box>
+      <RadioButtonComponent
+        row
+        id="contact_type"
+        label="Tipo de contacto"
+        options={CONTACT_TYPE}
+      />
     </Box>
   );
 };

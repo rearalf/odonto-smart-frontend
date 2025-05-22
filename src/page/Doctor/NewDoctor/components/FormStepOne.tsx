@@ -5,7 +5,7 @@ import type { FormikProps } from 'formik';
 import { SelectComponent, TextFieldBasic } from '@components/index';
 
 import type { INewDoctorFormValues } from '../types/newDoctor.types';
-import type { IBasicIdNameDescription } from 'src/types/common';
+import type { IBasicIdNameDescription } from 'src/types/common.types';
 
 interface IFormStepOneProps {
   isShowPassword: boolean;

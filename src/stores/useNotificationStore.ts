@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { NOTIFICATION } from '../utils/constants';
-import type { IContentNotification } from 'src/types/common';
+import type { IContentNotification } from 'src/types/common.types';
 
 interface IUseNotificationStore extends IContentNotification {
   handleShowNotification: (value: IContentNotification) => void;

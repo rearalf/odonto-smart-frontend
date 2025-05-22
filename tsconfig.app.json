@@ -23,9 +23,10 @@
     "noUncheckedSideEffectImports": true,
 
     /* Alias */
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
+      "@types/*": ["src/types/*"],
       "@features/*": ["src/features/*"],
       "@pages/*": ["src/page/*"],
       "@utils/*": ["src/utils/*"],

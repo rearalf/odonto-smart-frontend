@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 
-import type { IBasicIdNameDescription } from 'src/types/common';
+import type { IBasicIdNameDescription } from 'src/types/common.types';
 import TransferListColumn from './TransferListColumn';
 import './styles.css';
 

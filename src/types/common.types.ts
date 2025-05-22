@@ -12,9 +12,13 @@ export interface IBasicIdNameDescription {
   description?: string;
 }
 
+export interface IRadioButtonOptions {
+  value: string | number;
+  label: string;
+}
+
 export enum CONTACT_TYPE_ENUM {
   EMAIL = 'EMAIL',
   PHONE = 'PHONE',
   WHATSAPP = 'WHATSAPP',
-  TELEGRAM = 'TELEGRAM',
 }
