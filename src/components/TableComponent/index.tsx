@@ -17,6 +17,7 @@ interface ITableComponent {
   body: ReactNode;
   header: ReactNode;
   totalData: number;
+  paginacion: boolean;
   rowsPerPage: number;
   ariaLabelTable: string;
   handleSetPage: (value: number) => void;
@@ -53,21 +54,23 @@ const TableComponent = (props: ITableComponent) => {
           <TableRow>{props.header}</TableRow>
         </TableHead>
         <TableBody>{props.body}</TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              page={props.page}
-              count={props.totalData}
-              slotProps={slotPropsConst}
-              rowsPerPage={props.rowsPerPage}
-              onPageChange={handleChangePage}
-              labelRowsPerPage="Filas por página:"
-              ActionsComponent={TablePaginationActions}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-            />
-          </TableRow>
-        </TableFooter>
+        {props.paginacion && (
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                page={props.page}
+                count={props.totalData}
+                slotProps={slotPropsConst}
+                rowsPerPage={props.rowsPerPage}
+                onPageChange={handleChangePage}
+                labelRowsPerPage="Filas por página:"
+                ActionsComponent={TablePaginationActions}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              />
+            </TableRow>
+          </TableFooter>
+        )}
       </Table>
     </TableContainer>
   );
