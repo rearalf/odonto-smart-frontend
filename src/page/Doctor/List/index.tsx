@@ -28,6 +28,7 @@ function Doctor() {
       </header>
 
       <TableComponent
+        paginacion
         key="doctor"
         ariaLabelTable="doctores"
         handleSetPage={hook.handleSetPage}

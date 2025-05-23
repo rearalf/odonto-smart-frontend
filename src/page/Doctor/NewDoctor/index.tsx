@@ -71,9 +71,14 @@ function NewDoctor() {
             ) : hook.activeStep === 1 ? (
               <FormStepTwo
                 formikProps={props}
+                contact={hook.contact}
+                contactType={hook.contactType}
                 specialties={hook.specialties}
                 isLoadingSpecialty={hook.isLoadingSpecialty}
+                handleSetContactTyp={hook.handleSetContactTyp}
                 specialtiesBySelect={hook.specialtiesBySelect}
+                handleSetContactPhone={hook.handleSetContactPhone}
+                handleSetContactEmail={hook.handleSetContactEmail}
                 handleSetSpecialtiesBySelect={hook.handleSetSpecialtiesBySelect}
               />
             ) : null}
@@ -92,7 +97,10 @@ function NewDoctor() {
               <Button
                 color="primary"
                 variant="contained"
-                disabled={!props.isValid || !props.dirty}
+                disabled={hook.handleValidateDisableButton(
+                  props.isValid,
+                  props.dirty,
+                )}
                 onClick={(e) => hook.handleNextStep(props, e)}
                 type={
                   hook.activeStep === STEPS.length - 1 ? 'submit' : 'button'
