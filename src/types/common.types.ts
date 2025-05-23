@@ -17,8 +17,15 @@ export interface IRadioButtonOptions {
   label: string;
 }
 
+export type CONTACT_TYPE_TYPE = 'EMAIL' | 'PHONE' | 'WHATSAPP';
+
 export enum CONTACT_TYPE_ENUM {
   EMAIL = 'EMAIL',
   PHONE = 'PHONE',
   WHATSAPP = 'WHATSAPP',
+}
+
+export interface IContactForm {
+  contact_value: string;
+  contact_type: CONTACT_TYPE_TYPE;
 }

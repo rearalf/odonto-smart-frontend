@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 
+import type { ChangeEvent, ChangeEventHandler, MouseEvent } from 'react';
 import type { INewDoctorFormValues } from './types/newDoctor.types';
-import type { IBasicIdNameDescription } from 'src/types/common.types';
+import type { MuiTelInputInfo } from 'mui-tel-input';
 import type { FormikProps } from 'formik';
-import type { MouseEvent } from 'react';
+import type {
+  CONTACT_TYPE_TYPE,
+  IBasicIdNameDescription,
+} from 'src/types/common.types';
 
 import {
   doctorSchemaStepOne,
@@ -36,6 +40,10 @@ function useNewDoctor() {
   const [specialtiesBySelect, setSpecialtiesBySelect] = useState<
     (number | string)[]
   >([]);
+  const [contactType, setContactType] = useState<CONTACT_TYPE_TYPE | ''>(
+    'WHATSAPP',
+  );
+  const [contact, setContact] = useState<string>('');
 
   const isStepOptional = (step: number) => step === 1;
 
@@ -109,6 +117,34 @@ function useNewDoctor() {
     }
   };
 
+  const handleSetContactTyp = (event: ChangeEvent) => {
+    setContactType(
+      (event.target as HTMLInputElement).value as CONTACT_TYPE_TYPE,
+    );
+    setContact('');
+  };
+
+  const handleSetContactPhone = (
+    _value: string | ChangeEventHandler,
+    info: MuiTelInputInfo,
+  ) => {
+    if (info.nationalNumber) {
+      setContact(info.nationalNumber);
+    }
+  };
+
+  const handleSetContactEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setContact(e.target.value);
+  };
+
+  const handleValidateDisableButton = (isValid: boolean, dirty: boolean) => {
+    if (activeStep === 1) {
+      return false;
+    } else {
+      return !isValid || !dirty;
+    }
+  };
+
   useEffect(() => {
     sortSpecialtiesInForm();
     handleLoading(isLoadingSpecialty);
@@ -124,7 +160,9 @@ function useNewDoctor() {
   }, [isLoadingSpecialty]);
 
   return {
+    contact,
     activeStep,
+    contactType,
     specialties,
     isStepOptional,
     isShowPassword,
@@ -137,7 +175,11 @@ function useNewDoctor() {
     handlePrevStep,
     handleNextStep,
     handleShowPassword,
+    handleSetContactTyp,
+    handleSetContactEmail,
+    handleSetContactPhone,
     handleShowConfirmPassword,
+    handleValidateDisableButton,
     handleSetSpecialtiesBySelect,
   };
 }

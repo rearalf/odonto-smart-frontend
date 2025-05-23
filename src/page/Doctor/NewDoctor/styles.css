@@ -21,6 +21,18 @@
   gap: 2rem;
 }
 
+.new-doctor .form .form-step-2 .second-part {
+  margin: 2rem 0;
+  display: grid;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.new-doctor .form .form-step-2 .second-part .form-part {
+  display: grid;
+  gap: 1.4rem;
+}
+
 @media screen and (min-width: 768px) {
   .new-doctor .form .form-step-1 {
     padding: 0 2rem;
@@ -49,5 +61,9 @@
 
   .new-doctor .form .form-step-2 .tranfer-list-component .transfer-list-column {
     width: 20rem;
+  }
+
+  .new-doctor .form .form-step-2 .second-part {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
