@@ -1,101 +1,206 @@
-import { Box, Button } from '@mui/material';
-import { useState } from 'react';
-
+import { memo } from 'react';
+import {
+  Box,
+  List,
+  Tooltip,
+  Skeleton,
+  Checkbox,
+  ListItemIcon,
+  ListItemText,
+  ListItemButton,
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import type { PopperPlacementType } from '@mui/material';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
-import TransferListColumn from './TransferListColumn';
-import './styles.css';
 
-interface ITransferListComponentProps {
+const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
+  borderRadius: theme.shape.borderRadius,
+  margin: theme.spacing(0.25, 0.5),
+  transition: 'all 0.2s ease-in-out',
+
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover,
+    transform: 'translateX(2px)',
+  },
+
+  '&.Mui-selected': {
+    backgroundColor: theme.palette.primary.light,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+    },
+  },
+}));
+
+// Styled component para la columna
+const ColumnContainer = styled(Box)(({ theme }) => ({
+  border: `2px solid ${theme.palette.divider}`,
+  borderRadius: theme.shape.borderRadius,
+  minHeight: '160px', // 10rem equivalente
+  height: '100%',
+  maxHeight: '384px', // 24rem equivalente
+  overflowY: 'auto',
+  transition: 'border-color 0.2s ease-in-out',
+
+  '&:hover': {
+    borderColor: theme.palette.primary.main,
+  },
+
+  '&.empty': {
+    minWidth: '160px', // 10rem equivalente
+  },
+
+  [theme.breakpoints.up('lg')]: {
+    maxWidth: '320px', // 20rem equivalente
+  },
+
+  // Estilos para el scrollbar
+  '&::-webkit-scrollbar': {
+    width: '8px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: theme.palette.grey[100],
+    borderRadius: '4px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: theme.palette.grey[400],
+    borderRadius: '4px',
+    '&:hover': {
+      background: theme.palette.grey[600],
+    },
+  },
+}));
+
+interface ITransferListColumnProps {
   items: IBasicIdNameDescription[];
-  leftIds: (number | string)[];
-  rightIds: (number | string)[];
+  checkedIds: Set<number | string>;
+  onToggle: (id: number | string) => void;
   isLoading?: boolean;
-  onChange: (
-    newLeftIds: (number | string)[],
-    newRightIds: (number | string)[],
-  ) => void;
+  placement?: PopperPlacementType;
 }
 
-const TransferListComponent = (props: ITransferListComponentProps) => {
-  const [checkedIds, setCheckedIds] = useState<(number | string)[]>([]);
+// Componente memoizado del item individual para mejor performance
+const TransferListItem = memo(
+  ({
+    item,
+    isChecked,
+    onToggle,
+    placement,
+  }: {
+    item: IBasicIdNameDescription;
+    isChecked: boolean;
+    onToggle: (id: number | string) => void;
+    placement?: PopperPlacementType;
+  }) => {
+    const handleClick = () => {
+      onToggle(item.id);
+    };
 
-  const toggleChecked = (id: number | string) => {
-    setCheckedIds((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
-    );
-  };
-
-  const getCheckedIds = (ids: (number | string)[]) =>
-    checkedIds.filter((id) => ids.includes(id));
-
-  const leftItems = props.items.filter((item) =>
-    props.leftIds.includes(item.id),
-  );
-  const rightItems = props.items.filter((item) =>
-    props.rightIds.includes(item.id),
-  );
-
-  const handleCheckedRight = () => {
-    const leftCheckedIds = getCheckedIds(props.leftIds);
-    const newLeftIds = props.leftIds.filter(
-      (id) => !leftCheckedIds.includes(id),
-    );
-
-    const newRightIds = [...props.rightIds, ...leftCheckedIds];
-
-    props.onChange(newLeftIds, newRightIds);
-    setCheckedIds((prev) => prev.filter((id) => !leftCheckedIds.includes(id)));
-  };
-
-  const handleCheckedLeft = () => {
-    const rightCheckedIds = getCheckedIds(props.rightIds);
-    const newRightIds = props.rightIds.filter(
-      (id) => !rightCheckedIds.includes(id),
-    );
-    const newLeftIds = [...props.leftIds, ...rightCheckedIds];
-
-    props.onChange(newLeftIds, newRightIds);
-    setCheckedIds((prev) => prev.filter((id) => !rightCheckedIds.includes(id)));
-  };
-
-  return (
-    <Box component="div" className="tranfer-list-component">
-      <TransferListColumn
-        placement="left"
-        items={leftItems}
-        checkedIds={checkedIds}
-        onToggle={toggleChecked}
-        isLoading={props.isLoading}
-      />
-      <Box component="div" className="tranfer-list-buttons">
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={handleCheckedRight}
-          disabled={getCheckedIds(props.leftIds).length === 0}
-          aria-label="move selected right"
+    return (
+      <Tooltip
+        arrow
+        title={item.description || item.name}
+        placement={placement}
+        enterDelay={500}
+        leaveDelay={200}
+      >
+        <StyledListItemButton
+          role="listitem"
+          onClick={handleClick}
+          selected={isChecked}
+          dense
         >
-          &gt;
-        </Button>
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={handleCheckedLeft}
-          disabled={getCheckedIds(props.rightIds).length === 0}
-          aria-label="move selected left"
-        >
-          &lt;
-        </Button>
-      </Box>
-      <TransferListColumn
-        placement="right"
-        items={rightItems}
-        checkedIds={checkedIds}
-        onToggle={toggleChecked}
-        isLoading={props.isLoading}
-      />
-    </Box>
-  );
-};
+          <ListItemIcon>
+            <Checkbox
+              checked={isChecked}
+              tabIndex={-1}
+              disableRipple
+              size="small"
+              inputProps={{
+                'aria-labelledby': `transfer-item-${item.id}`,
+              }}
+            />
+          </ListItemIcon>
+          <ListItemText
+            id={`transfer-item-${item.id}`}
+            primary={item.name}
+            primaryTypographyProps={{
+              variant: 'body2',
+              noWrap: true,
+            }}
+          />
+        </StyledListItemButton>
+      </Tooltip>
+    );
+  },
+);
 
-export default TransferListComponent;
+TransferListItem.displayName = 'TransferListItem';
+
+const TransferListColumn = memo(
+  ({
+    items,
+    checkedIds,
+    onToggle,
+    isLoading = false,
+    placement = 'top',
+  }: ITransferListColumnProps) => {
+    const isEmpty = items.length === 0;
+
+    if (isLoading) {
+      return (
+        <ColumnContainer className={isEmpty ? 'empty' : ''}>
+          <Skeleton
+            variant="rectangular"
+            height="160px"
+            animation="wave"
+            sx={{ borderRadius: 1 }}
+          />
+        </ColumnContainer>
+      );
+    }
+
+    return (
+      <ColumnContainer className={isEmpty ? 'empty' : ''}>
+        {isEmpty ? (
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            height="100%"
+            color="text.secondary"
+            fontStyle="italic"
+          >
+            Sin elementos
+          </Box>
+        ) : (
+          <List
+            dense
+            component="div"
+            role="list"
+            sx={{
+              py: 0.5,
+              // Optimización para listas largas
+              '& .MuiListItemButton-root': {
+                minHeight: '40px',
+              },
+            }}
+          >
+            {items.map((item) => (
+              <TransferListItem
+                key={item.id}
+                item={item}
+                isChecked={checkedIds.has(item.id)}
+                onToggle={onToggle}
+                placement={placement}
+              />
+            ))}
+          </List>
+        )}
+      </ColumnContainer>
+    );
+  },
+);
+
+TransferListColumn.displayName = 'TransferListColumn';
+
+export default TransferListColumn;

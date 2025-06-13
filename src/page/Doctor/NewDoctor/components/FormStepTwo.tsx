@@ -126,48 +126,52 @@ const FormStepTwo = (props: IFormStepTwoProps) => {
                 Agregar
               </Button>
             </Box>
-            <TableComponent
-              key="doctor"
-              paginacion={false}
-              ariaLabelTable="doctores"
-              handleSetPage={(_newPage: number) => {}}
-              handleSetRowsPerPage={(_value: number) => {}}
-              page={1}
-              rowsPerPage={15}
-              totalData={20}
-              header={
-                <>
-                  <TableCell align="center">Tipo de contacto</TableCell>
-                  <TableCell align="center">Contacto</TableCell>
-                  <TableCell align="center">Acciones</TableCell>
-                </>
-              }
-              body={
-                props.formikProps.values.person_contact.length > 0 ? (
-                  props.formikProps.values.person_contact.map((contact, i) => (
-                    <TableRow hover key={i}>
-                      <TableCell align="center">
-                        {contact.contact_type}
-                      </TableCell>
-                      <TableCell align="center">
-                        {contact.contact_value}
-                      </TableCell>
-                      <TableCell align="center">
-                        <IconButton color="error" title="Eliminar usuario">
-                          <FiTrash title="Eliminar contacto" size={18} />
-                        </IconButton>
+            <div className="table-contact">
+              <TableComponent
+                key="doctor"
+                paginacion={false}
+                ariaLabelTable="doctores"
+                handleSetPage={(_newPage: number) => {}}
+                handleSetRowsPerPage={(_value: number) => {}}
+                page={1}
+                rowsPerPage={15}
+                totalData={20}
+                header={
+                  <>
+                    <TableCell align="center">Tipo de contacto</TableCell>
+                    <TableCell align="center">Contacto</TableCell>
+                    <TableCell align="center">Acciones</TableCell>
+                  </>
+                }
+                body={
+                  props.formikProps.values.person_contact.length > 0 ? (
+                    props.formikProps.values.person_contact.map(
+                      (contact, i) => (
+                        <TableRow hover key={i}>
+                          <TableCell align="center">
+                            {contact.contact_type}
+                          </TableCell>
+                          <TableCell align="center">
+                            {contact.contact_value}
+                          </TableCell>
+                          <TableCell align="center">
+                            <IconButton color="error" title="Eliminar usuario">
+                              <FiTrash title="Eliminar contacto" size={18} />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      ),
+                    )
+                  ) : (
+                    <TableRow hover>
+                      <TableCell align="center" colSpan={3}>
+                        No hay contactos
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow hover>
-                    <TableCell align="center" colSpan={3}>
-                      No hay contactos
-                    </TableCell>
-                  </TableRow>
-                )
-              }
-            ></TableComponent>
+                  )
+                }
+              ></TableComponent>
+            </div>
           </Box>
         )}
       </Formik>

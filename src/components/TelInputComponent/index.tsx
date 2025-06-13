@@ -10,6 +10,24 @@ interface ITelInputComponentProps {
   handleChange: (value: string, info: MuiTelInputInfo) => void;
 }
 
+function formatPhoneNumberWithDash(input: string): string {
+  // Elimina todos los caracteres excepto dígitos
+  const digits = input.replace(/\D/g, '');
+
+  // Si el número incluye código de país (11 dígitos: 50370123456)
+  if (digits.startsWith('503') && digits.length === 11) {
+    return `+503${digits.slice(3, 7)}-${digits.slice(7)}`;
+  }
+
+  // Si es un número nacional de 8 dígitos
+  if (digits.length === 8) {
+    return `${digits.slice(0, 4)}-${digits.slice(4)}`;
+  }
+
+  // Si no cumple con ninguna, devuelve el número limpio (sin guiones)
+  return digits;
+}
+
 const TelInputComponent = (props: ITelInputComponentProps) => (
   <MuiTelInput
     disableDropdown
@@ -21,7 +39,10 @@ const TelInputComponent = (props: ITelInputComponentProps) => (
     onBlur={props.handleOnBlur}
     aria-label={props.ariaLabel}
     helperText={props.helperText}
-    onChange={props.handleChange}
+    onChange={(value, info) => {
+      const formatted = formatPhoneNumberWithDash(value);
+      props.handleChange(formatted, info);
+    }}
   />
 );
 

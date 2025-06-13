@@ -34,6 +34,8 @@ function useNewDoctor() {
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] =
     useState<boolean>(false);
+  const [newContactType, setNewContactType] = useState('EMAIL');
+  const [newContactValue, setNewContactValue] = useState('');
 
   const [specialties, setSpecialties] = useState<IBasicIdNameDescription[]>([]);
 
@@ -181,6 +183,10 @@ function useNewDoctor() {
     handleShowConfirmPassword,
     handleValidateDisableButton,
     handleSetSpecialtiesBySelect,
+    newContactType,
+    setNewContactType,
+    newContactValue,
+    setNewContactValue,
   };
 }
 

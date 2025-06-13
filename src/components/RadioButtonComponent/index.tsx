@@ -1,46 +1,59 @@
+import type { IContactTypeRadioGroupProps } from '../../types/RadioButtonComponent.types';
+import type { FC } from 'react';
 import {
+  Box,
   Radio,
-  FormLabel,
+  useTheme,
+  Typography,
   RadioGroup,
-  FormControl,
   FormControlLabel,
 } from '@mui/material';
 
-import type { IRadioButtonOptions } from 'src/types/common.types';
-import type { ChangeEvent } from 'react';
-
-interface IRadioButtonComponentProps {
-  id: string;
-  row?: boolean;
-  label?: string;
-  value: string | number;
-  defaultValue?: string | number;
-  options: IRadioButtonOptions[];
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-}
-
-const RadioButtonComponent = (props: IRadioButtonComponentProps) => {
+const RadioButtonComponent: FC<IContactTypeRadioGroupProps> = ({
+  value,
+  onChange,
+  options,
+  sx,
+  disabled = false,
+}) => {
+  const theme = useTheme();
   return (
-    <FormControl>
-      <FormLabel id={props.id}>{props.label}</FormLabel>
-      <RadioGroup
-        row={props.row}
-        name={props.id}
-        aria-labelledby={props.id}
-        defaultValue={props.defaultValue}
-        value={props.value}
-        onChange={props.onChange}
-      >
-        {props.options.map((value) => (
-          <FormControlLabel
-            key={value.value}
-            value={value.value}
-            control={<Radio />}
-            label={value.label}
-          />
-        ))}
-      </RadioGroup>
-    </FormControl>
+    <RadioGroup
+      row
+      value={value}
+      onChange={(e) => {
+        const newValue = isNaN(Number(e.target.value))
+          ? e.target.value
+          : Number(e.target.value);
+        onChange(newValue);
+      }}
+      sx={{ ...sx }}
+    >
+      {options.map((option) => (
+        <FormControlLabel
+          key={option.value}
+          value={option.value.toString()}
+          control={
+            <Radio
+              size="small"
+              disabled={disabled}
+              sx={{
+                color: theme.palette.text.secondary,
+                '&.Mui-checked': {
+                  color: theme.palette.success.main,
+                },
+              }}
+            />
+          }
+          label={
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              {option.icon && option.icon}
+              <Typography variant="body2">{option.label}</Typography>
+            </Box>
+          }
+        />
+      ))}
+    </RadioGroup>
   );
 };
 
