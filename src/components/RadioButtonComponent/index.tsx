@@ -1,4 +1,4 @@
-import type { IContactTypeRadioGroupProps } from '../../types/RadioButtonComponent.types';
+import type { IRadioButtonComponentProps } from '../../types/RadioButtonComponent.types';
 import type { FC } from 'react';
 import {
   Box,
@@ -9,12 +9,13 @@ import {
   FormControlLabel,
 } from '@mui/material';
 
-const RadioButtonComponent: FC<IContactTypeRadioGroupProps> = ({
+const RadioButtonComponent: FC<IRadioButtonComponentProps> = ({
   value,
   onChange,
   options,
   sx,
   disabled = false,
+  id,
 }) => {
   const theme = useTheme();
   return (
@@ -28,6 +29,7 @@ const RadioButtonComponent: FC<IContactTypeRadioGroupProps> = ({
         onChange(newValue);
       }}
       sx={{ ...sx }}
+      id={id}
     >
       {options.map((option) => (
         <FormControlLabel
@@ -40,7 +42,7 @@ const RadioButtonComponent: FC<IContactTypeRadioGroupProps> = ({
               sx={{
                 color: theme.palette.text.secondary,
                 '&.Mui-checked': {
-                  color: theme.palette.success.main,
+                  color: theme.palette.primary.main,
                 },
               }}
             />

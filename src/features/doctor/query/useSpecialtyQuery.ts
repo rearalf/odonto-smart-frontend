@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 const useGetSpecialtiesQuery = (enabled: boolean = true) => {
   return useQuery({
     queryKey: ['specialties'],
-    queryFn: specialtyService.getAllSpecialty,
+    queryFn: () => specialtyService.getAllSpecialty(),
     enabled,
   });
 };
