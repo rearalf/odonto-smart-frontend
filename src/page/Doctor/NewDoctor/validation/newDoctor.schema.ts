@@ -12,9 +12,7 @@ export const doctorSchemaStepOne = Yup.object().shape({
   specialty_id: Yup.number()
     .typeError('Debe seleccionar una especialidad principal')
     .required('Debe seleccionar una especialidad principal'),
-  specialty_ids: Yup.array()
-    .of(Yup.number())
-    .min(1, 'Debe seleccionar al menos una especialidad'),
+  specialty_ids: Yup.array().of(Yup.number()),
 
   person: Yup.object({
     first_name: Yup.string().required('El nombre es obligatorio'),

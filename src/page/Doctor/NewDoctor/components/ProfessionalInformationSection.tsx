@@ -49,7 +49,9 @@ const ProfessionalInformationSection = ({
     const selectedId = formikProps.values.specialty_id;
     if (!selectedId) return null;
 
-    const specialty = specialties.find((s) => s.id === selectedId);
+    const specialty = specialties.find(
+      (s) => s.id.toString() === selectedId.toString(),
+    );
     return specialty
       ? { label: specialty.name, id: specialty.id.toString() }
       : null;
@@ -187,6 +189,7 @@ const ProfessionalInformationSection = ({
               <Autocomplete
                 multiple
                 fullWidth
+                aria-label="Especialidades adicionales"
                 id="specialty_ids"
                 options={specialties}
                 getOptionLabel={(option) => option.name}
@@ -227,9 +230,21 @@ const ProfessionalInformationSection = ({
                     {...params}
                     variant="outlined"
                     placeholder="Buscar especialidades..."
+                    helperText={
+                      formikProps.touched.specialty_ids &&
+                      formikProps.errors.specialty_ids
+                    }
+                    onBlur={() => {
+                      formikProps.setFieldTouched('specialty_ids', true);
+                      formikProps.validateField('specialty_ids');
+                    }}
+                    error={
+                      formikProps.touched.specialty_ids &&
+                      Boolean(formikProps.errors.specialty_ids)
+                    }
                     sx={{
                       '& .MuiOutlinedInput-root': {
-                        backgroundColor: theme.palette.background.paper,
+                        // backgroundColor: theme.palette.background.paper,
                         '&:hover .MuiOutlinedInput-notchedOutline': {
                           borderColor: theme.palette.primary.main,
                         },
@@ -246,21 +261,6 @@ const ProfessionalInformationSection = ({
                   },
                 }}
               />
-
-              {/* Helper text para especialidades */}
-              {formikProps.touched.specialty_ids &&
-                formikProps.errors.specialty_ids && (
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: theme.palette.error.main,
-                      mt: 0.5,
-                      display: 'block',
-                    }}
-                  >
-                    {formikProps.errors.specialty_ids}
-                  </Typography>
-                )}
 
               {/* Mostrar especialidades seleccionadas */}
               {selectedSpecialties.length > 0 && (

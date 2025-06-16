@@ -1,4 +1,4 @@
-import { Box, Button, Typography, useTheme } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { Formik } from 'formik';
 
 import { BreadCrumbs } from '@components/index';
@@ -10,23 +10,36 @@ import {
 } from './validation/newDoctor.schema';
 import { BREADCRUMBS } from './constants/newDoctor';
 
+import ProfessionalInformationSection from './components/ProfessionalInformationSection';
 import PersonalInformationSection from './components/PersonalInformationSection';
 import ContactInformationSection from './components/ContactInformationSection';
 import AccountInformationSection from './components/AccountInformationSection';
-import ProfessionalInformationSection from './components/ProfessionalInformationSection';
-import './styles.css';
 
 function NewDoctor() {
   const hook = useNewDoctor();
-  const theme = useTheme();
 
   return (
-    <Box component="div" className="new-doctor">
+    <Box component="div">
       <BreadCrumbs links={BREADCRUMBS} loading={false} />
-
-      <header className="header">
-        <h1>Nuevo doctor</h1>
-      </header>
+      <Box
+        component="header"
+        sx={{
+          mt: 2,
+          mb: 4,
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            fontWeight: 600,
+            color: 'primary.main',
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Nuevo doctor
+        </Typography>
+      </Box>
 
       <Formik
         initialValues={doctorInitialValues}
@@ -42,32 +55,6 @@ function NewDoctor() {
               e.preventDefault();
             }}
           >
-            <Box component="div" className="form-step-1">
-              <Box sx={{ mb: 4, textAlign: 'center' }}>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 600,
-                    color: theme.palette.primary.main,
-                    mb: 1,
-                  }}
-                >
-                  Información Personal
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: theme.palette.text.secondary,
-                    maxWidth: 600,
-                    mx: 'auto',
-                  }}
-                >
-                  Complete los datos personales del profesional médico. Los
-                  campos marcados con * son obligatorios.
-                </Typography>
-              </Box>
-            </Box>
-
             {/* Personal Information Section */}
             <PersonalInformationSection formikProps={props} />
 
