@@ -30,6 +30,7 @@ const SelectComponent = (props: ISelectComponentProps) => {
   return (
     <TextField
       select
+      fullWidth
       id={props.id}
       name={props.id}
       label={props.label}

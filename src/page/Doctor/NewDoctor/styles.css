@@ -25,12 +25,20 @@
   margin: 2rem 0;
   display: grid;
   justify-content: center;
+  align-items: start;
   gap: 2rem;
 }
 
 .new-doctor .form .form-step-2 .second-part .form-part {
   display: grid;
   gap: 1.4rem;
+}
+
+.new-doctor .form .form-step-2 .second-part .table-contact {
+  max-height: 18rem;
+  overflow-y: auto;
+  border: 1px solid var(--mui-palette-TableCell-border, rgba(224, 224, 224, 1));
+  border-radius: 0.4rem;
 }
 
 @media screen and (min-width: 768px) {

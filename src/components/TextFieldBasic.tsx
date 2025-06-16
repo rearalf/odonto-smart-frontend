@@ -22,6 +22,7 @@ interface ITextFieldBasicProps {
 
 const TextFieldBasic = (props: ITextFieldBasicProps) => (
   <TextField
+    fullWidth
     minRows={4}
     id={props.id}
     name={props.id}

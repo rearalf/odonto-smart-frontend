@@ -1,100 +1,74 @@
 import * as Yup from 'yup';
 
 import { validateStrongPassword } from '@utils/passwordValidation';
-
-import type { INewDoctorFormValues } from '../types/newDoctor.types';
+import type { IRadioButtonComponentOption } from '../../../../types/RadioButtonComponent.types';
 import { CONTACT_TYPE_ENUM, type IContactForm } from 'src/types/common.types';
+import type { IFormValues } from '../types/newDoctor.types';
+
+const SALVADOR_PHONE_REGEX = /^(?:\+503[- ]?)?(2|6|7|9)\d{3}[- ]?\d{4}$/;
 
 export const doctorSchemaStepOne = Yup.object().shape({
-  first_name: Yup.string()
-    .trim()
-    .required('El primer nombre es obligatorio.')
-    .matches(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/, 'Solo se permiten letras.'),
-  middle_name: Yup.string()
-    .trim()
-    .matches(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/, 'Solo se permiten letras.'),
-  last_name: Yup.string()
-    .trim()
-    .matches(/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/, 'Solo se permiten letras.')
-    .required('Los apellidos son obligatorios.'),
-  qualification: Yup.string().trim(),
-  email: Yup.string()
-    .trim()
-    .email('Correo invalido.')
-    .required('El correo es obligatorio.'),
-  password: Yup.string()
-    .trim()
-    .min(1, 'Deben de ser mínimo 8 caracteres.')
-    .required('La contraseña es requerida.')
-    .test(
-      'is-strong',
-      'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos especiales.',
-      function (value) {
-        return validateStrongPassword(value, this);
-      },
-    ),
-  confirmPassword: Yup.string()
-    .trim()
-    .min(1, 'Deben de ser mínimo 8 caracteres.')
-    .required('La contraseña es requerida.')
-    .oneOf([Yup.ref('password')], 'Las contraseñas deben de ser iguales')
-    .test(
-      'is-strong',
-      'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos especiales.',
-      function (value) {
-        return validateStrongPassword(value, this);
-      },
-    ),
-  specialty: Yup.number()
-    .typeError('El doctor debe tener una especialidad.')
-    .required('El doctor debe tener una especialidad.'),
-});
+  qualification: Yup.string(),
+  specialty_id: Yup.number()
+    .typeError('Debe seleccionar una especialidad principal')
+    .required('Debe seleccionar una especialidad principal'),
+  specialty_ids: Yup.array().of(Yup.number()),
 
-export const doctorSchemaStepTwo = Yup.object().shape({
-  specialty_ids: Yup.array().of(
-    Yup.number().typeError('Cada especialidad debe ser un número'),
-  ),
-  person_contact: Yup.array().of(
-    Yup.object()
-      .shape({
-        contact_value: Yup.string().required(
-          'El valor de contacto es obligatorio',
+  person: Yup.object({
+    first_name: Yup.string().required('El nombre es obligatorio'),
+    middle_name: Yup.string(),
+    last_name: Yup.string().required('El apellido es obligatorio'),
+    profile_picture_name: Yup.string(),
+    profile_picture: Yup.string().url('Debe ser una URL válida'),
+
+    user: Yup.object({
+      email: Yup.string()
+        .email('Debe ser un email válido')
+        .required('El email es obligatorio'),
+      password: Yup.string()
+        .trim()
+        .min(1, 'Deben de ser mínimo 8 caracteres.')
+        .required('La contraseña es requerida.')
+        .test(
+          'is-strong',
+          'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos especiales.',
+          function (value) {
+            return validateStrongPassword(value, this);
+          },
         ),
-        contact_type: Yup.string()
-          .oneOf(
-            [
-              CONTACT_TYPE_ENUM.EMAIL,
-              CONTACT_TYPE_ENUM.PHONE,
-              CONTACT_TYPE_ENUM.WHATSAPP,
-            ],
-            'El tipo de contacto debe ser EMAIL o PHONE',
-          )
-          .required('El tipo de contacto es obligatorio'),
-      })
-      .test(
-        'validate-contact',
-        'El contacto no es válido para el tipo seleccionado',
-        function ({ contact_type, contact_value }) {
-          if (contact_type === CONTACT_TYPE_ENUM.EMAIL) {
-            return Yup.string()
-              .email('El valor debe ser un correo electrónico')
-              .isValidSync(contact_value);
-          }
+      confirmPassword: Yup.string()
+        .trim()
+        .min(1, 'Deben de ser mínimo 8 caracteres.')
+        .required('La contraseña es requerida.')
+        .oneOf([Yup.ref('password')], 'Las contraseñas deben de ser iguales')
+        .test(
+          'is-strong',
+          'La contraseña debe incluir mayúsculas, minúsculas, números y símbolos especiales.',
+          function (value) {
+            return validateStrongPassword(value, this);
+          },
+        ),
+      role_ids: Yup.array()
+        .of(Yup.number())
+        .min(1, 'Debe seleccionar al menos un rol'),
+      permission_ids: Yup.array()
+        .of(Yup.number())
+        .min(1, 'Debe seleccionar al menos un permiso'),
+    }),
 
-          if (contact_type === CONTACT_TYPE_ENUM.PHONE) {
-            const phoneRegex = /^[267]\d{7}$/;
-            return phoneRegex.test(contact_value);
-          }
-
-          if (contact_type === CONTACT_TYPE_ENUM.WHATSAPP) {
-            const whatsappRegex = /^[267]\d{7}$/;
-            return whatsappRegex.test(contact_value);
-          }
-
-          return true;
-        },
-      ),
-  ),
+    personContact: Yup.array()
+      .of(
+        Yup.object({
+          contact_value: Yup.string().required(
+            'El valor de contacto es obligatorio',
+          ),
+          contact_type: Yup.string()
+            .oneOf(['EMAIL', 'PHONE'], 'Tipo de contacto inválido')
+            .required('El tipo de contacto es obligatorio'),
+        }),
+      )
+      .min(1, 'Debe agregar al menos un contacto'),
+  }),
 });
 
 export const contactSchema = Yup.object().shape({
@@ -111,49 +85,68 @@ export const contactSchema = Yup.object().shape({
 
   contact_value: Yup.string().test(
     'contact-validation',
-    'El valor de contacto no es válido',
+    'El número no es válido. Debe tener 8 dígitos y empezar con 2, 6, 7 o 9.',
     function (value) {
       const { contact_type } = this.parent;
-
-      if (value === undefined) return true;
+      if (!value) return false;
 
       if (contact_type === CONTACT_TYPE_ENUM.EMAIL) {
         return Yup.string().email().isValidSync(value);
-      } else if (
-        (contact_type === CONTACT_TYPE_ENUM.PHONE ||
-          contact_type === CONTACT_TYPE_ENUM.WHATSAPP) &&
-        value
+      }
+
+      if (
+        contact_type === CONTACT_TYPE_ENUM.PHONE ||
+        contact_type === CONTACT_TYPE_ENUM.WHATSAPP
       ) {
-        const phoneRegex = /^[0-9]{8}(?: [0-9]{1,2})?$/;
-
-        if (!phoneRegex.test(value)) return false;
-
         const digits = value.replace(/\D/g, '');
-        if (digits.length > 8 || (value.match(/ /g) || []).length > 1)
-          return false;
-
-        return true;
+        if (digits.length !== 8 && digits.length !== 11) return false;
+        return SALVADOR_PHONE_REGEX.test(value);
       }
       return false;
     },
   ),
 });
 
-export const doctorInitialValues: INewDoctorFormValues = {
-  first_name: '',
-  middle_name: '',
-  last_name: '',
+export const doctorInitialValues: IFormValues = {
   qualification: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  specialty: '',
+  specialty_id: 0,
   specialty_ids: [],
-  roles: [],
-  person_contact: [],
+  person: {
+    first_name: '',
+    middle_name: '',
+    last_name: '',
+    profile_picture_name: '',
+    profile_picture: '',
+    user: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+      role_ids: [],
+      permission_ids: [],
+    },
+    personContact: [],
+  },
 };
 
 export const contactInitialValues: IContactForm = {
-  contact_type: 'WHATSAPP',
+  contact_type: CONTACT_TYPE_ENUM.EMAIL,
   contact_value: '',
 };
+
+export const contactOptions: IRadioButtonComponentOption[] = [
+  {
+    value: CONTACT_TYPE_ENUM.EMAIL,
+    label: 'Correo',
+    color: '#0288d1',
+  },
+  {
+    value: CONTACT_TYPE_ENUM.PHONE,
+    label: 'Teléfono',
+    color: '#2e7d32',
+  },
+  {
+    value: CONTACT_TYPE_ENUM.WHATSAPP,
+    label: 'WhatsApp',
+    color: '#2e7d32',
+  },
+];

@@ -1,114 +1,108 @@
-import {
-  Box,
-  Button,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { Formik } from 'formik';
 
 import { BreadCrumbs } from '@components/index';
 import useNewDoctor from './useNewDoctor';
-import FormStepTwo from './components/FormStepTwo';
-import FormStepOne from './components/FormStepOne';
 
-import { doctorInitialValues } from './validation/newDoctor.schema';
-import { BREADCRUMBS, STEPS } from './constants/newDoctor';
-import './styles.css';
+import {
+  doctorInitialValues,
+  doctorSchemaStepOne,
+} from './validation/newDoctor.schema';
+import { BREADCRUMBS } from './constants/newDoctor';
+
+import ProfessionalInformationSection from './components/ProfessionalInformationSection';
+import PersonalInformationSection from './components/PersonalInformationSection';
+import ContactInformationSection from './components/ContactInformationSection';
+import AccountInformationSection from './components/AccountInformationSection';
 
 function NewDoctor() {
   const hook = useNewDoctor();
+
   return (
-    <Box component="div" className="new-doctor">
+    <Box component="div">
       <BreadCrumbs links={BREADCRUMBS} loading={false} />
-
-      <header className="header">
-        <h1>Nuevo doctor</h1>
-      </header>
-
-      <Stepper activeStep={hook.activeStep} className="steps-components">
-        {STEPS.map((label, index) => {
-          const stepProps: { completed?: boolean } = {};
-          const labelProps: {
-            optional?: React.ReactNode;
-          } = {};
-          if (hook.isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Opcional</Typography>
-            );
-          }
-
-          if (hook.isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+      <Box
+        component="header"
+        sx={{
+          mt: 2,
+          mb: 4,
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            fontWeight: 600,
+            color: 'primary.main',
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Nuevo doctor
+        </Typography>
+      </Box>
 
       <Formik
         initialValues={doctorInitialValues}
-        validationSchema={hook.getValidationSchema(hook.activeStep)}
+        validationSchema={doctorSchemaStepOne}
         onSubmit={(_values, formikHelpers) => formikHelpers.setSubmitting(true)}
-        validateOnChange={false}
-        validateOnBlur={false}
+        validateOnChange={true}
+        validateOnBlur={true}
       >
         {(props) => (
-          <Box component="form" className="form" onSubmit={props.handleSubmit}>
-            {hook.activeStep === 0 ? (
-              <FormStepOne
-                formikProps={props}
-                specialties={hook.specialties}
-                isShowPassword={hook.isShowPassword}
-                isShowConfirmPassword={hook.isShowConfirmPassword}
-                handleShowPassword={hook.handleShowPassword}
-                handleShowConfirmPassword={hook.handleShowConfirmPassword}
-              />
-            ) : hook.activeStep === 1 ? (
-              <FormStepTwo
-                formikProps={props}
-                contact={hook.contact}
-                contactType={hook.contactType}
-                specialties={hook.specialties}
-                isLoadingSpecialty={hook.isLoadingSpecialty}
-                handleSetContactTyp={hook.handleSetContactTyp}
-                specialtiesBySelect={hook.specialtiesBySelect}
-                handleSetContactPhone={hook.handleSetContactPhone}
-                handleSetContactEmail={hook.handleSetContactEmail}
-                handleSetSpecialtiesBySelect={hook.handleSetSpecialtiesBySelect}
-              />
-            ) : null}
-            <div className="btn-group">
-              <Button
-                color="inherit"
-                type="button"
-                variant="text"
-                aria-label="Regresar"
-                disabled={hook.activeStep === 0}
-                onClick={hook.handlePrevStep}
-              >
-                Regresar
-              </Button>
+          <Box
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
+            {/* Personal Information Section */}
+            <PersonalInformationSection formikProps={props} />
 
-              <Button
-                color="primary"
-                variant="contained"
-                disabled={hook.handleValidateDisableButton(
-                  props.isValid,
-                  props.dirty,
-                )}
-                onClick={(e) => hook.handleNextStep(props, e)}
-                type={
-                  hook.activeStep === STEPS.length - 1 ? 'submit' : 'button'
-                }
-              >
-                {hook.activeStep === STEPS.length - 1 ? 'Guardar' : 'Siguiente'}
+            {/* Account Information Section */}
+            <AccountInformationSection
+              formikProps={props}
+              hookValue={{
+                ...hook,
+                permissions: [],
+                roles: [],
+              }}
+            />
+
+            {/* Professional Information Section */}
+            <ProfessionalInformationSection
+              formikProps={props}
+              specialties={
+                hook.dataSpecialties && hook.dataSpecialties.data
+                  ? hook.dataSpecialties.data
+                  : []
+              }
+              isLoadingSpecialty={hook.isLoadingSpecialty}
+            />
+
+            {/* Contact Information Section */}
+            <ContactInformationSection formikProps={props} />
+
+            <Box
+              component="div"
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '1rem',
+                mt: '2rem',
+              }}
+            >
+              <Button variant="outlined" color="error">
+                Cancelar
               </Button>
-            </div>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={!props.isValid || !props.dirty}
+              >
+                Guardar
+              </Button>
+            </Box>
           </Box>
         )}
       </Formik>
