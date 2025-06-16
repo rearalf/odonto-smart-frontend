@@ -1,19 +1,12 @@
-import {
-  alpha,
-  Autocomplete,
-  Box,
-  Chip,
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import { FiActivity } from 'react-icons/fi';
-import { TextFieldBasic } from '@components/index';
-import type { FormikProps } from 'formik';
+import { alpha, Box, Grid, Paper, Typography, useTheme } from '@mui/material';
 import type { IFormValues } from '../types/newDoctor.types';
+import { FiActivity } from 'react-icons/fi';
+import type { FormikProps } from 'formik';
+
+import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
+
+import { AutocompleteComponent, TextFieldBasic } from '@components/index';
 
 interface IProfessionalInformationSectionProps {
   formikProps: FormikProps<IFormValues>;
@@ -65,13 +58,15 @@ const ProfessionalInformationSection = ({
       formikProps.values.specialty_ids?.includes(specialty.id),
   );
 
-  const handleSpecialtiesChange = (
-    _e: any,
-    newValue: IBasicIdNameDescription[],
-  ) => {
-    const specialtyIds = newValue.map((specialty) => specialty.id);
-    formikProps.setFieldValue('specialty_ids', specialtyIds);
-  };
+  const convertToAutocompleteOptions = (
+    items: IBasicIdNameDescription[],
+  ): IAutocompleteOption[] =>
+    items.map((item) => ({
+      id: item.id,
+      label: item.name,
+      name: item.name,
+      description: item.description,
+    }));
 
   return (
     <Paper
@@ -101,65 +96,34 @@ const ProfessionalInformationSection = ({
           <Grid container spacing={2.5}>
             {/* Especialidad Principal */}
             <Grid size={12}>
-              <Autocomplete
+              <AutocompleteComponent
+                required
+                fullWidth
                 id="specialty_id"
                 options={specialtyOptions}
-                getOptionLabel={(option) => option.label || ''}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
                 value={selectedSpecialty}
-                onChange={(_event, newValue) => {
+                loading={isLoadingSpecialty}
+                placeholder="Buscar especialidad"
+                label="Especialidad médica principal *"
+                loadingText="Cargando especialidades..."
+                noOptionsText="No se encontraron especialidades"
+                onChange={(newValue) => {
                   formikProps.setFieldValue('specialty_id', newValue?.id || '');
                 }}
                 onBlur={() => {
                   formikProps.setFieldTouched('specialty_id', true);
                   formikProps.validateField('specialty_id');
                 }}
-                loading={isLoadingSpecialty}
-                loadingText="Cargando especialidades..."
-                noOptionsText="No se encontraron especialidades"
-                fullWidth
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Especialidad médica principal *"
-                    placeholder="Buscar especialidad..."
-                    helperText={
-                      formikProps.touched.specialty_id &&
-                      formikProps.errors.specialty_id
-                        ? formikProps.errors.specialty_id
-                        : 'Seleccione la especialidad principal del doctor'
-                    }
-                    onBlur={() => {
-                      formikProps.setFieldTouched('specialty_id', true);
-                      formikProps.validateField('specialty_id');
-                    }}
-                    error={
-                      formikProps.touched.specialty_id &&
-                      Boolean(formikProps.errors.specialty_id)
-                    }
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        '&:hover fieldset': {
-                          borderColor: theme.palette.primary.main,
-                        },
-                        '&.Mui-focused fieldset': {
-                          borderColor: theme.palette.primary.main,
-                        },
-                      },
-                    }}
-                  />
-                )}
-                sx={{
-                  '& .MuiAutocomplete-inputRoot': {
-                    paddingRight: '9px !important',
-                  },
-                  '& .MuiAutocomplete-endAdornment': {
-                    right: '9px',
-                  },
-                }}
-                clearOnEscape
-                selectOnFocus
-                disableClearable={false}
+                helperText={
+                  formikProps.touched.specialty_id &&
+                  formikProps.errors.specialty_id
+                    ? formikProps.errors.specialty_id
+                    : 'Seleccione la especialidad principal del doctor'
+                }
+                error={
+                  formikProps.touched.specialty_id &&
+                  Boolean(formikProps.errors.specialty_id)
+                }
               />
             </Grid>
 
@@ -186,80 +150,35 @@ const ProfessionalInformationSection = ({
                 </Typography>
               </Box>
 
-              <Autocomplete
+              <AutocompleteComponent
                 multiple
                 fullWidth
-                aria-label="Especialidades adicionales"
                 id="specialty_ids"
-                options={specialties}
-                getOptionLabel={(option) => option.name}
-                value={selectedSpecialties}
-                onChange={handleSpecialtiesChange}
-                filterSelectedOptions
-                disabled={formikProps.isSubmitting}
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => {
-                    const { key, ...chipProps } = getTagProps({ index });
-                    return (
-                      <Chip
-                        key={key}
-                        variant="outlined"
-                        label={option.name}
-                        size="small"
-                        sx={{
-                          backgroundColor: alpha(
-                            theme.palette.primary.main,
-                            0.08,
-                          ),
-                          borderColor: alpha(theme.palette.primary.main, 0.3),
-                          color: theme.palette.primary.main,
-                          '& .MuiChip-deleteIcon': {
-                            color: alpha(theme.palette.primary.main, 0.7),
-                            '&:hover': {
-                              color: theme.palette.primary.main,
-                            },
-                          },
-                        }}
-                        {...chipProps}
-                      />
-                    );
-                  })
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    placeholder="Buscar especialidades..."
-                    helperText={
-                      formikProps.touched.specialty_ids &&
-                      formikProps.errors.specialty_ids
-                    }
-                    onBlur={() => {
-                      formikProps.setFieldTouched('specialty_ids', true);
-                      formikProps.validateField('specialty_ids');
-                    }}
-                    error={
-                      formikProps.touched.specialty_ids &&
-                      Boolean(formikProps.errors.specialty_ids)
-                    }
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        // backgroundColor: theme.palette.background.paper,
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: theme.palette.primary.main,
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: theme.palette.primary.main,
-                        },
-                      },
-                    }}
-                  />
-                )}
-                sx={{
-                  '& .MuiAutocomplete-popupIndicator': {
-                    color: theme.palette.primary.main,
-                  },
+                label="Especialidades adicionales"
+                placeholder="Buscar especialidades..."
+                options={convertToAutocompleteOptions(specialties)} // Convertir aquí
+                value={convertToAutocompleteOptions(selectedSpecialties)} // Convertir aquí
+                onChange={(newValue) => {
+                  const specialtyIds = newValue.map(
+                    (specialty) => specialty.id,
+                  );
+                  formikProps.setFieldValue('specialty_ids', specialtyIds);
                 }}
+                helperText={
+                  formikProps.touched.specialty_ids &&
+                  formikProps.errors.specialty_ids
+                    ? formikProps.errors.specialty_ids
+                    : 'Seleccione la especialidad principal del doctor'
+                }
+                onBlur={() => {
+                  formikProps.setFieldTouched('specialty_ids', true);
+                  formikProps.validateField('specialty_ids');
+                }}
+                error={
+                  formikProps.touched.specialty_ids &&
+                  Boolean(formikProps.errors.specialty_ids)
+                }
+                disabled={formikProps.isSubmitting}
               />
 
               {/* Mostrar especialidades seleccionadas */}

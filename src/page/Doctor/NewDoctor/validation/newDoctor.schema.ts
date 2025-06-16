@@ -1,13 +1,11 @@
 import * as Yup from 'yup';
 
 import { validateStrongPassword } from '@utils/passwordValidation';
-import type { IRadioButtonComponentOption } from '../../../../types/RadioButtonComponent.types';
-import { CONTACT_TYPE_ENUM, type IContactForm } from 'src/types/common.types';
-import type { IFormValues } from '../types/newDoctor.types';
+import { CONTACT_TYPE_ENUM } from 'src/types/common.types';
 
 const SALVADOR_PHONE_REGEX = /^(?:\+503[- ]?)?(2|6|7|9)\d{3}[- ]?\d{4}$/;
 
-export const doctorSchemaStepOne = Yup.object().shape({
+export const newDoctorSchema = Yup.object().shape({
   qualification: Yup.string(),
   specialty_id: Yup.number()
     .typeError('Debe seleccionar una especialidad principal')
@@ -106,47 +104,3 @@ export const contactSchema = Yup.object().shape({
     },
   ),
 });
-
-export const doctorInitialValues: IFormValues = {
-  qualification: '',
-  specialty_id: 0,
-  specialty_ids: [],
-  person: {
-    first_name: '',
-    middle_name: '',
-    last_name: '',
-    profile_picture_name: '',
-    profile_picture: '',
-    user: {
-      email: '',
-      password: '',
-      confirmPassword: '',
-      role_ids: [],
-      permission_ids: [],
-    },
-    personContact: [],
-  },
-};
-
-export const contactInitialValues: IContactForm = {
-  contact_type: CONTACT_TYPE_ENUM.EMAIL,
-  contact_value: '',
-};
-
-export const contactOptions: IRadioButtonComponentOption[] = [
-  {
-    value: CONTACT_TYPE_ENUM.EMAIL,
-    label: 'Correo',
-    color: '#0288d1',
-  },
-  {
-    value: CONTACT_TYPE_ENUM.PHONE,
-    label: 'Teléfono',
-    color: '#2e7d32',
-  },
-  {
-    value: CONTACT_TYPE_ENUM.WHATSAPP,
-    label: 'WhatsApp',
-    color: '#2e7d32',
-  },
-];

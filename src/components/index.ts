@@ -1,4 +1,4 @@
-export { default as TransferListComponent } from './TransferListComponent';
+export { default as AutocompleteComponent } from './AutocompleteComponent';
 export { default as RadioButtonComponent } from './RadioButtonComponent';
 export { default as LoadingProgress } from './LoadingProgress';
 export { default as SelectComponent } from './SelectComponent';

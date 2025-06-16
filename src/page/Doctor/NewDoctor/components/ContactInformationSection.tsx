@@ -1,4 +1,5 @@
 import { FiMail, FiPhone, FiPlus, FiTrash2 } from 'react-icons/fi';
+import { Formik, type FormikProps } from 'formik';
 import {
   alpha,
   Box,
@@ -10,19 +11,17 @@ import {
   useTheme,
 } from '@mui/material';
 
-import { Formik, type FormikProps } from 'formik';
-import type { IFormValues } from '../types/newDoctor.types';
-
 import {
   RadioButtonComponent,
   TextFieldBasic,
   TextFieldPhone,
 } from '@components/index';
+import { contactSchema } from '../validation/newDoctor.schema';
+import type { IFormValues } from '../types/newDoctor.types';
 import {
-  contactInitialValues,
-  contactOptions,
-  contactSchema,
-} from '../validation/newDoctor.schema';
+  CONTACT_INITIAL_VALUES,
+  CONTACT_OPTIONS,
+} from '../constants/newDoctor';
 
 interface IContactInformationSection {
   formikProps: FormikProps<IFormValues>;
@@ -58,7 +57,7 @@ const ContactInformationSection = ({
 
       {/* Add New Contact Form */}
       <Formik
-        initialValues={contactInitialValues}
+        initialValues={CONTACT_INITIAL_VALUES}
         validationSchema={contactSchema}
         onSubmit={(values, formikHelpers) => {
           const newArray = [...formikProps.values.person.personContact, values];
@@ -95,7 +94,7 @@ const ContactInformationSection = ({
                 formik.setFieldError('contact_value', undefined);
                 formik.setFieldTouched('contact_value', false, false);
               }}
-              options={contactOptions}
+              options={CONTACT_OPTIONS}
               sx={{ mb: 2.5 }}
             />
 

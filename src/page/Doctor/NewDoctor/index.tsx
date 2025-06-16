@@ -4,11 +4,8 @@ import { Formik } from 'formik';
 import { BreadCrumbs } from '@components/index';
 import useNewDoctor from './useNewDoctor';
 
-import {
-  doctorInitialValues,
-  doctorSchemaStepOne,
-} from './validation/newDoctor.schema';
-import { BREADCRUMBS } from './constants/newDoctor';
+import { newDoctorSchema } from './validation/newDoctor.schema';
+import { BREADCRUMBS, INITIAL_VALUES } from './constants/newDoctor';
 
 import ProfessionalInformationSection from './components/ProfessionalInformationSection';
 import PersonalInformationSection from './components/PersonalInformationSection';
@@ -42,8 +39,8 @@ function NewDoctor() {
       </Box>
 
       <Formik
-        initialValues={doctorInitialValues}
-        validationSchema={doctorSchemaStepOne}
+        initialValues={INITIAL_VALUES}
+        validationSchema={newDoctorSchema}
         onSubmit={(_values, formikHelpers) => formikHelpers.setSubmitting(true)}
         validateOnChange={true}
         validateOnBlur={true}
