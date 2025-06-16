@@ -76,7 +76,7 @@ const AccountInformationSection = ({
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <FiLock
           size={24}
-          color={theme.palette.info.main}
+          color={theme.palette.primary.main}
           style={{ marginRight: 8 }}
         />
         <Typography variant="h6" sx={{ fontWeight: 500 }}>
@@ -369,6 +369,7 @@ const AccountInformationSection = ({
                   }}
                 >
                   Permisos Específicos
+                  <Typography variant="caption"> (Opcional)</Typography>
                 </Typography>
               </Box>
 

@@ -1,9 +1,9 @@
 export { default as TransferListComponent } from './TransferListComponent';
 export { default as RadioButtonComponent } from './RadioButtonComponent';
-export { default as TelInputComponent } from './TelInputComponent';
 export { default as LoadingProgress } from './LoadingProgress';
 export { default as SelectComponent } from './SelectComponent';
 export { default as DialogComponent } from './DialogComponent';
+export { default as TextFieldPhone } from './TextFieldPhone';
 export { default as TableComponent } from './TableComponent';
 export { default as TextFieldBasic } from './TextFieldBasic';
 export { default as ExpiredSession } from './ExpiredSession';

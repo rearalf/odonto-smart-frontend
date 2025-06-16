@@ -32,8 +32,8 @@ function NewDoctor() {
         initialValues={doctorInitialValues}
         validationSchema={doctorSchemaStepOne}
         onSubmit={(_values, formikHelpers) => formikHelpers.setSubmitting(true)}
-        validateOnChange={false}
-        validateOnBlur={false}
+        validateOnChange={true}
+        validateOnBlur={true}
       >
         {(props) => (
           <Box
@@ -71,9 +71,6 @@ function NewDoctor() {
             {/* Personal Information Section */}
             <PersonalInformationSection formikProps={props} />
 
-            {/* Contact Information Section */}
-            <ContactInformationSection formikProps={props} />
-
             {/* Account Information Section */}
             <AccountInformationSection
               formikProps={props}
@@ -95,9 +92,17 @@ function NewDoctor() {
               isLoadingSpecialty={hook.isLoadingSpecialty}
             />
 
+            {/* Contact Information Section */}
+            <ContactInformationSection formikProps={props} />
+
             <Box
               component="div"
-              sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '1rem',
+                mt: '2rem',
+              }}
             >
               <Button variant="outlined" color="error">
                 Cancelar

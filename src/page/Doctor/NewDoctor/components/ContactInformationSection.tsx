@@ -13,7 +13,11 @@ import {
 import { Formik, type FormikProps } from 'formik';
 import type { IFormValues } from '../types/newDoctor.types';
 
-import { RadioButtonComponent, TextFieldBasic } from '@components/index';
+import {
+  RadioButtonComponent,
+  TextFieldBasic,
+  TextFieldPhone,
+} from '@components/index';
 import {
   contactInitialValues,
   contactOptions,
@@ -47,7 +51,8 @@ const ContactInformationSection = ({
           style={{ marginRight: 8 }}
         />
         <Typography variant="h6" sx={{ fontWeight: 500 }}>
-          Información de Contacto
+          Información de Contacto{' '}
+          <Typography variant="caption"> (Opcional)</Typography>
         </Typography>
       </Box>
 
@@ -85,8 +90,10 @@ const ContactInformationSection = ({
               id="conact_values"
               value={formik.values.contact_type}
               onChange={(e) => {
-                formik.setFieldValue('contact_value', '');
                 formik.setFieldValue('contact_type', e);
+                formik.setFieldValue('contact_value', '');
+                formik.setFieldError('contact_value', undefined);
+                formik.setFieldTouched('contact_value', false, false);
               }}
               options={contactOptions}
               sx={{ mb: 2.5 }}
@@ -95,7 +102,7 @@ const ContactInformationSection = ({
             {/* Contact Value Input */}
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, md: 8 }}>
-                {formik.values.contact_type === 'EMAIL' && (
+                {formik.values.contact_type === 'EMAIL' ? (
                   <TextFieldBasic
                     id="email"
                     type="email"
@@ -105,6 +112,33 @@ const ContactInformationSection = ({
                     value={formik.values.contact_value}
                     onChange={(e) => {
                       formik.setFieldValue('contact_value', e.target.value);
+                    }}
+                    handleOnBlur={() => {
+                      formik.setFieldTouched('contact_value', true);
+                      formik.validateField('contact_value');
+                    }}
+                    helperText={
+                      formik.touched.contact_value &&
+                      formik.errors.contact_value
+                        ? formik.errors.contact_value
+                        : ''
+                    }
+                    error={
+                      formik.touched.contact_value &&
+                      Boolean(formik.errors.contact_value)
+                    }
+                  />
+                ) : (
+                  <TextFieldPhone
+                    id="contact_value"
+                    label={
+                      formik.values.contact_type === 'PHONE'
+                        ? 'Teléfono'
+                        : 'WhatsApp'
+                    }
+                    value={formik.values.contact_value}
+                    onChange={(e) => {
+                      formik.setFieldValue('contact_value', e);
                     }}
                     handleOnBlur={() => {
                       formik.setFieldTouched('contact_value', true);

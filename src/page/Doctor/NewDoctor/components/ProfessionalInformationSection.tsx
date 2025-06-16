@@ -79,6 +79,7 @@ const ProfessionalInformationSection = ({
         backgroundColor: alpha(theme.palette.primary.main, 0.02),
         border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
         borderRadius: 2,
+        mb: 3,
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2.5 }}>
@@ -172,6 +173,7 @@ const ProfessionalInformationSection = ({
                   }}
                 >
                   Especialidades adicionales
+                  <Typography variant="caption"> (Opcional)</Typography>
                 </Typography>
                 <Typography
                   variant="caption"
@@ -292,7 +294,8 @@ const ProfessionalInformationSection = ({
                 mb: 0.5,
               }}
             >
-              Cualificación académica y experiencia
+              Cualificación académica y experiencia{' '}
+              <Typography variant="caption"> (Opcional)</Typography>
             </Typography>
             <Typography
               variant="caption"

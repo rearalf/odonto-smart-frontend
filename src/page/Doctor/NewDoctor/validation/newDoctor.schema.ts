@@ -131,7 +131,7 @@ export const doctorInitialValues: IFormValues = {
 };
 
 export const contactInitialValues: IContactForm = {
-  contact_type: 'WHATSAPP',
+  contact_type: CONTACT_TYPE_ENUM.EMAIL,
   contact_value: '',
 };
 
