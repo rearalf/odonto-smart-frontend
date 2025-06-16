@@ -10,7 +10,7 @@ import { MdNavigateNext } from 'react-icons/md';
 import { AiOutlineHome } from 'react-icons/ai';
 import { Link } from 'react-router';
 
-import type { IBreadCrumbsProps } from 'src/types/components';
+import type { IBreadCrumbsProps } from 'src/types/BreadCrumbsComponent.type';
 
 const BreadCrumbs = ({ loading, links }: IBreadCrumbsProps) => {
   const theme = useTheme();

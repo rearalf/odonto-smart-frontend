@@ -1,4 +1,4 @@
-import type { ILink } from 'src/types/components';
+import type { ILink } from 'src/types/BreadCrumbsComponent.type';
 import type { IFormValues } from '../types/newDoctor.types';
 import { CONTACT_TYPE_ENUM, type IContactForm } from 'src/types/common.types';
 import type { IRadioButtonComponentOption } from 'src/types/RadioButtonComponent.types';

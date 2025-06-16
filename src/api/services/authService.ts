@@ -1,3 +1,4 @@
+import type { IApiErrorData, IApiResponse } from 'src/types/apiResponse.types';
 import { axiosInstance, axiosInstanceWithAuth } from '../axios/axiosInstance';
 import { authEndpoints } from '../endpoints';
 import { isAxiosError } from 'axios';
