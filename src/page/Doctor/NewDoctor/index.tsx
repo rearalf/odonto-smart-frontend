@@ -61,7 +61,8 @@ function NewDoctor() {
               hookValue={{
                 ...hook,
                 permissions: [],
-                roles: [],
+                roles:
+                  hook.dataRole && hook.dataRole.data ? hook.dataRole.data : [],
               }}
             />
 

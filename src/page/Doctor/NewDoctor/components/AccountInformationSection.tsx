@@ -12,14 +12,16 @@ import {
   CardContent,
 } from '@mui/material';
 import { FiLock, FiUsers, FiShield, FiKey } from 'react-icons/fi';
-import { TextFieldBasic } from '@components/index';
+import { AutocompleteComponent, TextFieldBasic } from '@components/index';
 import type { FormikProps } from 'formik';
 import type { IFormValues } from '../types/newDoctor.types';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
+import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
 
 interface IAccountInformationSectionProps {
   formikProps: FormikProps<IFormValues>;
   hookValue: {
+    isLoadingRole: boolean;
     isShowPassword: boolean;
     isShowConfirmPassword: boolean;
     handleShowPassword: () => void;
@@ -35,12 +37,6 @@ const AccountInformationSection = ({
 }: IAccountInformationSectionProps) => {
   const theme = useTheme();
 
-  // Función para manejar cambios en roles
-  const handleRolesChange = (_e: any, newValue: IBasicIdNameDescription[]) => {
-    const roleIds = newValue.map((role) => role.id);
-    formikProps.setFieldValue('person.user.role_ids', roleIds);
-  };
-
   // Función para manejar cambios en permisos
   const handlePermissionsChange = (
     _e: any,
@@ -50,17 +46,26 @@ const AccountInformationSection = ({
     formikProps.setFieldValue('person.user.permission_ids', permissionIds);
   };
 
-  // Obtener roles seleccionados
-  const selectedRoles = hookValue.roles.filter(
-    (role: IBasicIdNameDescription) =>
-      formikProps.values.person.user.role_ids?.includes(role.id),
-  );
-
   // Obtener permisos seleccionados
   const selectedPermissions = hookValue.permissions.filter(
     (permission: IBasicIdNameDescription) =>
       formikProps.values.person.user.permission_ids?.includes(permission.id),
   );
+
+  const selectedRoles = hookValue.roles.filter(
+    (role: IBasicIdNameDescription) =>
+      formikProps.values.person.user.role_ids?.includes(role.id),
+  );
+
+  const convertToAutocompleteOptions = (
+    items: IBasicIdNameDescription[],
+  ): IAutocompleteOption[] =>
+    items.map((item) => ({
+      id: item.id,
+      label: item.name,
+      name: item.name,
+      description: item.description,
+    }));
 
   return (
     <Paper
@@ -247,7 +252,47 @@ const AccountInformationSection = ({
                 del doctor.
               </Typography>
 
-              <Autocomplete
+              <AutocompleteComponent
+                multiple
+                fullWidth
+                loading={hookValue.isLoadingRole}
+                id="person.user.role_ids"
+                label="Especialidades adicionales"
+                placeholder="Buscar especialidades..."
+                options={convertToAutocompleteOptions(hookValue.roles)}
+                value={convertToAutocompleteOptions(selectedRoles)}
+                onChange={(newValue) => {
+                  const roleIds = newValue.map((specialty) => specialty.id);
+                  formikProps.setFieldValue('person.user.role_ids', roleIds);
+                }}
+                helperText={
+                  formikProps.touched.person &&
+                  formikProps.touched.person.user &&
+                  formikProps.touched.person.user.role_ids &&
+                  formikProps.errors.person &&
+                  formikProps.errors.person.user &&
+                  formikProps.errors.person.user.role_ids
+                    ? formikProps.errors.person.user.role_ids
+                    : 'Seleccione los roles para este doctor'
+                }
+                onBlur={() => {
+                  formikProps.setFieldTouched('person.user.role_ids', true);
+                  formikProps.validateField('person.user.role_ids');
+                }}
+                error={
+                  formikProps.touched.person &&
+                  formikProps.touched.person.user &&
+                  formikProps.touched.person.user.role_ids &&
+                  Boolean(
+                    formikProps.errors.person &&
+                      formikProps.errors.person.user &&
+                      formikProps.errors.person.user.role_ids,
+                  )
+                }
+                disabled={formikProps.isSubmitting}
+              />
+
+              {/*  <Autocomplete
                 multiple
                 id="person.user.role_ids"
                 options={hookValue.roles}
@@ -307,7 +352,7 @@ const AccountInformationSection = ({
                     color: theme.palette.warning.main,
                   },
                 }}
-              />
+              /> */}
 
               {/* Error message para roles */}
               {formikProps.touched.person?.user?.role_ids &&

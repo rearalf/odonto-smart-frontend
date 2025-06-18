@@ -3,7 +3,7 @@ import { ThemeProvider } from '@emotion/react';
 import { THEME_ID } from '@mui/material';
 import { Outlet } from 'react-router';
 
-import queryClient from '@features/doctor/queryClient';
+import queryClient from '@features/queryClient';
 import themeLight from './Theme';
 import {
   Notification,

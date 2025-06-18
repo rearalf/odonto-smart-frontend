@@ -5,37 +5,33 @@ import { useEffect, useState } from 'react';
 
 import useGetSpecialtiesQuery from '@features/doctor/query/useSpecialtyQuery';
 import useNotificationStore from '@stores/useNotificationStore';
+import useGetAllRoleQuery from '@features/role/query/useGetAllRoleQuery';
 
 function useNewDoctor() {
   const {
-    isError,
     data: dataSpecialties,
+    isError: isErrorSpecialty,
     isLoading: isLoadingSpecialty,
   } = useGetSpecialtiesQuery();
+
+  const {
+    data: dataRole,
+    isError: isErrorRole,
+    isLoading: isLoadingRole,
+  } = useGetAllRoleQuery();
 
   const storeNotification = useNotificationStore();
 
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] =
     useState<boolean>(false);
-  const [newContactType, setNewContactType] = useState('EMAIL');
-  const [newContactValue, setNewContactValue] = useState('');
-
-  const [specialtiesBySelect, setSpecialtiesBySelect] = useState<
-    (number | string)[]
-  >([]);
-
-  const isStepOptional = (step: number) => step === 1;
 
   const handleShowPassword = () => setIsShowPassword(!isShowPassword);
   const handleShowConfirmPassword = () =>
     setIsShowConfirmPassword(!isShowConfirmPassword);
 
-  const handleSetSpecialtiesBySelect = (newSet: (number | string)[]) =>
-    setSpecialtiesBySelect(newSet);
-
   useEffect(() => {
-    if (isError) {
+    if (isErrorSpecialty) {
       storeNotification.handleShowNotification({
         severity: 'error',
         show: true,
@@ -43,22 +39,28 @@ function useNewDoctor() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isError]);
+  }, [isErrorSpecialty]);
+
+  useEffect(() => {
+    if (isErrorRole) {
+      storeNotification.handleShowNotification({
+        severity: 'error',
+        show: true,
+        text: 'Error en el servidor',
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isErrorRole]);
 
   return {
-    dataSpecialties,
-    isStepOptional,
+    dataRole,
+    isLoadingRole,
     isShowPassword,
+    dataSpecialties,
     isLoadingSpecialty,
-    specialtiesBySelect,
     isShowConfirmPassword,
     handleShowPassword,
     handleShowConfirmPassword,
-    handleSetSpecialtiesBySelect,
-    newContactType,
-    setNewContactType,
-    newContactValue,
-    setNewContactValue,
   };
 }
 

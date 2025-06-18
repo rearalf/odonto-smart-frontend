@@ -14,11 +14,6 @@ interface IProfessionalInformationSectionProps {
   isLoadingSpecialty: boolean;
 }
 
-interface ISpecialtyOption {
-  label: string;
-  id: string;
-}
-
 const ProfessionalInformationSection = ({
   formikProps,
   specialties,
@@ -28,7 +23,7 @@ const ProfessionalInformationSection = ({
 
   const getSpecialtyOptions = (
     values: IBasicIdNameDescription[],
-  ): ISpecialtyOption[] => {
+  ): IAutocompleteOption[] => {
     if (Array.isArray(values)) {
       return values.map((value) => ({
         label: value.name,
@@ -38,7 +33,7 @@ const ProfessionalInformationSection = ({
     return [];
   };
 
-  const getSelectedSpecialty = (): ISpecialtyOption | null => {
+  const getSelectedSpecialty = (): IAutocompleteOption | null => {
     const selectedId = formikProps.values.specialty_id;
     if (!selectedId) return null;
 
@@ -104,7 +99,7 @@ const ProfessionalInformationSection = ({
                 value={selectedSpecialty}
                 loading={isLoadingSpecialty}
                 placeholder="Buscar especialidad"
-                label="Especialidad médica principal *"
+                label="Especialidad médica principal"
                 loadingText="Cargando especialidades..."
                 noOptionsText="No se encontraron especialidades"
                 onChange={(newValue) => {

@@ -54,7 +54,7 @@ const AutocompleteComponent = (props: ICustomAutocompleteProps) => {
           <TextField
             {...params}
             variant="outlined"
-            placeholder="Buscar especialidades..."
+            placeholder={props.placeholder}
             error={props.error}
             onBlur={props.onBlur}
             required={props.required}

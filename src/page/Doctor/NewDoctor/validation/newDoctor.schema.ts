@@ -46,12 +46,8 @@ export const newDoctorSchema = Yup.object().shape({
             return validateStrongPassword(value, this);
           },
         ),
-      role_ids: Yup.array()
-        .of(Yup.number())
-        .min(1, 'Debe seleccionar al menos un rol'),
-      permission_ids: Yup.array()
-        .of(Yup.number())
-        .min(1, 'Debe seleccionar al menos un permiso'),
+      role_ids: Yup.array().of(Yup.number()),
+      permission_ids: Yup.array().of(Yup.number()),
     }),
 
     personContact: Yup.array()
