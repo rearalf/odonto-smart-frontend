@@ -254,11 +254,11 @@ const AccountInformationSection = ({
 
               <AutocompleteComponent
                 multiple
+                required
                 fullWidth
                 loading={hookValue.isLoadingRole}
                 id="person.user.role_ids"
-                label="Especialidades adicionales"
-                placeholder="Buscar especialidades..."
+                placeholder="Seleccionar roles..."
                 options={convertToAutocompleteOptions(hookValue.roles)}
                 value={convertToAutocompleteOptions(selectedRoles)}
                 onChange={(newValue) => {
@@ -266,14 +266,9 @@ const AccountInformationSection = ({
                   formikProps.setFieldValue('person.user.role_ids', roleIds);
                 }}
                 helperText={
-                  formikProps.touched.person &&
-                  formikProps.touched.person.user &&
-                  formikProps.touched.person.user.role_ids &&
-                  formikProps.errors.person &&
-                  formikProps.errors.person.user &&
-                  formikProps.errors.person.user.role_ids
-                    ? formikProps.errors.person.user.role_ids
-                    : 'Seleccione los roles para este doctor'
+                  formikProps.touched.person?.user?.role_ids
+                    ? formikProps.errors.person?.user?.role_ids
+                    : undefined
                 }
                 onBlur={() => {
                   formikProps.setFieldTouched('person.user.role_ids', true);
@@ -291,83 +286,6 @@ const AccountInformationSection = ({
                 }
                 disabled={formikProps.isSubmitting}
               />
-
-              {/*  <Autocomplete
-                multiple
-                id="person.user.role_ids"
-                options={hookValue.roles}
-                getOptionLabel={(option) => option.name}
-                value={selectedRoles}
-                onChange={handleRolesChange}
-                filterSelectedOptions
-                disabled={formikProps.isSubmitting}
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => {
-                    const { key, ...chipProps } = getTagProps({ index });
-                    return (
-                      <Chip
-                        key={key}
-                        variant="filled"
-                        label={option.name}
-                        size="medium"
-                        sx={{
-                          backgroundColor: theme.palette.warning.main,
-                          color: theme.palette.warning.contrastText,
-                          fontWeight: 500,
-                          '& .MuiChip-deleteIcon': {
-                            color: alpha(
-                              theme.palette.warning.contrastText,
-                              0.8,
-                            ),
-                            '&:hover': {
-                              color: theme.palette.warning.contrastText,
-                            },
-                          },
-                        }}
-                        {...chipProps}
-                      />
-                    );
-                  })
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    placeholder="Seleccionar roles..."
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        backgroundColor: theme.palette.background.paper,
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: theme.palette.warning.main,
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: theme.palette.warning.main,
-                        },
-                      },
-                    }}
-                  />
-                )}
-                sx={{
-                  '& .MuiAutocomplete-popupIndicator': {
-                    color: theme.palette.warning.main,
-                  },
-                }}
-              /> */}
-
-              {/* Error message para roles */}
-              {formikProps.touched.person?.user?.role_ids &&
-                formikProps.errors.person?.user?.role_ids && (
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: theme.palette.error.main,
-                      mt: 1,
-                      display: 'block',
-                    }}
-                  >
-                    {formikProps.errors.person?.user?.role_ids}
-                  </Typography>
-                )}
 
               {/* Info de roles seleccionados */}
               {selectedRoles.length > 0 && (
