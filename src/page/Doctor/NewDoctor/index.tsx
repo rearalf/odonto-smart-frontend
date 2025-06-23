@@ -1,20 +1,16 @@
 import { Box, Button, Typography } from '@mui/material';
 import { Formik } from 'formik';
 
-import { BreadCrumbs } from '@components/index';
-import useNewDoctor from './useNewDoctor';
-
-import { newDoctorSchema } from './validation/newDoctor.schema';
 import { BREADCRUMBS, INITIAL_VALUES } from './constants/newDoctor';
+import { newDoctorSchema } from './validation/newDoctor.schema';
 
 import ProfessionalInformationSection from './components/ProfessionalInformationSection';
 import PersonalInformationSection from './components/PersonalInformationSection';
 import ContactInformationSection from './components/ContactInformationSection';
 import AccountInformationSection from './components/AccountInformationSection';
+import { BreadCrumbs } from '@components/index';
 
 function NewDoctor() {
-  const hook = useNewDoctor();
-
   return (
     <Box component="div">
       <BreadCrumbs links={BREADCRUMBS} loading={false} />
@@ -56,29 +52,10 @@ function NewDoctor() {
             <PersonalInformationSection formikProps={props} />
 
             {/* Account Information Section */}
-            <AccountInformationSection
-              formikProps={props}
-              hookValue={{
-                ...hook,
-                permissions:
-                  hook.dataPermission && hook.dataPermission.data
-                    ? hook.dataPermission.data
-                    : [],
-                roles:
-                  hook.dataRole && hook.dataRole.data ? hook.dataRole.data : [],
-              }}
-            />
+            <AccountInformationSection formikProps={props} />
 
             {/* Professional Information Section */}
-            <ProfessionalInformationSection
-              formikProps={props}
-              specialties={
-                hook.dataSpecialties && hook.dataSpecialties.data
-                  ? hook.dataSpecialties.data
-                  : []
-              }
-              isLoadingSpecialty={hook.isLoadingSpecialty}
-            />
+            <ProfessionalInformationSection formikProps={props} />
 
             {/* Contact Information Section */}
             <ContactInformationSection formikProps={props} />

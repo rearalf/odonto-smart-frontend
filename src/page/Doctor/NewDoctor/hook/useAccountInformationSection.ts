@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 
 import useGetAllPermission from '@features/permission/query/useGetAllPermissionQuery';
-import useGetSpecialtiesQuery from '@features/doctor/query/useSpecialtyQuery';
 import useGetAllRoleQuery from '@features/role/query/useGetAllRoleQuery';
 import useNotificationStore from '@stores/useNotificationStore';
 
-function useNewDoctor() {
-  const {
-    data: dataSpecialties,
-    isError: isErrorSpecialty,
-    isLoading: isLoadingSpecialty,
-  } = useGetSpecialtiesQuery();
+import type { IBasicIdNameDescription } from 'src/types/common.types';
+import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
 
+function useAccountInformationSection() {
   const {
     data: dataRole,
     isError: isErrorRole,
@@ -24,26 +20,35 @@ function useNewDoctor() {
     isLoading: isLoadingPermission,
   } = useGetAllPermission();
 
-  const storeNotification = useNotificationStore();
-
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] =
     useState<boolean>(false);
+
+  const storeNotification = useNotificationStore();
 
   const handleShowPassword = () => setIsShowPassword(!isShowPassword);
   const handleShowConfirmPassword = () =>
     setIsShowConfirmPassword(!isShowConfirmPassword);
 
-  useEffect(() => {
-    if (isErrorSpecialty) {
-      storeNotification.handleShowNotification({
-        severity: 'error',
-        show: true,
-        text: 'Error al obtener las especialidades',
-      });
+  const convertToAutocompleteOptions = (
+    items: IBasicIdNameDescription[],
+    permissions?: boolean,
+  ): IAutocompleteOption[] => {
+    if (permissions) {
+      return items.map((item) => ({
+        id: item.id,
+        label: item.label || item.name,
+        name: item.label || item.name,
+        description: item.description,
+      }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isErrorSpecialty]);
+    return items.map((item) => ({
+      id: item.id,
+      label: item.name,
+      name: item.name,
+      description: item.description,
+    }));
+  };
 
   useEffect(() => {
     if (isErrorRole) {
@@ -68,17 +73,16 @@ function useNewDoctor() {
   }, [isErrorPermission]);
 
   return {
-    dataRole,
     isLoadingRole,
-    dataPermission,
     isShowPassword,
-    dataSpecialties,
-    isLoadingSpecialty,
     isLoadingPermission,
     isShowConfirmPassword,
+    roles: dataRole?.data || [],
+    permissions: dataPermission?.data || [],
     handleShowPassword,
     handleShowConfirmPassword,
+    convertToAutocompleteOptions,
   };
 }
 
-export default useNewDoctor;
+export default useAccountInformationSection;

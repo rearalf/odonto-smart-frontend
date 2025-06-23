@@ -9,62 +9,32 @@ import {
   CardContent,
 } from '@mui/material';
 import { FiLock, FiUsers, FiShield, FiKey } from 'react-icons/fi';
-import { AutocompleteComponent, TextFieldBasic } from '@components/index';
 import type { FormikProps } from 'formik';
-import type { IFormValues } from '../types/newDoctor.types';
+
+import { AutocompleteComponent, TextFieldBasic } from '@components/index';
+import useAccountInformationSection from '../hook/useAccountInformationSection';
+
 import type { IBasicIdNameDescription } from 'src/types/common.types';
-import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
+import type { IFormValues } from '../types/newDoctor.types';
 
 interface IAccountInformationSectionProps {
   formikProps: FormikProps<IFormValues>;
-  hookValue: {
-    isLoadingRole: boolean;
-    isLoadingPermission: boolean;
-    isShowPassword: boolean;
-    isShowConfirmPassword: boolean;
-    handleShowPassword: () => void;
-    handleShowConfirmPassword: () => void;
-    roles: IBasicIdNameDescription[];
-    permissions: IBasicIdNameDescription[];
-  };
 }
 
 const AccountInformationSection = ({
   formikProps,
-  hookValue,
 }: IAccountInformationSectionProps) => {
+  const hook = useAccountInformationSection();
   const theme = useTheme();
 
-  // Obtener permisos seleccionados
-  const selectedPermissions = hookValue.permissions.filter(
+  const selectedPermissions = hook.permissions.filter(
     (permission: IBasicIdNameDescription) =>
       formikProps.values.person.user.permission_ids?.includes(permission.id),
   );
 
-  const selectedRoles = hookValue.roles.filter(
-    (role: IBasicIdNameDescription) =>
-      formikProps.values.person.user.role_ids?.includes(role.id),
+  const selectedRoles = hook.roles.filter((role: IBasicIdNameDescription) =>
+    formikProps.values.person.user.role_ids?.includes(role.id),
   );
-
-  const convertToAutocompleteOptions = (
-    items: IBasicIdNameDescription[],
-    permissions?: boolean,
-  ): IAutocompleteOption[] => {
-    if (permissions) {
-      return items.map((item) => ({
-        id: item.id,
-        label: item.label || item.name,
-        name: item.label || item.name,
-        description: item.description,
-      }));
-    }
-    return items.map((item) => ({
-      id: item.id,
-      label: item.name,
-      name: item.name,
-      description: item.description,
-    }));
-  };
 
   return (
     <Paper
@@ -157,8 +127,8 @@ const AccountInformationSection = ({
                     disabled={formikProps.isSubmitting}
                     value={formikProps.values.person.user.password}
                     onChange={formikProps.handleChange}
-                    showPassword={hookValue.isShowPassword}
-                    handleShowPassword={hookValue.handleShowPassword}
+                    showPassword={hook.isShowPassword}
+                    handleShowPassword={hook.handleShowPassword}
                     handleOnBlur={() => {
                       formikProps.setFieldTouched('person.user.password', true);
                       formikProps.validateField('person.user.password');
@@ -186,8 +156,8 @@ const AccountInformationSection = ({
                     disabled={formikProps.isSubmitting}
                     onChange={formikProps.handleChange}
                     value={formikProps.values.person.user.confirmPassword}
-                    showPassword={hookValue.isShowConfirmPassword}
-                    handleShowPassword={hookValue.handleShowConfirmPassword}
+                    showPassword={hook.isShowConfirmPassword}
+                    handleShowPassword={hook.handleShowConfirmPassword}
                     handleOnBlur={() => {
                       formikProps.setFieldTouched(
                         'person.user.confirmPassword',
@@ -255,11 +225,11 @@ const AccountInformationSection = ({
                 multiple
                 required
                 fullWidth
-                loading={hookValue.isLoadingRole}
+                loading={hook.isLoadingRole}
                 id="person.user.role_ids"
                 placeholder="Seleccionar roles..."
-                options={convertToAutocompleteOptions(hookValue.roles)}
-                value={convertToAutocompleteOptions(selectedRoles)}
+                options={hook.convertToAutocompleteOptions(hook.roles)}
+                value={hook.convertToAutocompleteOptions(selectedRoles)}
                 onChange={(newValue) => {
                   const roleIds = newValue.map((specialty) => specialty.id);
                   formikProps.setFieldValue('person.user.role_ids', roleIds);
@@ -349,14 +319,17 @@ const AccountInformationSection = ({
                 multiple
                 required
                 fullWidth
-                loading={hookValue.isLoadingPermission}
+                loading={hook.isLoadingPermission}
                 id="person.user.permission_ids"
                 placeholder="Seleccionar permisos..."
-                options={convertToAutocompleteOptions(
-                  hookValue.permissions,
+                options={hook.convertToAutocompleteOptions(
+                  hook.permissions,
                   true,
                 )}
-                value={convertToAutocompleteOptions(selectedPermissions, true)}
+                value={hook.convertToAutocompleteOptions(
+                  selectedPermissions,
+                  true,
+                )}
                 onChange={(newValue) => {
                   const permissionIds = newValue.map(
                     (permission) => permission.id,

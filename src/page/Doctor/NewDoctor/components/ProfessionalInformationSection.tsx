@@ -7,37 +7,23 @@ import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
 
 import { AutocompleteComponent, TextFieldBasic } from '@components/index';
+import useProfessionalInformationSection from '../hook/useProfessionalInformationSection';
 
 interface IProfessionalInformationSectionProps {
   formikProps: FormikProps<IFormValues>;
-  specialties: IBasicIdNameDescription[];
-  isLoadingSpecialty: boolean;
 }
 
 const ProfessionalInformationSection = ({
   formikProps,
-  specialties,
-  isLoadingSpecialty,
 }: IProfessionalInformationSectionProps) => {
+  const hook = useProfessionalInformationSection();
   const theme = useTheme();
-
-  const getSpecialtyOptions = (
-    values: IBasicIdNameDescription[],
-  ): IAutocompleteOption[] => {
-    if (Array.isArray(values)) {
-      return values.map((value) => ({
-        label: value.name,
-        id: value.id.toString(),
-      }));
-    }
-    return [];
-  };
 
   const getSelectedSpecialty = (): IAutocompleteOption | null => {
     const selectedId = formikProps.values.specialty_id;
     if (!selectedId) return null;
 
-    const specialty = specialties.find(
+    const specialty = hook.specialties.find(
       (s) => s.id.toString() === selectedId.toString(),
     );
     return specialty
@@ -45,23 +31,13 @@ const ProfessionalInformationSection = ({
       : null;
   };
 
-  const specialtyOptions = getSpecialtyOptions(specialties);
+  const specialtyOptions = hook.getSpecialtyOptions(hook.specialties);
   const selectedSpecialty = getSelectedSpecialty();
 
-  const selectedSpecialties = specialties.filter(
+  const selectedSpecialties = hook.specialties.filter(
     (specialty: IBasicIdNameDescription) =>
       formikProps.values.specialty_ids?.includes(specialty.id),
   );
-
-  const convertToAutocompleteOptions = (
-    items: IBasicIdNameDescription[],
-  ): IAutocompleteOption[] =>
-    items.map((item) => ({
-      id: item.id,
-      label: item.name,
-      name: item.name,
-      description: item.description,
-    }));
 
   return (
     <Paper
@@ -97,7 +73,7 @@ const ProfessionalInformationSection = ({
                 id="specialty_id"
                 options={specialtyOptions}
                 value={selectedSpecialty}
-                loading={isLoadingSpecialty}
+                loading={hook.isLoadingSpecialty}
                 placeholder="Buscar especialidad"
                 label="Especialidad médica principal"
                 loadingText="Cargando especialidades..."
@@ -151,8 +127,8 @@ const ProfessionalInformationSection = ({
                 id="specialty_ids"
                 label="Especialidades adicionales"
                 placeholder="Buscar especialidades..."
-                options={convertToAutocompleteOptions(specialties)} // Convertir aquí
-                value={convertToAutocompleteOptions(selectedSpecialties)} // Convertir aquí
+                options={hook.convertToAutocompleteOptions(hook.specialties)}
+                value={hook.convertToAutocompleteOptions(selectedSpecialties)}
                 onChange={(newValue) => {
                   const specialtyIds = newValue.map(
                     (specialty) => specialty.id,
