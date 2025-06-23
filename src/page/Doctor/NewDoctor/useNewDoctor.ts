@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 
-// import type { ChangeEvent, ChangeEventHandler, MouseEvent } from 'react';
-// import type { MuiTelInputInfo } from 'mui-tel-input';
-
+import useGetAllPermission from '@features/permission/query/useGetAllPermissionQuery';
 import useGetSpecialtiesQuery from '@features/doctor/query/useSpecialtyQuery';
-import useNotificationStore from '@stores/useNotificationStore';
 import useGetAllRoleQuery from '@features/role/query/useGetAllRoleQuery';
+import useNotificationStore from '@stores/useNotificationStore';
 
 function useNewDoctor() {
   const {
@@ -19,6 +17,12 @@ function useNewDoctor() {
     isError: isErrorRole,
     isLoading: isLoadingRole,
   } = useGetAllRoleQuery();
+
+  const {
+    data: dataPermission,
+    isError: isErrorPermission,
+    isLoading: isLoadingPermission,
+  } = useGetAllPermission();
 
   const storeNotification = useNotificationStore();
 
@@ -35,7 +39,7 @@ function useNewDoctor() {
       storeNotification.handleShowNotification({
         severity: 'error',
         show: true,
-        text: 'Error en el servidor',
+        text: 'Error al obtener las especialidades',
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,18 +50,31 @@ function useNewDoctor() {
       storeNotification.handleShowNotification({
         severity: 'error',
         show: true,
-        text: 'Error en el servidor',
+        text: 'Error al obtener los roles',
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isErrorRole]);
 
+  useEffect(() => {
+    if (isErrorPermission) {
+      storeNotification.handleShowNotification({
+        severity: 'error',
+        show: true,
+        text: 'Error al obtener los permisos',
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isErrorPermission]);
+
   return {
     dataRole,
     isLoadingRole,
+    dataPermission,
     isShowPassword,
     dataSpecialties,
     isLoadingSpecialty,
+    isLoadingPermission,
     isShowConfirmPassword,
     handleShowPassword,
     handleShowConfirmPassword,

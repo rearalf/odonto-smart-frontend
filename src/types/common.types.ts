@@ -10,6 +10,7 @@ export interface IBasicIdNameDescription {
   id: number;
   name: string;
   description?: string;
+  label?: string;
 }
 
 export interface IRadioButtonOptions {

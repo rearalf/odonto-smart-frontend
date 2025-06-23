@@ -1,9 +1,14 @@
-import { useTheme, TextField, Autocomplete } from '@mui/material';
+import RenderInput from './RenderInput';
+import Tag from './Tag';
 import type {
   IAutocompleteOption,
   ICustomAutocompleteProps,
 } from 'src/types/AutocompleteComponent.type';
-import Tag from './Tag';
+import {
+  useTheme,
+  Autocomplete,
+  type AutocompleteRenderInputParams,
+} from '@mui/material';
 
 const AutocompleteComponent = (props: ICustomAutocompleteProps) => {
   const theme = useTheme();
@@ -11,7 +16,6 @@ const AutocompleteComponent = (props: ICustomAutocompleteProps) => {
   const sharedStyles = {
     textField: {
       '& .MuiOutlinedInput-root': {
-        // backgroundColor: theme.palette.background.paper,
         '&:hover .MuiOutlinedInput-notchedOutline': {
           borderColor: theme.palette.primary.main,
         },
@@ -33,75 +37,51 @@ const AutocompleteComponent = (props: ICustomAutocompleteProps) => {
     },
   };
 
+  const commonProps = {
+    id: props.id,
+    'aria-label': props.label,
+    options: props.options,
+    disabled: props.disabled,
+    loading: props.loading,
+    loadingText: props.loadingText || 'Cargando...',
+    noOptionsText: props.noOptionsText || 'Sin opciones',
+    sx: sharedStyles.autocomplete,
+    renderInput: (params: AutocompleteRenderInputParams) =>
+      RenderInput(params, props, sharedStyles.textField),
+    onBlur: props.onBlur,
+  };
+
   if (props.multiple) {
     return (
       <Autocomplete
+        {...commonProps}
         multiple
-        id={props.id}
-        aria-label={props.label}
-        options={props.options}
-        getOptionLabel={(option) => option.name}
         value={props.value}
+        getOptionLabel={(option) => option.name || ''}
         onChange={(_event, newValue) => {
           props.onChange(newValue as IAutocompleteOption[]);
         }}
         filterSelectedOptions
         limitTags={props.maxTags}
-        disabled={props.disabled}
-        sx={sharedStyles.autocomplete}
         renderTags={(value, getTagProps) => Tag(value, getTagProps, theme)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            placeholder={props.placeholder}
-            error={props.error}
-            onBlur={props.onBlur}
-            required={props.required}
-            helperText={props.helperText}
-            sx={sharedStyles.textField}
-          />
-        )}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
       />
     );
   }
 
   return (
     <Autocomplete
-      id={props.id}
-      aria-label={props.label}
-      options={props.options}
-      getOptionLabel={(option) => option.label || ''}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
+      {...commonProps}
       value={props.value as IAutocompleteOption | null}
+      getOptionLabel={(option) => option.label || option.name || ''}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       onChange={(_event, newValue) => {
         props.onChange(newValue as IAutocompleteOption | null);
       }}
-      onBlur={props.onBlur}
-      loading={props.loading}
-      disabled={props.disabled}
       fullWidth={props.fullWidth}
-      loadingText={props.loadingText}
-      noOptionsText={props.noOptionsText}
-      sx={sharedStyles.autocomplete}
       clearOnEscape
       selectOnFocus
-      disableClearable={false}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          {...props.textFieldProps}
-          variant="outlined"
-          label={props.label}
-          disabled={props.disabled}
-          placeholder={props.placeholder}
-          error={props.error}
-          onBlur={props.onBlur}
-          required={props.required}
-          helperText={props.helperText}
-          sx={sharedStyles.textField}
-        />
-      )}
+      disableClearable={props.disableClearable ?? false}
     />
   );
 };

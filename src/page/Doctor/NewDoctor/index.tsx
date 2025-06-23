@@ -60,7 +60,10 @@ function NewDoctor() {
               formikProps={props}
               hookValue={{
                 ...hook,
-                permissions: [],
+                permissions:
+                  hook.dataPermission && hook.dataPermission.data
+                    ? hook.dataPermission.data
+                    : [],
                 roles:
                   hook.dataRole && hook.dataRole.data ? hook.dataRole.data : [],
               }}

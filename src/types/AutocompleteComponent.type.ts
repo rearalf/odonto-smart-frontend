@@ -27,6 +27,7 @@ export interface ISingleAutocompleteProps extends IBaseAutocompleteProps {
   multiple?: false;
   value: IAutocompleteOption | null;
   onChange: (value: IAutocompleteOption | null) => void;
+  disableClearable?: boolean;
 }
 
 export interface IMultipleAutocompleteProps extends IBaseAutocompleteProps {

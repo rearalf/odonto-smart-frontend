@@ -1,14 +1,11 @@
 import {
-  alpha,
   Box,
   Grid,
-  Paper,
-  Typography,
-  useTheme,
-  Chip,
-  Autocomplete,
-  TextField,
   Card,
+  Paper,
+  alpha,
+  useTheme,
+  Typography,
   CardContent,
 } from '@mui/material';
 import { FiLock, FiUsers, FiShield, FiKey } from 'react-icons/fi';
@@ -22,6 +19,7 @@ interface IAccountInformationSectionProps {
   formikProps: FormikProps<IFormValues>;
   hookValue: {
     isLoadingRole: boolean;
+    isLoadingPermission: boolean;
     isShowPassword: boolean;
     isShowConfirmPassword: boolean;
     handleShowPassword: () => void;
@@ -37,15 +35,6 @@ const AccountInformationSection = ({
 }: IAccountInformationSectionProps) => {
   const theme = useTheme();
 
-  // Función para manejar cambios en permisos
-  const handlePermissionsChange = (
-    _e: any,
-    newValue: IBasicIdNameDescription[],
-  ) => {
-    const permissionIds = newValue.map((permission) => permission.id);
-    formikProps.setFieldValue('person.user.permission_ids', permissionIds);
-  };
-
   // Obtener permisos seleccionados
   const selectedPermissions = hookValue.permissions.filter(
     (permission: IBasicIdNameDescription) =>
@@ -59,13 +48,23 @@ const AccountInformationSection = ({
 
   const convertToAutocompleteOptions = (
     items: IBasicIdNameDescription[],
-  ): IAutocompleteOption[] =>
-    items.map((item) => ({
+    permissions?: boolean,
+  ): IAutocompleteOption[] => {
+    if (permissions) {
+      return items.map((item) => ({
+        id: item.id,
+        label: item.label || item.name,
+        name: item.label || item.name,
+        description: item.description,
+      }));
+    }
+    return items.map((item) => ({
       id: item.id,
       label: item.name,
       name: item.name,
       description: item.description,
     }));
+  };
 
   return (
     <Paper
@@ -346,79 +345,51 @@ const AccountInformationSection = ({
                 Configure permisos granulares adicionales a los roles asignados.
               </Typography>
 
-              <Autocomplete
+              <AutocompleteComponent
                 multiple
+                required
+                fullWidth
+                loading={hookValue.isLoadingPermission}
                 id="person.user.permission_ids"
-                options={hookValue.permissions}
-                getOptionLabel={(option) => option.name}
-                value={selectedPermissions}
-                onChange={handlePermissionsChange}
-                filterSelectedOptions
-                disabled={formikProps.isSubmitting}
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => {
-                    const { key, ...chipProps } = getTagProps({ index });
-                    return (
-                      <Chip
-                        key={key}
-                        variant="filled"
-                        label={option.name}
-                        size="medium"
-                        sx={{
-                          backgroundColor: theme.palette.error.main,
-                          color: theme.palette.error.contrastText,
-                          fontWeight: 500,
-                          '& .MuiChip-deleteIcon': {
-                            color: alpha(theme.palette.error.contrastText, 0.8),
-                            '&:hover': {
-                              color: theme.palette.error.contrastText,
-                            },
-                          },
-                        }}
-                        {...chipProps}
-                      />
-                    );
-                  })
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    placeholder="Seleccionar permisos..."
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        backgroundColor: theme.palette.background.paper,
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          borderColor: theme.palette.error.main,
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          borderColor: theme.palette.error.main,
-                        },
-                      },
-                    }}
-                  />
+                placeholder="Seleccionar permisos..."
+                options={convertToAutocompleteOptions(
+                  hookValue.permissions,
+                  true,
                 )}
-                sx={{
-                  '& .MuiAutocomplete-popupIndicator': {
-                    color: theme.palette.error.main,
-                  },
+                value={convertToAutocompleteOptions(selectedPermissions, true)}
+                onChange={(newValue) => {
+                  const permissionIds = newValue.map(
+                    (permission) => permission.id,
+                  );
+                  formikProps.setFieldValue(
+                    'person.user.permission_ids',
+                    permissionIds,
+                  );
                 }}
+                helperText={
+                  formikProps.touched.person?.user?.permission_ids
+                    ? formikProps.errors.person?.user?.permission_ids
+                    : undefined
+                }
+                onBlur={() => {
+                  formikProps.setFieldTouched(
+                    'person.user.permission_ids',
+                    true,
+                  );
+                  formikProps.validateField('person.user.permission_ids');
+                }}
+                error={
+                  formikProps.touched.person &&
+                  formikProps.touched.person.user &&
+                  formikProps.touched.person.user.permission_ids &&
+                  Boolean(
+                    formikProps.errors.person &&
+                      formikProps.errors.person.user &&
+                      formikProps.errors.person.user.permission_ids,
+                  )
+                }
+                disabled={formikProps.isSubmitting}
               />
-
-              {/* Error message para permisos */}
-              {formikProps.touched.person?.user?.permission_ids &&
-                formikProps.errors.person?.user?.permission_ids && (
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: theme.palette.error.main,
-                      mt: 1,
-                      display: 'block',
-                    }}
-                  >
-                    {formikProps.errors.person?.user?.permission_ids}
-                  </Typography>
-                )}
 
               {/* Info de permisos seleccionados */}
               {selectedPermissions.length > 0 && (

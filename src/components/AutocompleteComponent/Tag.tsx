@@ -1,10 +1,10 @@
+import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
 import {
   Chip,
   alpha,
   type Theme,
   type AutocompleteRenderGetTagProps,
 } from '@mui/material';
-import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
 
 const Tag = (
   value: IAutocompleteOption[],
@@ -23,8 +23,9 @@ const Tag = (
           backgroundColor: alpha(theme.palette.primary.main, 0.08),
           borderColor: alpha(theme.palette.primary.main, 0.3),
           color: theme.palette.primary.main,
+          fontWeight: 500,
           '& .MuiChip-deleteIcon': {
-            color: alpha(theme.palette.primary.main, 0.7),
+            color: alpha(theme.palette.primary.main, 0.8),
             '&:hover': {
               color: theme.palette.primary.main,
             },
