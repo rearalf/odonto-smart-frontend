@@ -96,6 +96,7 @@ const ContactInformationSection = ({
               }}
               options={CONTACT_OPTIONS}
               sx={{ mb: 2.5 }}
+              disabled={formikProps.isSubmitting}
             />
 
             {/* Contact Value Input */}
@@ -109,6 +110,7 @@ const ContactInformationSection = ({
                     autoComplete="email"
                     placeholder="doctor@clinica.com"
                     value={formik.values.contact_value}
+                    disabled={formikProps.isSubmitting}
                     onChange={(e) => {
                       formik.setFieldValue('contact_value', e.target.value);
                     }}
@@ -136,6 +138,7 @@ const ContactInformationSection = ({
                         : 'WhatsApp'
                     }
                     value={formik.values.contact_value}
+                    disabled={formikProps.isSubmitting}
                     onChange={(e) => {
                       formik.setFieldValue('contact_value', e);
                     }}
@@ -160,7 +163,9 @@ const ContactInformationSection = ({
                 <Button
                   variant="contained"
                   fullWidth
-                  disabled={!formik.isValid || !formik.dirty}
+                  disabled={
+                    !formik.isValid || !formik.dirty || formikProps.isSubmitting
+                  }
                   startIcon={<FiPlus />}
                   type="submit"
                   onClick={formik.submitForm}
@@ -253,6 +258,7 @@ const ContactInformationSection = ({
                     <IconButton
                       size="small"
                       color="error"
+                      disabled={formikProps.isSubmitting}
                       onClick={() => {
                         const newContacts = [
                           ...formikProps.values.person.personContact,

@@ -8,7 +8,7 @@ interface IUser {
   permission_ids: number[];
 }
 
-interface IPerson {
+export interface IPerson {
   first_name: string;
   middle_name?: string;
   last_name: string;
@@ -24,4 +24,20 @@ export interface IFormValues {
   specialty_id: number;
   specialty_ids: number[];
   person: IPerson;
+}
+
+export interface INewDoctorPersonFormData {
+  first_name: string;
+  middle_name?: string;
+  last_name: string;
+  profile_picture_name?: string;
+  profile_picture?: string;
+  personContact?: IContactForm[];
+  person_type_id: 4;
+  user: {
+    email: string;
+    password: string;
+    role_ids: number[];
+    permission_ids?: number[];
+  };
 }

@@ -223,7 +223,6 @@ const AccountInformationSection = ({
 
               <AutocompleteComponent
                 multiple
-                required
                 fullWidth
                 loading={hook.isLoadingRole}
                 id="person.user.role_ids"
@@ -317,7 +316,6 @@ const AccountInformationSection = ({
 
               <AutocompleteComponent
                 multiple
-                required
                 fullWidth
                 loading={hook.isLoadingPermission}
                 id="person.user.permission_ids"

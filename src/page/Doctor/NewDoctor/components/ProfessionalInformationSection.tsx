@@ -78,6 +78,7 @@ const ProfessionalInformationSection = ({
                 label="Especialidad médica principal"
                 loadingText="Cargando especialidades..."
                 noOptionsText="No se encontraron especialidades"
+                disabled={formikProps.isSubmitting}
                 onChange={(newValue) => {
                   formikProps.setFieldValue('specialty_id', newValue?.id || '');
                 }}
@@ -129,6 +130,7 @@ const ProfessionalInformationSection = ({
                 placeholder="Buscar especialidades..."
                 options={hook.convertToAutocompleteOptions(hook.specialties)}
                 value={hook.convertToAutocompleteOptions(selectedSpecialties)}
+                disabled={formikProps.isSubmitting}
                 onChange={(newValue) => {
                   const specialtyIds = newValue.map(
                     (specialty) => specialty.id,
@@ -149,7 +151,6 @@ const ProfessionalInformationSection = ({
                   formikProps.touched.specialty_ids &&
                   Boolean(formikProps.errors.specialty_ids)
                 }
-                disabled={formikProps.isSubmitting}
               />
 
               {/* Mostrar especialidades seleccionadas */}
@@ -213,6 +214,7 @@ const ProfessionalInformationSection = ({
 • Miembro de la Sociedad Cardiológica Nacional"
               onChange={formikProps.handleChange}
               value={formikProps.values.qualification}
+              disabled={formikProps.isSubmitting}
               handleOnBlur={() => {
                 formikProps.setFieldTouched('qualification', true);
                 formikProps.validateField('qualification');
