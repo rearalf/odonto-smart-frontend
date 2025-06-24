@@ -78,7 +78,10 @@ function useNewDoctor() {
       onError: (error) => {
         formikHelpers.setSubmitting(false);
         storeNotification.handleShowNotification({
-          text: error.message[0] || 'Error al crear el doctor.',
+          text:
+            Array.isArray(error.message) && error.message.length > 0
+              ? error.message[0]
+              : 'Error al crear el doctor.',
           show: true,
           severity: 'error',
         });
