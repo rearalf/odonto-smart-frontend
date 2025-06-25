@@ -1,5 +1,8 @@
-import { Box, Button, Typography } from '@mui/material';
+import { FiSave, FiXCircle } from 'react-icons/fi';
+import { Box, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
+
+import { BreadCrumbs, ButtonComponent } from '@components/index';
 
 import { BREADCRUMBS, INITIAL_VALUES } from './constants/newDoctor';
 import { newDoctorSchema } from './validation/newDoctor.schema';
@@ -8,30 +11,16 @@ import ProfessionalInformationSection from './components/ProfessionalInformation
 import PersonalInformationSection from './components/PersonalInformationSection';
 import ContactInformationSection from './components/ContactInformationSection';
 import AccountInformationSection from './components/AccountInformationSection';
-import { BreadCrumbs } from '@components/index';
+import { btnGroupStyles, headerStyles } from '@styles/index';
 import useNewDoctor from './hook/useNewDoctor';
 
 function NewDoctor() {
   const hook = useNewDoctor();
   return (
-    <Box component="div">
+    <>
       <BreadCrumbs links={BREADCRUMBS} loading={false} />
-      <Box
-        component="header"
-        sx={{
-          mt: 2,
-          mb: 4,
-        }}
-      >
-        <Typography
-          variant="h4"
-          component="h1"
-          sx={{
-            fontWeight: 600,
-            color: 'primary.main',
-            letterSpacing: '-0.02em',
-          }}
-        >
+      <Box component="header" sx={headerStyles}>
+        <Typography variant="h4" component="h1">
           Nuevo doctor
         </Typography>
       </Box>
@@ -57,36 +46,30 @@ function NewDoctor() {
             {/* Contact Information Section */}
             <ContactInformationSection formikProps={props} />
 
-            <Box
-              component="div"
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '1rem',
-                mt: '2rem',
-              }}
-            >
-              <Button
-                variant="outlined"
+            <Box component="div" sx={btnGroupStyles}>
+              <ButtonComponent
                 color="error"
-                disabled={props.isSubmitting}
-              >
-                Cancelar
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
+                text="Cancelar"
+                position="left"
+                variant="outlined"
+                icon={<FiXCircle />}
                 loading={props.isSubmitting}
-                disabled={!props.isValid || !props.dirty}
-              >
-                Guardar
-              </Button>
+              />
+              <ButtonComponent
+                type="submit"
+                text="Guardar"
+                color="success"
+                position="left"
+                icon={<FiSave />}
+                variant="contained"
+                loading={props.isSubmitting}
+                disabled={!props.isValid || !props.dirty || props.isSubmitting}
+              />
             </Box>
           </Form>
         )}
       </Formik>
-    </Box>
+    </>
   );
 }
 

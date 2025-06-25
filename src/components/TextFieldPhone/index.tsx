@@ -14,6 +14,7 @@ interface ITextFieldPhoneProps {
   onChange: (value: string) => void;
   handleOnBlur?: () => void;
   format?: string; // Formato personalizable
+  onSubmit?: () => void;
 }
 
 const TextFieldPhone = (props: ITextFieldPhoneProps) => (
@@ -37,6 +38,12 @@ const TextFieldPhone = (props: ITextFieldPhoneProps) => (
     helperText={props.helperText}
     placeholder={props.placeholder || '0000-0000'}
     type="tel"
+    onKeyDown={(e) => {
+      if (e.key === 'Enter' && props.onSubmit) {
+        e.preventDefault();
+        props.onSubmit();
+      }
+    }}
   />
 );
 

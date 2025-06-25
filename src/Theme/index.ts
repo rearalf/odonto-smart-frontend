@@ -47,7 +47,7 @@ const themeLight = createTheme({
       '800': '#2e6506',
       '900': '#215304',
     },
-  }, //.MuiFormControl-root.MuiTextField-root .MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-multiline textarea
+  },
   components: {
     MuiTextField: {
       styleOverrides: {
@@ -169,6 +169,18 @@ const themeLight = createTheme({
           },
         },
       },
+    },
+    MuiTypography: {
+      variants: [
+        {
+          props: { variant: 'h4', component: 'h1' },
+          style: {
+            fontWeight: 600,
+            color: '#19A7CE',
+            letterSpacing: '-0.02em',
+          },
+        },
+      ],
     },
   },
 });

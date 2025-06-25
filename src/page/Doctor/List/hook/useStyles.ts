@@ -23,18 +23,11 @@ function useStyles() {
     },
   };
 
-  const h1Styles: SxProps<Theme> = {
-    fontWeight: 600,
-    color: 'primary.main',
-    letterSpacing: '-0.02em',
-  };
-
   const headerIconStyles: CSSProperties = {
     transition: 'transform 0.2s ease-in-out',
   };
 
   return {
-    h1Styles,
     headerStyles,
     headerIconStyles,
   };

@@ -3,7 +3,6 @@ import {
   Grid,
   Card,
   Paper,
-  alpha,
   useTheme,
   Typography,
   CardContent,
@@ -16,6 +15,7 @@ import useAccountInformationSection from '../hook/useAccountInformationSection';
 
 import type { IBasicIdNameDescription } from 'src/types/common.types';
 import type { IFormValues } from '../types/newDoctor.types';
+import useStyles from '../hook/useStyles';
 
 interface IAccountInformationSectionProps {
   formikProps: FormikProps<IFormValues>;
@@ -25,6 +25,7 @@ const AccountInformationSection = ({
   formikProps,
 }: IAccountInformationSectionProps) => {
   const hook = useAccountInformationSection();
+  const styles = useStyles();
   const theme = useTheme();
 
   const selectedPermissions = hook.permissions.filter(
@@ -37,16 +38,7 @@ const AccountInformationSection = ({
   );
 
   return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: 3,
-        mb: 3,
-        backgroundColor: alpha(theme.palette.primary.main, 0.02),
-        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-        borderRadius: 2,
-      }}
-    >
+    <Paper elevation={0} sx={styles.paperStyles}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <FiLock
           size={24}
@@ -61,15 +53,7 @@ const AccountInformationSection = ({
       <Grid container spacing={3}>
         {/* Credenciales de Acceso */}
         <Grid size={12}>
-          <Card
-            elevation={0}
-            sx={{
-              backgroundColor: alpha(theme.palette.info.main, 0.04),
-              border: `1px solid ${alpha(theme.palette.info.main, 0.2)}`,
-              borderRadius: 2,
-              mb: 3,
-            }}
-          >
+          <Card elevation={0} sx={styles.cardCredencialesStyles}>
             <CardContent sx={{ p: 2.5 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2.5 }}>
                 <FiKey
@@ -183,15 +167,7 @@ const AccountInformationSection = ({
 
         {/* Roles del Sistema */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Card
-            elevation={0}
-            sx={{
-              backgroundColor: alpha(theme.palette.warning.main, 0.03),
-              border: `1px solid ${alpha(theme.palette.warning.main, 0.15)}`,
-              borderRadius: 2,
-              height: '100%',
-            }}
-          >
+          <Card elevation={0} sx={styles.cardRolsStyles}>
             <CardContent sx={{ p: 2.5 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <FiUsers
@@ -276,15 +252,7 @@ const AccountInformationSection = ({
 
         {/* Permisos Específicos */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Card
-            elevation={0}
-            sx={{
-              backgroundColor: alpha(theme.palette.error.main, 0.03),
-              border: `1px solid ${alpha(theme.palette.error.main, 0.15)}`,
-              borderRadius: 2,
-              height: '100%',
-            }}
-          >
+          <Card elevation={0} sx={styles.cardPermissionsStyles}>
             <CardContent sx={{ p: 2.5 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <FiShield

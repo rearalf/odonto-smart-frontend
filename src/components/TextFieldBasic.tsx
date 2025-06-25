@@ -18,6 +18,7 @@ interface ITextFieldBasicProps {
   showPassword?: boolean;
   handleOnBlur?: () => void;
   handleShowPassword?: () => void;
+  onSubmit?: () => void;
 }
 
 const TextFieldBasic = (props: ITextFieldBasicProps) => (
@@ -39,6 +40,12 @@ const TextFieldBasic = (props: ITextFieldBasicProps) => (
     helperText={props.helperText}
     placeholder={props.placeholder}
     autoComplete={props.autoComplete}
+    onKeyDown={(e) => {
+      if (e.key === 'Enter' && props.onSubmit) {
+        e.preventDefault();
+        props.onSubmit();
+      }
+    }}
     type={props.showPassword ? 'text' : props.type}
     InputProps={{
       minRows: 1,

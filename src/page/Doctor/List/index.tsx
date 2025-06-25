@@ -26,7 +26,7 @@ function Doctor() {
       <BreadCrumbs links={hook.breadCrumbs} loading={false} />
 
       <Box component="header" sx={styles.headerStyles}>
-        <Typography variant="h4" component="h1" sx={styles.h1Styles}>
+        <Typography variant="h4" component="h1">
           Doctores
         </Typography>
         <ButtonComponent

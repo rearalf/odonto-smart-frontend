@@ -1,29 +1,21 @@
-import { FiMail, FiPhone, FiPlus, FiTrash2 } from 'react-icons/fi';
-import { Form, Formik, type FormikProps } from 'formik';
-import { FaWhatsapp } from 'react-icons/fa';
-import {
-  alpha,
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Paper,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Grid, Paper, useTheme, Typography } from '@mui/material';
+import { Formik, type FormikProps } from 'formik';
+import { FiPhone, FiPlus } from 'react-icons/fi';
 
 import {
+  ButtonComponent,
   RadioButtonComponent,
   TextFieldBasic,
   TextFieldPhone,
 } from '@components/index';
 import { contactSchema } from '../validation/newDoctor.schema';
 import type { IFormValues } from '../types/newDoctor.types';
-import { CONTACT_TYPE_ENUM } from 'src/types/common.types';
+import useStyles from '../hook/useStyles';
 import {
-  CONTACT_INITIAL_VALUES,
   CONTACT_OPTIONS,
+  CONTACT_INITIAL_VALUES,
 } from '../constants/newDoctor';
+import ContactCard from './ContactCard';
 
 interface IContactInformationSection {
   formikProps: FormikProps<IFormValues>;
@@ -33,18 +25,10 @@ const ContactInformationSection = ({
   formikProps,
 }: IContactInformationSection) => {
   const theme = useTheme();
+  const styles = useStyles();
 
   return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: 3,
-        mb: 3,
-        backgroundColor: alpha(theme.palette.primary.main, 0.02),
-        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-        borderRadius: 2,
-      }}
-    >
+    <Paper elevation={0} sx={styles.paperStyles}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2.5 }}>
         <FiPhone
           size={24}
@@ -52,7 +36,7 @@ const ContactInformationSection = ({
           style={{ marginRight: 8 }}
         />
         <Typography variant="h6" sx={{ fontWeight: 500 }}>
-          Información de Contacto{' '}
+          Información de Contacto
           <Typography variant="caption"> (Opcional)</Typography>
         </Typography>
       </Box>
@@ -69,15 +53,8 @@ const ContactInformationSection = ({
         }}
       >
         {(formik) => (
-          <Form>
-            <Box
-              sx={{
-                p: 2.5,
-                backgroundColor: alpha(theme.palette.success.main, 0.03),
-                borderRadius: 1.5,
-                border: `1px solid ${alpha(theme.palette.success.main, 0.1)}`,
-              }}
-            >
+          <>
+            <Box sx={styles.boxContactFormStyles}>
               <Typography
                 variant="subtitle2"
                 sx={{
@@ -114,6 +91,7 @@ const ContactInformationSection = ({
                       placeholder="doctor@clinica.com"
                       value={formik.values.contact_value}
                       disabled={formikProps.isSubmitting}
+                      onSubmit={formik.submitForm}
                       onChange={(e) => {
                         formik.setFieldValue('contact_value', e.target.value);
                       }}
@@ -135,6 +113,7 @@ const ContactInformationSection = ({
                   ) : (
                     <TextFieldPhone
                       id="contact_value"
+                      onSubmit={formik.submitForm}
                       label={
                         formik.values.contact_type === 'PHONE'
                           ? 'Teléfono'
@@ -163,31 +142,33 @@ const ContactInformationSection = ({
                   )}
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
-                  <Button
-                    variant="contained"
+                  <ButtonComponent
                     fullWidth
+                    type="button"
+                    color="primary"
+                    position="left"
+                    text="Agregar"
+                    variant="contained"
+                    icon={<FiPlus />}
+                    onClick={formik.submitForm}
                     disabled={
                       !formik.isValid ||
                       !formik.dirty ||
                       formikProps.isSubmitting
                     }
-                    startIcon={<FiPlus />}
-                    type="submit"
-                    onClick={formik.submitForm}
                     sx={{
                       backgroundColor: theme.palette.success.main,
-                      height: '56px',
+                      height: '100%',
+                      width: '100%',
                       '&:hover': {
                         backgroundColor: theme.palette.success.dark,
                       },
                     }}
-                  >
-                    Agregar
-                  </Button>
+                  />
                 </Grid>
               </Grid>
             </Box>
-          </Form>
+          </>
         )}
       </Formik>
       {/* Contact List Display */}
@@ -195,112 +176,11 @@ const ContactInformationSection = ({
         <Box sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {formikProps.values.person.personContact.map((contact, index) => (
-              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
-                <Box
-                  sx={{
-                    p: 2,
-                    borderRadius: 1.5,
-                    backgroundColor: theme.palette.background.paper,
-                    border: `1px solid ${alpha(theme.palette.divider, 0.2)}`,
-                    position: 'relative',
-                    transition: 'all 0.2s ease',
-                    '&:hover': {
-                      borderColor: theme.palette.success.main,
-                      boxShadow: `0 2px 8px ${alpha(theme.palette.success.main, 0.15)}`,
-                    },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: 1.5,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        p: 1,
-                        borderRadius: 1,
-                        backgroundColor: alpha(
-                          contact.contact_type === 'EMAIL'
-                            ? theme.palette.info.main
-                            : theme.palette.success.main,
-                          0.1,
-                        ),
-                      }}
-                    >
-                      {contact.contact_type === CONTACT_TYPE_ENUM.EMAIL ? (
-                        <FiMail size={20} color={theme.palette.info.main} />
-                      ) : contact.contact_type === CONTACT_TYPE_ENUM.PHONE ? (
-                        <FiPhone
-                          size={20}
-                          color={theme.palette.secondary.main}
-                        />
-                      ) : (
-                        <FaWhatsapp
-                          size={20}
-                          color={theme.palette.success.main}
-                        />
-                      )}
-                    </Box>
-                    <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          color: theme.palette.text.secondary,
-                          fontWeight: 500,
-                          textTransform: 'uppercase',
-                          letterSpacing: 0.5,
-                        }}
-                      >
-                        {contact.contact_type === CONTACT_TYPE_ENUM.EMAIL
-                          ? 'Correo'
-                          : contact.contact_type === CONTACT_TYPE_ENUM.PHONE
-                            ? 'Teléfono'
-                            : 'WhatsApp'}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight: 500,
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {contact.contact_value || 'Sin especificar'}
-                      </Typography>
-                    </Box>
-                    <IconButton
-                      size="small"
-                      color="error"
-                      disabled={formikProps.isSubmitting}
-                      onClick={() => {
-                        const newContacts = [
-                          ...formikProps.values.person.personContact,
-                        ];
-                        newContacts.splice(index, 1);
-                        formikProps.setFieldValue(
-                          'person.personContact',
-                          newContacts,
-                        );
-                      }}
-                      sx={{
-                        opacity: 0.7,
-                        '&:hover': {
-                          opacity: 1,
-                          backgroundColor: alpha(
-                            theme.palette.error.main,
-                            0.08,
-                          ),
-                        },
-                      }}
-                    >
-                      <FiTrash2 size={16} />
-                    </IconButton>
-                  </Box>
-                </Box>
-              </Grid>
+              <ContactCard
+                key={index}
+                contact={contact}
+                formikProps={formikProps}
+              />
             ))}
           </Grid>
         </Box>
