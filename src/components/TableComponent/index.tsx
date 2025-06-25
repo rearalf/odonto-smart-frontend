@@ -1,42 +1,60 @@
-import TablePaginationActions from './TablePaginationActions';
+import { memo, useCallback } from 'react';
 import {
+  alpha,
   Table,
   Paper,
+  useTheme,
   TableRow,
   TableHead,
   TableBody,
+  TableCell,
   TableFooter,
   TableContainer,
   TablePagination,
 } from '@mui/material';
 
-import type { ReactNode } from 'react';
+import TablePaginationActions from './TablePaginationActions';
+import type {
+  HeaderObject,
+  ITableComponent,
+} from 'src/types/TableComponent.type';
+import TableEmptyState from './TableEmptyState';
 
-interface ITableComponent {
-  page: number;
-  body: ReactNode;
-  header: ReactNode;
-  totalData: number;
-  paginacion: boolean;
-  rowsPerPage: number;
-  ariaLabelTable: string;
-  handleSetPage: (value: number) => void;
-  handleSetRowsPerPage: (value: number) => void;
-}
+const TableComponent = memo((props: ITableComponent) => {
+  const theme = useTheme();
+  const {
+    handleSetPage,
+    handleSetRowsPerPage,
+    emptyMessage = 'No hay datos disponibles',
+  } = props;
 
-const TableComponent = (props: ITableComponent) => {
-  const handleChangePage = (
-    _event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number,
-  ) => props.handleSetPage(newPage);
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const value = parseInt(event.target.value, 10);
-    props.handleSetPage(0);
-    props.handleSetRowsPerPage(value);
+  const isObjectHeader = (
+    headers: ITableComponent['headers'],
+  ): headers is HeaderObject[] => {
+    return (
+      Array.isArray(headers) &&
+      headers.length > 0 &&
+      headers[0] != null &&
+      typeof headers[0] === 'object' &&
+      'title' in headers[0] &&
+      'key' in headers[0]
+    );
   };
+
+  const handleChangePage = useCallback(
+    (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) =>
+      handleSetPage(newPage),
+    [handleSetPage],
+  );
+
+  const handleChangeRowsPerPage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const value = parseInt(event.target.value, 10);
+      handleSetPage(0);
+      handleSetRowsPerPage(value);
+    },
+    [handleSetPage, handleSetRowsPerPage],
+  );
 
   const slotPropsConst = {
     select: {
@@ -47,17 +65,60 @@ const TableComponent = (props: ITableComponent) => {
     },
   };
 
+  const isEmpty = props.totalData === 0 && !props.loading;
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label={props.ariaLabelTable}>
+    <TableContainer
+      component={Paper}
+      className={props.className}
+      sx={{
+        maxHeight: props.maxHeight,
+        ...(props.maxHeight && { overflow: 'auto' }),
+        backgroundColor: alpha(theme.palette.primary.main, 0.02),
+        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+        borderRadius: 2,
+      }}
+    >
+      <Table
+        sx={{ minWidth: 500 }}
+        aria-label={props.ariaLabelTable}
+        size={props.dense ? 'small' : 'medium'}
+      >
         <TableHead>
-          <TableRow>{props.header}</TableRow>
+          <TableRow
+            sx={{
+              backgroundColor: alpha(theme.palette.primary.main, 0.1),
+            }}
+          >
+            {isObjectHeader(props.headers)
+              ? props.headers.map((header) => (
+                  <TableCell
+                    key={header.key}
+                    align={header.align || 'left'}
+                    sx={{
+                      fontWeight: 'bold',
+                      color: theme.palette.info.main,
+                    }}
+                  >
+                    {header.title}
+                  </TableCell>
+                ))
+              : props.headers}
+          </TableRow>
         </TableHead>
-        <TableBody>{props.body}</TableBody>
-        {props.paginacion && (
+
+        <TableBody>
+          {isEmpty ? (
+            <TableEmptyState emptyMessage={emptyMessage}></TableEmptyState>
+          ) : (
+            props.body
+          )}
+        </TableBody>
+        {props.totalData > 0 && props.pagination && (
           <TableFooter>
             <TableRow>
               <TablePagination
+                component="td"
                 page={props.page}
                 count={props.totalData}
                 slotProps={slotPropsConst}
@@ -67,6 +128,9 @@ const TableComponent = (props: ITableComponent) => {
                 ActionsComponent={TablePaginationActions}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                labelDisplayedRows={({ from, to, count }) =>
+                  `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`
+                }
               />
             </TableRow>
           </TableFooter>
@@ -74,6 +138,8 @@ const TableComponent = (props: ITableComponent) => {
       </Table>
     </TableContainer>
   );
-};
+});
+
+TableComponent.displayName = 'TableComponent';
 
 export default TableComponent;

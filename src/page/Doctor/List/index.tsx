@@ -26,9 +26,8 @@ function Doctor() {
           </Button>
         </Link>
       </header>
-
       <TableComponent
-        paginacion
+        pagination
         key="doctor"
         ariaLabelTable="doctores"
         handleSetPage={hook.handleSetPage}
@@ -36,15 +35,14 @@ function Doctor() {
         page={hook.page}
         rowsPerPage={hook.rowsPerPage}
         totalData={hook.doctor.length}
-        header={
-          <>
-            <TableCell align="left">Nombre</TableCell>
-            <TableCell align="center">Especialidad</TableCell>
-            <TableCell align="center">email</TableCell>
-            <TableCell align="center">Roles</TableCell>
-            <TableCell align="center">Acciones</TableCell>
-          </>
-        }
+        emptyMessage="No hay doctores registrados"
+        headers={[
+          { title: 'Nombre', key: 'fullName' },
+          { title: 'Especialidad', key: 'speacilty', align: 'center' },
+          { title: 'Correo', key: 'email', align: 'center' },
+          { title: 'Roles', key: 'rols', align: 'center' },
+          { title: 'Acciones', key: 'actions', align: 'center' },
+        ]}
         body={hook.doctor.map((row) => (
           <TableRow hover key={row.email}>
             <TableCell align="left">{row.fullName}</TableCell>
@@ -82,7 +80,7 @@ function Doctor() {
             </TableCell>
           </TableRow>
         ))}
-      ></TableComponent>
+      />
 
       <DialogComponent
         fullWidth

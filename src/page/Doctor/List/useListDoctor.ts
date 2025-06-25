@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import type { IListDoctor } from 'src/types/doctor';
 
 function useListDoctor() {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
-  const [doctor, setDoctor] = useState<IListDoctor[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [doctor, _setDoctor] = useState<IListDoctor[]>([]);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
   const breadCrumbs = [
@@ -31,25 +32,6 @@ function useListDoctor() {
     setRowsPerPage(value);
     setPage(0);
   };
-
-  useEffect(() => {
-    setDoctor([
-      {
-        fullName: 'Nombre 1',
-        id: 1,
-        email: 'reasdfas',
-        specialty: 'Odonto',
-        role: [{ id: 1, name: 'Rol' }],
-      },
-      {
-        id: 2,
-        fullName: 'Nombre 1',
-        email: 'reasdfas',
-        specialty: 'Odonto',
-        role: [{ id: 1, name: 'Rol' }],
-      },
-    ]);
-  }, []);
 
   return {
     page,
