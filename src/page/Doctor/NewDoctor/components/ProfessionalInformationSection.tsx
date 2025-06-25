@@ -68,7 +68,7 @@ const ProfessionalInformationSection = ({
             {/* Especialidad Principal */}
             <Grid size={12}>
               <AutocompleteComponent
-                required
+                // required
                 fullWidth
                 id="specialty_id"
                 options={specialtyOptions}

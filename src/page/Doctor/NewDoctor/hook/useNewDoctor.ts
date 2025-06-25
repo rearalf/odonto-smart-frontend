@@ -1,12 +1,14 @@
 import useCreateDoctor from '@features/doctor/mutation/useCreateDoctor';
 import useNotificationStore from '@stores/useNotificationStore';
 import type { FormikHelpers } from 'formik';
+import { useNavigate } from 'react-router';
 import type {
   IFormValues,
   INewDoctorPersonFormData,
 } from '../types/newDoctor.types';
 
 function useNewDoctor() {
+  const navigate = useNavigate();
   const { mutate, isPending } = useCreateDoctor();
 
   const storeNotification = useNotificationStore();
@@ -23,7 +25,8 @@ function useNewDoctor() {
     if (values.specialty_ids.length > 0)
       formData.append('specialty_ids', JSON.stringify(values.specialty_ids));
 
-    formData.append('specialty_id', values.specialty_id.toString());
+    if (values.specialty_id !== null)
+      formData.append('specialty_id', values.specialty_id.toString());
 
     const person: INewDoctorPersonFormData = {
       first_name: values.person.first_name.trim(),
@@ -74,6 +77,7 @@ function useNewDoctor() {
           show: true,
           severity: 'success',
         });
+        navigate('/doctors');
       },
       onError: (error) => {
         formikHelpers.setSubmitting(false);

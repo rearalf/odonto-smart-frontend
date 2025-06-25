@@ -21,7 +21,7 @@ export interface IPerson {
 
 export interface IFormValues {
   qualification: string;
-  specialty_id: number;
+  specialty_id: number | null;
   specialty_ids: number[];
   person: IPerson;
 }

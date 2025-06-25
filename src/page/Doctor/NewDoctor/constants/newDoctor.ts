@@ -17,7 +17,7 @@ export const BREADCRUMBS: ILink[] = [
 
 export const INITIAL_VALUES: IFormValues = {
   qualification: '',
-  specialty_id: 0,
+  specialty_id: null,
   specialty_ids: [],
   person: {
     first_name: '',

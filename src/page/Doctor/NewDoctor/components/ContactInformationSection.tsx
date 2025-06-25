@@ -1,5 +1,6 @@
 import { FiMail, FiPhone, FiPlus, FiTrash2 } from 'react-icons/fi';
-import { Formik, type FormikProps } from 'formik';
+import { Form, Formik, type FormikProps } from 'formik';
+import { FaWhatsapp } from 'react-icons/fa';
 import {
   alpha,
   Box,
@@ -18,6 +19,7 @@ import {
 } from '@components/index';
 import { contactSchema } from '../validation/newDoctor.schema';
 import type { IFormValues } from '../types/newDoctor.types';
+import { CONTACT_TYPE_ENUM } from 'src/types/common.types';
 import {
   CONTACT_INITIAL_VALUES,
   CONTACT_OPTIONS,
@@ -67,121 +69,125 @@ const ContactInformationSection = ({
         }}
       >
         {(formik) => (
-          <Box
-            sx={{
-              p: 2.5,
-              backgroundColor: alpha(theme.palette.success.main, 0.03),
-              borderRadius: 1.5,
-              border: `1px solid ${alpha(theme.palette.success.main, 0.1)}`,
-            }}
-          >
-            <Typography
-              variant="subtitle2"
+          <Form>
+            <Box
               sx={{
-                mb: 2,
-                fontWeight: 600,
+                p: 2.5,
+                backgroundColor: alpha(theme.palette.success.main, 0.03),
+                borderRadius: 1.5,
+                border: `1px solid ${alpha(theme.palette.success.main, 0.1)}`,
               }}
             >
-              Agregar nuevo contacto
-            </Typography>
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  mb: 2,
+                  fontWeight: 600,
+                }}
+              >
+                Agregar nuevo contacto
+              </Typography>
 
-            <RadioButtonComponent
-              id="conact_values"
-              value={formik.values.contact_type}
-              onChange={(e) => {
-                formik.setFieldValue('contact_type', e);
-                formik.setFieldValue('contact_value', '');
-                formik.setFieldError('contact_value', undefined);
-                formik.setFieldTouched('contact_value', false, false);
-              }}
-              options={CONTACT_OPTIONS}
-              sx={{ mb: 2.5 }}
-              disabled={formikProps.isSubmitting}
-            />
+              <RadioButtonComponent
+                id="conact_values"
+                value={formik.values.contact_type}
+                onChange={(e) => {
+                  formik.setFieldValue('contact_type', e);
+                  formik.setFieldValue('contact_value', '');
+                  formik.setFieldError('contact_value', undefined);
+                  formik.setFieldTouched('contact_value', false, false);
+                }}
+                options={CONTACT_OPTIONS}
+                sx={{ mb: 2.5 }}
+                disabled={formikProps.isSubmitting}
+              />
 
-            {/* Contact Value Input */}
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 8 }}>
-                {formik.values.contact_type === 'EMAIL' ? (
-                  <TextFieldBasic
-                    id="email"
-                    type="email"
-                    label="Correo"
-                    autoComplete="email"
-                    placeholder="doctor@clinica.com"
-                    value={formik.values.contact_value}
-                    disabled={formikProps.isSubmitting}
-                    onChange={(e) => {
-                      formik.setFieldValue('contact_value', e.target.value);
+              {/* Contact Value Input */}
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 12, md: 8 }}>
+                  {formik.values.contact_type === 'EMAIL' ? (
+                    <TextFieldBasic
+                      id="email"
+                      type="email"
+                      label="Correo"
+                      autoComplete="email"
+                      placeholder="doctor@clinica.com"
+                      value={formik.values.contact_value}
+                      disabled={formikProps.isSubmitting}
+                      onChange={(e) => {
+                        formik.setFieldValue('contact_value', e.target.value);
+                      }}
+                      handleOnBlur={() => {
+                        formik.setFieldTouched('contact_value', true);
+                        formik.validateField('contact_value');
+                      }}
+                      helperText={
+                        formik.touched.contact_value &&
+                        formik.errors.contact_value
+                          ? formik.errors.contact_value
+                          : ''
+                      }
+                      error={
+                        formik.touched.contact_value &&
+                        Boolean(formik.errors.contact_value)
+                      }
+                    />
+                  ) : (
+                    <TextFieldPhone
+                      id="contact_value"
+                      label={
+                        formik.values.contact_type === 'PHONE'
+                          ? 'Teléfono'
+                          : 'WhatsApp'
+                      }
+                      value={formik.values.contact_value}
+                      disabled={formikProps.isSubmitting}
+                      onChange={(e) => {
+                        formik.setFieldValue('contact_value', e);
+                      }}
+                      handleOnBlur={() => {
+                        formik.setFieldTouched('contact_value', true);
+                        formik.validateField('contact_value');
+                      }}
+                      helperText={
+                        formik.touched.contact_value &&
+                        formik.errors.contact_value
+                          ? formik.errors.contact_value
+                          : ''
+                      }
+                      error={
+                        formik.touched.contact_value &&
+                        Boolean(formik.errors.contact_value)
+                      }
+                    />
+                  )}
+                </Grid>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    disabled={
+                      !formik.isValid ||
+                      !formik.dirty ||
+                      formikProps.isSubmitting
+                    }
+                    startIcon={<FiPlus />}
+                    type="submit"
+                    onClick={formik.submitForm}
+                    sx={{
+                      backgroundColor: theme.palette.success.main,
+                      height: '56px',
+                      '&:hover': {
+                        backgroundColor: theme.palette.success.dark,
+                      },
                     }}
-                    handleOnBlur={() => {
-                      formik.setFieldTouched('contact_value', true);
-                      formik.validateField('contact_value');
-                    }}
-                    helperText={
-                      formik.touched.contact_value &&
-                      formik.errors.contact_value
-                        ? formik.errors.contact_value
-                        : ''
-                    }
-                    error={
-                      formik.touched.contact_value &&
-                      Boolean(formik.errors.contact_value)
-                    }
-                  />
-                ) : (
-                  <TextFieldPhone
-                    id="contact_value"
-                    label={
-                      formik.values.contact_type === 'PHONE'
-                        ? 'Teléfono'
-                        : 'WhatsApp'
-                    }
-                    value={formik.values.contact_value}
-                    disabled={formikProps.isSubmitting}
-                    onChange={(e) => {
-                      formik.setFieldValue('contact_value', e);
-                    }}
-                    handleOnBlur={() => {
-                      formik.setFieldTouched('contact_value', true);
-                      formik.validateField('contact_value');
-                    }}
-                    helperText={
-                      formik.touched.contact_value &&
-                      formik.errors.contact_value
-                        ? formik.errors.contact_value
-                        : ''
-                    }
-                    error={
-                      formik.touched.contact_value &&
-                      Boolean(formik.errors.contact_value)
-                    }
-                  />
-                )}
+                  >
+                    Agregar
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid size={{ xs: 12, md: 4 }}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  disabled={
-                    !formik.isValid || !formik.dirty || formikProps.isSubmitting
-                  }
-                  startIcon={<FiPlus />}
-                  type="submit"
-                  onClick={formik.submitForm}
-                  sx={{
-                    backgroundColor: theme.palette.success.main,
-                    height: '56px',
-                    '&:hover': {
-                      backgroundColor: theme.palette.success.dark,
-                    },
-                  }}
-                >
-                  Agregar
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
+            </Box>
+          </Form>
         )}
       </Formik>
       {/* Contact List Display */}
@@ -223,10 +229,18 @@ const ContactInformationSection = ({
                         ),
                       }}
                     >
-                      {contact.contact_type === 'EMAIL' ? (
+                      {contact.contact_type === CONTACT_TYPE_ENUM.EMAIL ? (
                         <FiMail size={20} color={theme.palette.info.main} />
+                      ) : contact.contact_type === CONTACT_TYPE_ENUM.PHONE ? (
+                        <FiPhone
+                          size={20}
+                          color={theme.palette.secondary.main}
+                        />
                       ) : (
-                        <FiPhone size={20} color={theme.palette.success.main} />
+                        <FaWhatsapp
+                          size={20}
+                          color={theme.palette.success.main}
+                        />
                       )}
                     </Box>
                     <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -239,9 +253,11 @@ const ContactInformationSection = ({
                           letterSpacing: 0.5,
                         }}
                       >
-                        {contact.contact_type === 'EMAIL'
+                        {contact.contact_type === CONTACT_TYPE_ENUM.EMAIL
                           ? 'Correo'
-                          : 'Teléfono'}
+                          : contact.contact_type === CONTACT_TYPE_ENUM.PHONE
+                            ? 'Teléfono'
+                            : 'WhatsApp'}
                       </Typography>
                       <Typography
                         variant="body2"

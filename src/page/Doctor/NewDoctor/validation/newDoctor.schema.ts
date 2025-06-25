@@ -46,8 +46,9 @@ export const newDoctorSchema = Yup.object().shape({
             return validateStrongPassword(value, this);
           },
         ),
-      role_ids: Yup.array().of(Yup.number()),
-      // .min(1, 'Debe seleccionar al menos un rol'),
+      role_ids: Yup.array()
+        .of(Yup.number())
+        .min(1, 'Debe seleccionar al menos un rol'),
       permission_ids: Yup.array().of(Yup.number()),
     }),
 
@@ -57,7 +58,14 @@ export const newDoctorSchema = Yup.object().shape({
           'El valor de contacto es obligatorio',
         ),
         contact_type: Yup.string()
-          .oneOf(['EMAIL', 'PHONE'], 'Tipo de contacto inválido')
+          .oneOf(
+            [
+              CONTACT_TYPE_ENUM.EMAIL,
+              CONTACT_TYPE_ENUM.PHONE,
+              CONTACT_TYPE_ENUM.WHATSAPP,
+            ],
+            'Tipo de contacto inválido',
+          )
           .required('El tipo de contacto es obligatorio'),
       }),
     ),
