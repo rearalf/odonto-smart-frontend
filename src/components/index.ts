@@ -1,6 +1,7 @@
 export { default as AutocompleteComponent } from './AutocompleteComponent';
 export { default as RadioButtonComponent } from './RadioButtonComponent';
 export { default as LoadingProgress } from './LoadingProgress';
+export { default as ButtonComponent } from './ButtonComponent';
 export { default as SelectComponent } from './SelectComponent';
 export { default as DialogComponent } from './DialogComponent';
 export { default as TextFieldPhone } from './TextFieldPhone';

@@ -1,31 +1,51 @@
-import { Button, IconButton, TableCell, TableRow } from '@mui/material';
 import { FiEdit, FiTrash, FiUser } from 'react-icons/fi';
 import { LiaNotesMedicalSolid } from 'react-icons/lia';
-import { Link } from 'react-router';
+import {
+  Box,
+  Button,
+  IconButton,
+  TableCell,
+  TableRow,
+  Typography,
+} from '@mui/material';
 
+import useListDoctor from './hook/useListDoctor';
+import useStyles from './hook/useStyles';
 import {
   BreadCrumbs,
   TableComponent,
   DialogComponent,
+  ButtonComponent,
 } from '@components/index';
-import useListDoctor from './useListDoctor';
-
-import './styles.css';
 
 function Doctor() {
   const hook = useListDoctor();
+  const styles = useStyles();
   return (
-    <div className="list-doctor">
+    <>
       <BreadCrumbs links={hook.breadCrumbs} loading={false} />
 
-      <header className="header">
-        <h1>Doctores</h1>
-        <Link to="new-doctor">
-          <Button variant="contained" type="button" className="btn">
-            <LiaNotesMedicalSolid size={20} /> Nuevo doctor
-          </Button>
-        </Link>
-      </header>
+      <Box component="header" sx={styles.headerStyles}>
+        <Typography variant="h4" component="h1" sx={styles.h1Styles}>
+          Doctores
+        </Typography>
+        <ButtonComponent
+          type="button"
+          color="primary"
+          position="left"
+          text="Nuevo doctor"
+          variant="contained"
+          onClick={hook.handleNewDoctor}
+          icon={
+            <LiaNotesMedicalSolid
+              size={20}
+              style={styles.headerIconStyles}
+              className="button-icon"
+            />
+          }
+        />
+      </Box>
+
       <TableComponent
         pagination
         key="doctor"
@@ -110,7 +130,7 @@ function Doctor() {
           </Button>
         </DialogComponent.Footer>
       </DialogComponent>
-    </div>
+    </>
   );
 }
 

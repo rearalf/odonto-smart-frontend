@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import type { IListDoctor } from 'src/types/doctor';
 
 function useListDoctor() {
+  const navigate = useNavigate();
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,6 +35,8 @@ function useListDoctor() {
     setPage(0);
   };
 
+  const handleNewDoctor = () => navigate('/doctor/new-doctor');
+
   return {
     page,
     doctor,
@@ -40,6 +44,7 @@ function useListDoctor() {
     openDeleteModal,
     breadCrumbs,
     handleSetPage,
+    handleNewDoctor,
     handleSetRowsPerPage,
     handleShowDeleteModal,
   };
