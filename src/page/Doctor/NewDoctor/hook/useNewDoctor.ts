@@ -77,7 +77,7 @@ function useNewDoctor() {
           show: true,
           severity: 'success',
         });
-        navigate('/doctors');
+        navigate('/doctor');
       },
       onError: (error) => {
         formikHelpers.setSubmitting(false);
@@ -85,7 +85,9 @@ function useNewDoctor() {
           text:
             Array.isArray(error.message) && error.message.length > 0
               ? error.message[0]
-              : 'Error al crear el doctor.',
+              : error.message
+                ? error.message
+                : 'Error al crear el doctor.',
           show: true,
           severity: 'error',
         });
