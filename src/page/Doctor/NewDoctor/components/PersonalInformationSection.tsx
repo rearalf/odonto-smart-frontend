@@ -1,10 +1,11 @@
-import { alpha, Box, Grid, Paper, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import { FiUser } from 'react-icons/fi';
 
 import type { FormikProps } from 'formik';
 
 import { TextFieldBasic } from '@components/index';
 import type { IFormValues } from '../types/newDoctor.types';
+import useStyles from '../hook/useStyles';
 
 interface IPersonalInformationSection {
   formikProps: FormikProps<IFormValues>;
@@ -13,23 +14,14 @@ interface IPersonalInformationSection {
 const PersonalInformationSection = ({
   formikProps,
 }: IPersonalInformationSection) => {
-  const theme = useTheme();
+  const styles = useStyles();
 
   return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: 3,
-        mb: 3,
-        backgroundColor: alpha(theme.palette.primary.main, 0.02),
-        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-        borderRadius: 2,
-      }}
-    >
+    <Paper elevation={0} sx={styles.paperStyles}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2.5 }}>
         <FiUser
           size={24}
-          color={theme.palette.primary.main}
+          color={styles.theme.palette.primary.main}
           style={{ marginRight: 8 }}
         />
         <Typography variant="h6" sx={{ fontWeight: 500 }}>

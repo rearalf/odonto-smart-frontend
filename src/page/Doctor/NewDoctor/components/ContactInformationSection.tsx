@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, useTheme, Typography } from '@mui/material';
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import { Formik, type FormikProps } from 'formik';
 import { FiPhone, FiPlus } from 'react-icons/fi';
 
@@ -11,11 +11,11 @@ import {
 import { contactSchema } from '../validation/newDoctor.schema';
 import type { IFormValues } from '../types/newDoctor.types';
 import useStyles from '../hook/useStyles';
+import ContactCard from './ContactCard';
 import {
   CONTACT_OPTIONS,
   CONTACT_INITIAL_VALUES,
 } from '../constants/newDoctor';
-import ContactCard from './ContactCard';
 
 interface IContactInformationSection {
   formikProps: FormikProps<IFormValues>;
@@ -24,7 +24,6 @@ interface IContactInformationSection {
 const ContactInformationSection = ({
   formikProps,
 }: IContactInformationSection) => {
-  const theme = useTheme();
   const styles = useStyles();
 
   return (
@@ -32,7 +31,7 @@ const ContactInformationSection = ({
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2.5 }}>
         <FiPhone
           size={24}
-          color={theme.palette.primary.main}
+          color={styles.theme.palette.primary.main}
           style={{ marginRight: 8 }}
         />
         <Typography variant="h6" sx={{ fontWeight: 500 }}>
@@ -157,11 +156,11 @@ const ContactInformationSection = ({
                       formikProps.isSubmitting
                     }
                     sx={{
-                      backgroundColor: theme.palette.success.main,
+                      backgroundColor: styles.theme.palette.success.main,
                       height: '100%',
                       width: '100%',
                       '&:hover': {
-                        backgroundColor: theme.palette.success.dark,
+                        backgroundColor: styles.theme.palette.success.dark,
                       },
                     }}
                   />
@@ -178,6 +177,7 @@ const ContactInformationSection = ({
             {formikProps.values.person.personContact.map((contact, index) => (
               <ContactCard
                 key={index}
+                index={index}
                 contact={contact}
                 formikProps={formikProps}
               />

@@ -1,3 +1,4 @@
+import type { FormikProps } from 'formik';
 import type { IContactForm } from 'src/types/common.types';
 
 interface IUser {
@@ -40,4 +41,13 @@ export interface INewDoctorPersonFormData {
     role_ids: number[];
     permission_ids?: number[];
   };
+}
+
+export interface IComponentFormProps {
+  formikProps: FormikProps<IFormValues>;
+}
+
+export interface IContactCardProps extends IComponentFormProps {
+  contact: IContactForm;
+  index: number;
 }

@@ -1,95 +1,36 @@
 import { Box, Grid, Typography, IconButton } from '@mui/material';
 import { FiMail, FiPhone, FiTrash2 } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
-import type { FormikProps } from 'formik';
 
-import { CONTACT_TYPE_ENUM, type IContactForm } from 'src/types/common.types';
-import type { IFormValues } from '../types/newDoctor.types';
-import useStyles from '../hook/useStyles';
-
-interface IContactCardProps {
-  contact: IContactForm;
-  key: number;
-  formikProps: FormikProps<IFormValues>;
-}
+import type { IContactCardProps } from '../types/newDoctor.types';
+import { CONTACT_TYPE_ENUM } from 'src/types/common.types';
+import useContactCard from '../hook/useContactCard';
 
 const ContactCard = (props: IContactCardProps) => {
-  const styles = useStyles();
+  const hook = useContactCard(props);
 
   return (
-    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={props.key}>
-      <Box
-        sx={{
-          ...styles.boxContactCardStyles,
-          '&:hover': {
-            borderColor:
-              props.contact.contact_type === CONTACT_TYPE_ENUM.EMAIL
-                ? styles.theme.palette.info.main
-                : props.contact.contact_type === CONTACT_TYPE_ENUM.PHONE
-                  ? styles.theme.palette.secondary.main
-                  : styles.theme.palette.success.main,
-            boxShadow: `0 2px 8px ${styles.alphafunction(styles.theme.palette.success.main, 0.15)}`,
-          },
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            gap: 1.5,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Box
-            sx={{
-              p: 1,
-              borderRadius: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: styles.alphafunction(
-                props.contact.contact_type === CONTACT_TYPE_ENUM.EMAIL
-                  ? styles.theme.palette.info.main
-                  : props.contact.contact_type === CONTACT_TYPE_ENUM.PHONE
-                    ? styles.theme.palette.secondary.main
-                    : styles.theme.palette.success.main,
-                0.1,
-              ),
-            }}
-          >
+    <Grid size={{ xs: 12, sm: 6, md: 4 }} key={props.index}>
+      <Box sx={hook.cardContainerStyles}>
+        <Box sx={hook.contentStyles}>
+          <Box sx={hook.contactTypeStyles}>
             {props.contact.contact_type === CONTACT_TYPE_ENUM.EMAIL ? (
-              <FiMail size={20} color={styles.theme.palette.info.main} />
+              <FiMail size={20} color={hook.theme.palette.info.main} />
             ) : props.contact.contact_type === CONTACT_TYPE_ENUM.PHONE ? (
-              <FiPhone size={20} color={styles.theme.palette.secondary.main} />
+              <FiPhone size={20} color={hook.theme.palette.secondary.main} />
             ) : (
-              <FaWhatsapp size={20} color={styles.theme.palette.success.main} />
+              <FaWhatsapp size={20} color={hook.theme.palette.success.main} />
             )}
           </Box>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography
-              variant="caption"
-              sx={{
-                color: styles.theme.palette.text.secondary,
-                fontWeight: 500,
-                textTransform: 'uppercase',
-                letterSpacing: 0.5,
-              }}
-            >
+            <Typography variant="caption" sx={hook.typographyTypeStyles}>
               {props.contact.contact_type === CONTACT_TYPE_ENUM.EMAIL
                 ? 'Correo'
                 : props.contact.contact_type === CONTACT_TYPE_ENUM.PHONE
                   ? 'Teléfono'
                   : 'WhatsApp'}
             </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 500,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
+            <Typography variant="body2" sx={hook.typographyContactStyles}>
               {props.contact.contact_value || 'Sin especificar'}
             </Typography>
           </Box>
@@ -97,26 +38,8 @@ const ContactCard = (props: IContactCardProps) => {
             size="small"
             color="error"
             disabled={props.formikProps.isSubmitting}
-            onClick={() => {
-              const newContacts = [
-                ...props.formikProps.values.person.personContact,
-              ];
-              newContacts.splice(props.key, 1);
-              props.formikProps.setFieldValue(
-                'person.personContact',
-                newContacts,
-              );
-            }}
-            sx={{
-              opacity: 0.7,
-              '&:hover': {
-                opacity: 1,
-                backgroundColor: styles.alphafunction(
-                  styles.theme.palette.error.main,
-                  0.08,
-                ),
-              },
-            }}
+            onClick={hook.handleDeleteContact}
+            sx={hook.deleteButtonStyles}
           >
             <FiTrash2 size={16} />
           </IconButton>

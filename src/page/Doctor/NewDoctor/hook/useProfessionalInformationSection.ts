@@ -4,8 +4,11 @@ import { useEffect } from 'react';
 
 import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
+import type { IComponentFormProps } from '../types/newDoctor.types';
 
-function useProfessionalInformationSection() {
+function useProfessionalInformationSection({
+  formikProps,
+}: IComponentFormProps) {
   const {
     data: dataSpecialties,
     isError: isErrorSpecialty,
@@ -36,6 +39,28 @@ function useProfessionalInformationSection() {
       description: item.description,
     }));
 
+  const getSelectedSpecialty = (): IAutocompleteOption | null => {
+    const selectedId = formikProps.values.specialty_id;
+    if (!selectedId) return null;
+
+    const specialty =
+      dataSpecialties && dataSpecialties.data
+        ? dataSpecialties.data.find(
+            (s) => s.id.toString() === selectedId.toString(),
+          )
+        : null;
+    return specialty
+      ? { label: specialty.name, id: specialty.id.toString() }
+      : null;
+  };
+
+  const selectedSpecialties =
+    dataSpecialties && dataSpecialties.data
+      ? dataSpecialties.data.filter((specialty: IBasicIdNameDescription) =>
+          formikProps.values.specialty_ids?.includes(specialty.id),
+        )
+      : [];
+
   useEffect(() => {
     if (isErrorSpecialty) {
       storeNotification.handleShowNotification({
@@ -51,7 +76,9 @@ function useProfessionalInformationSection() {
     specialties:
       dataSpecialties && dataSpecialties.data ? dataSpecialties.data : [],
     isLoadingSpecialty,
+    selectedSpecialties,
     getSpecialtyOptions,
+    getSelectedSpecialty,
     convertToAutocompleteOptions,
   };
 }

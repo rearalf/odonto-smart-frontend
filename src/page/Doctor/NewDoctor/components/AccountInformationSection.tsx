@@ -1,48 +1,22 @@
-import {
-  Box,
-  Grid,
-  Card,
-  Paper,
-  useTheme,
-  Typography,
-  CardContent,
-} from '@mui/material';
+import { Box, Grid, Card, Paper, Typography, CardContent } from '@mui/material';
 import { FiLock, FiUsers, FiShield, FiKey } from 'react-icons/fi';
-import type { FormikProps } from 'formik';
 
 import { AutocompleteComponent, TextFieldBasic } from '@components/index';
-import useAccountInformationSection from '../hook/useAccountInformationSection';
 
-import type { IBasicIdNameDescription } from 'src/types/common.types';
-import type { IFormValues } from '../types/newDoctor.types';
+import useAccountInformationSection from '../hook/useAccountInformationSection';
+import type { IComponentFormProps } from '../types/newDoctor.types';
 import useStyles from '../hook/useStyles';
 
-interface IAccountInformationSectionProps {
-  formikProps: FormikProps<IFormValues>;
-}
-
-const AccountInformationSection = ({
-  formikProps,
-}: IAccountInformationSectionProps) => {
-  const hook = useAccountInformationSection();
+const AccountInformationSection = ({ formikProps }: IComponentFormProps) => {
+  const hook = useAccountInformationSection({ formikProps });
   const styles = useStyles();
-  const theme = useTheme();
-
-  const selectedPermissions = hook.permissions.filter(
-    (permission: IBasicIdNameDescription) =>
-      formikProps.values.person.user.permission_ids?.includes(permission.id),
-  );
-
-  const selectedRoles = hook.roles.filter((role: IBasicIdNameDescription) =>
-    formikProps.values.person.user.role_ids?.includes(role.id),
-  );
 
   return (
     <Paper elevation={0} sx={styles.paperStyles}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <FiLock
           size={24}
-          color={theme.palette.primary.main}
+          color={styles.theme.palette.primary.main}
           style={{ marginRight: 8 }}
         />
         <Typography variant="h6" sx={{ fontWeight: 500 }}>
@@ -58,14 +32,14 @@ const AccountInformationSection = ({
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2.5 }}>
                 <FiKey
                   size={20}
-                  color={theme.palette.info.main}
+                  color={styles.theme.palette.info.main}
                   style={{ marginRight: 8 }}
                 />
                 <Typography
                   variant="subtitle1"
                   sx={{
                     fontWeight: 600,
-                    color: theme.palette.info.main,
+                    color: styles.theme.palette.info.main,
                   }}
                 >
                   Credenciales de Acceso
@@ -172,14 +146,14 @@ const AccountInformationSection = ({
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <FiUsers
                   size={20}
-                  color={theme.palette.warning.main}
+                  color={styles.theme.palette.warning.main}
                   style={{ marginRight: 8 }}
                 />
                 <Typography
                   variant="subtitle1"
                   sx={{
                     fontWeight: 600,
-                    color: theme.palette.warning.main,
+                    color: styles.theme.palette.warning.main,
                   }}
                 >
                   Roles del Sistema
@@ -189,7 +163,7 @@ const AccountInformationSection = ({
               <Typography
                 variant="body2"
                 sx={{
-                  color: theme.palette.text.secondary,
+                  color: styles.theme.palette.text.secondary,
                   mb: 2.5,
                 }}
               >
@@ -204,7 +178,7 @@ const AccountInformationSection = ({
                 id="person.user.role_ids"
                 placeholder="Seleccionar roles..."
                 options={hook.convertToAutocompleteOptions(hook.roles)}
-                value={hook.convertToAutocompleteOptions(selectedRoles)}
+                value={hook.convertToAutocompleteOptions(hook.selectedRoles)}
                 onChange={(newValue) => {
                   const roleIds = newValue.map((specialty) => specialty.id);
                   formikProps.setFieldValue('person.user.role_ids', roleIds);
@@ -232,17 +206,17 @@ const AccountInformationSection = ({
               />
 
               {/* Info de roles seleccionados */}
-              {selectedRoles.length > 0 && (
+              {hook.selectedRoles.length > 0 && (
                 <Box sx={{ mt: 2 }}>
                   <Typography
                     variant="caption"
                     sx={{
-                      color: theme.palette.text.secondary,
+                      color: styles.theme.palette.text.secondary,
                       fontWeight: 500,
                       display: 'block',
                     }}
                   >
-                    Roles seleccionados: {selectedRoles.length}
+                    Roles seleccionados: {hook.selectedRoles.length}
                   </Typography>
                 </Box>
               )}
@@ -257,14 +231,14 @@ const AccountInformationSection = ({
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <FiShield
                   size={20}
-                  color={theme.palette.error.main}
+                  color={styles.theme.palette.error.main}
                   style={{ marginRight: 8 }}
                 />
                 <Typography
                   variant="subtitle1"
                   sx={{
                     fontWeight: 600,
-                    color: theme.palette.error.main,
+                    color: styles.theme.palette.error.main,
                   }}
                 >
                   Permisos Específicos
@@ -275,7 +249,7 @@ const AccountInformationSection = ({
               <Typography
                 variant="body2"
                 sx={{
-                  color: theme.palette.text.secondary,
+                  color: styles.theme.palette.text.secondary,
                   mb: 2.5,
                 }}
               >
@@ -293,7 +267,7 @@ const AccountInformationSection = ({
                   true,
                 )}
                 value={hook.convertToAutocompleteOptions(
-                  selectedPermissions,
+                  hook.selectedPermissions,
                   true,
                 )}
                 onChange={(newValue) => {
@@ -331,17 +305,17 @@ const AccountInformationSection = ({
               />
 
               {/* Info de permisos seleccionados */}
-              {selectedPermissions.length > 0 && (
+              {hook.selectedPermissions.length > 0 && (
                 <Box sx={{ mt: 2 }}>
                   <Typography
                     variant="caption"
                     sx={{
-                      color: theme.palette.text.secondary,
+                      color: styles.theme.palette.text.secondary,
                       fontWeight: 500,
                       display: 'block',
                     }}
                   >
-                    Permisos seleccionados: {selectedPermissions.length}
+                    Permisos seleccionados: {hook.selectedPermissions.length}
                   </Typography>
                 </Box>
               )}

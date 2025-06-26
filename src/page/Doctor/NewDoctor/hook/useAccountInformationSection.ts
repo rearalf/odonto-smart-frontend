@@ -4,10 +4,11 @@ import useGetAllPermission from '@features/permission/query/useGetAllPermissionQ
 import useGetAllRoleQuery from '@features/role/query/useGetAllRoleQuery';
 import useNotificationStore from '@stores/useNotificationStore';
 
-import type { IBasicIdNameDescription } from 'src/types/common.types';
 import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
+import type { IBasicIdNameDescription } from 'src/types/common.types';
+import type { IComponentFormProps } from '../types/newDoctor.types';
 
-function useAccountInformationSection() {
+function useAccountInformationSection({ formikProps }: IComponentFormProps) {
   const {
     data: dataRole,
     isError: isErrorRole,
@@ -50,6 +51,22 @@ function useAccountInformationSection() {
     }));
   };
 
+  const selectedPermissions =
+    dataPermission && dataPermission.data
+      ? dataPermission.data.filter((permission: IBasicIdNameDescription) =>
+          formikProps.values.person.user.permission_ids?.includes(
+            permission.id,
+          ),
+        )
+      : [];
+
+  const selectedRoles =
+    dataRole && dataRole.data
+      ? dataRole.data.filter((role: IBasicIdNameDescription) =>
+          formikProps.values.person.user.role_ids?.includes(role.id),
+        )
+      : [];
+
   useEffect(() => {
     if (isErrorRole) {
       storeNotification.handleShowNotification({
@@ -79,6 +96,8 @@ function useAccountInformationSection() {
     isShowConfirmPassword,
     roles: dataRole?.data || [],
     permissions: dataPermission?.data || [],
+    selectedRoles,
+    selectedPermissions,
     handleShowPassword,
     handleShowConfirmPassword,
     convertToAutocompleteOptions,
