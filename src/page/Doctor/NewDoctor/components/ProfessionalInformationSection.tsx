@@ -175,6 +175,7 @@ const ProfessionalInformationSection = ({
               type="text"
               id="qualification"
               label="Descripción detallada"
+              ariaLabel="Descripción detallada"
               placeholder="Ejemplo:
 • Médico Cirujano - Universidad Nacional (2015)
 • Especialización en Cardiología - Hospital Central (2018)

@@ -19,6 +19,15 @@ interface ITextFieldBasicProps {
   handleOnBlur?: () => void;
   handleShowPassword?: () => void;
   onSubmit?: () => void;
+  inputMode?:
+    | 'email'
+    | 'search'
+    | 'tel'
+    | 'text'
+    | 'url'
+    | 'none'
+    | 'numeric'
+    | 'decimal';
 }
 
 const TextFieldBasic = (props: ITextFieldBasicProps) => (
@@ -35,6 +44,7 @@ const TextFieldBasic = (props: ITextFieldBasicProps) => (
     required={props.required}
     onChange={props.onChange}
     onBlur={props.handleOnBlur}
+    inputMode={props.inputMode}
     multiline={props.multiline}
     aria-label={props.ariaLabel}
     helperText={props.helperText}

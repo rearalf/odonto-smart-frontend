@@ -51,10 +51,12 @@ const AccountInformationSection = ({ formikProps }: IComponentFormProps) => {
                   <TextFieldBasic
                     required
                     type="text"
+                    inputMode="email"
+                    autoComplete="email"
                     id="person.user.email"
                     label="Correo electrónico"
-                    autoComplete="email"
                     placeholder="doctor@clinica.com"
+                    ariaLabel="Correo electrónico"
                     value={formikProps.values.person.user.email}
                     disabled={formikProps.isSubmitting}
                     onChange={formikProps.handleChange}
@@ -79,6 +81,7 @@ const AccountInformationSection = ({ formikProps }: IComponentFormProps) => {
                     required
                     type="password"
                     label="Contraseña"
+                    ariaLabel="Contraseña"
                     id="person.user.password"
                     autoComplete="new-password"
                     placeholder="Mínimo 8 caracteres"
@@ -109,6 +112,7 @@ const AccountInformationSection = ({ formikProps }: IComponentFormProps) => {
                     type="password"
                     autoComplete="new-password"
                     label="Confirmar contraseña"
+                    ariaLabel="Confirmar contraseña"
                     id="person.user.confirmPassword"
                     placeholder="Repita la contraseña"
                     disabled={formikProps.isSubmitting}
