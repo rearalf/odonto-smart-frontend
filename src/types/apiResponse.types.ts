@@ -1,3 +1,5 @@
+import type { AxiosError } from 'axios';
+
 export interface IApiErrorData {
   error: string;
   message: string;
@@ -10,4 +12,11 @@ export interface IApiResponse<T> {
   status: number;
   error?: AxiosError | any;
   message?: string;
+}
+
+export interface IGetPaginationOptions {
+  pagination?: boolean;
+  page?: number;
+  per_page?: number;
+  search?: string;
 }

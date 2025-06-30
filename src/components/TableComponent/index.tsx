@@ -43,7 +43,7 @@ const TableComponent = memo((props: ITableComponent) => {
 
   const handleChangePage = useCallback(
     (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) =>
-      handleSetPage(newPage),
+      handleSetPage(newPage + 1),
     [handleSetPage],
   );
 
@@ -119,7 +119,7 @@ const TableComponent = memo((props: ITableComponent) => {
             <TableRow>
               <TablePagination
                 component="td"
-                page={props.page}
+                page={Math.max(0, props.page - 1)}
                 count={props.totalData}
                 slotProps={slotPropsConst}
                 rowsPerPage={props.rowsPerPage}

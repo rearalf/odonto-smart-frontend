@@ -11,6 +11,6 @@ export const getAllPermission = async () => {
     );
     return response;
   } catch (error) {
-    return handleError(error as AxiosError);
+    throw handleError(error as AxiosError<{ message?: string }>);
   }
 };

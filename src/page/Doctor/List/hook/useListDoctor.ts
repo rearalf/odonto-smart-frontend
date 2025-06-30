@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import useGetAllDoctorsQuery from '@features/doctor/query/useGetAllDoctors';
+import useNotificationStore from '@stores/useNotificationStore';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-
-import type { IListDoctor } from 'src/types/doctor';
 
 function useListDoctor() {
   const navigate = useNavigate();
+  const storeNotification = useNotificationStore();
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [doctor, _setDoctor] = useState<IListDoctor[]>([]);
+  const [page, setPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+
+  const { data, isLoading, isError } = useGetAllDoctorsQuery({
+    pagination: true,
+    page: page,
+    per_page: rowsPerPage,
+  });
 
   const breadCrumbs = [
     {
@@ -37,9 +42,21 @@ function useListDoctor() {
 
   const handleNewDoctor = () => navigate('/doctor/new-doctor');
 
+  useEffect(() => {
+    if (isError) {
+      storeNotification.handleShowNotification({
+        severity: 'error',
+        show: true,
+        text: 'Error al cargar los datos',
+      });
+    }
+  }, [isError, storeNotification]);
+
   return {
     page,
-    doctor,
+    doctors: data && data.data ? data.data : [],
+    pagination: data && data.pagination ? data.pagination : null,
+    isLoading,
     rowsPerPage,
     openDeleteModal,
     breadCrumbs,

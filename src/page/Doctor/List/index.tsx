@@ -1,11 +1,14 @@
-import { FiEdit, FiTrash, FiUser } from 'react-icons/fi';
+import { FiEdit, FiTrash } from 'react-icons/fi';
 import { LiaNotesMedicalSolid } from 'react-icons/lia';
 import {
   Box,
   Button,
+  Chip,
   IconButton,
+  Stack,
   TableCell,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 
@@ -53,50 +56,101 @@ function Doctor() {
         handleSetPage={hook.handleSetPage}
         handleSetRowsPerPage={hook.handleSetRowsPerPage}
         page={hook.page}
+        loading={hook.isLoading}
         rowsPerPage={hook.rowsPerPage}
-        totalData={hook.doctor.length}
+        totalData={hook.pagination?.total ?? 0}
         emptyMessage="No hay doctores registrados"
         headers={[
-          { title: 'Nombre', key: 'fullName' },
-          { title: 'Especialidad', key: 'speacilty', align: 'center' },
+          { title: 'Nombre completo', key: 'full_name' },
           { title: 'Correo', key: 'email', align: 'center' },
-          { title: 'Roles', key: 'rols', align: 'center' },
+          {
+            title: 'Especialidad principal',
+            key: 'specialty',
+            align: 'center',
+          },
+          {
+            title: 'Especialidades secundarias',
+            key: 'secondary_specialties',
+            align: 'center',
+          },
           { title: 'Acciones', key: 'actions', align: 'center' },
         ]}
-        body={hook.doctor.map((row) => (
+        body={hook.doctors.map((row) => (
           <TableRow hover key={row.email}>
-            <TableCell align="left">{row.fullName}</TableCell>
+            <TableCell align="left">{row.full_name}</TableCell>
+
             <TableCell align="center">{row.email}</TableCell>
-            <TableCell align="center">{row.specialty}</TableCell>
+
+            <TableCell align="center">{row.specialty.name}</TableCell>
+
             <TableCell align="center">
-              {row.role.length === 0 ? (
-                <p>No posee roles</p>
+              {row.secondary_specialties.length > 0 ? (
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  flexWrap="wrap"
+                  justifyContent="center"
+                >
+                  {row.secondary_specialties.slice(0, 2).map((s) => (
+                    <Chip
+                      key={s.id}
+                      label={s.name}
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                    />
+                  ))}
+
+                  {row.secondary_specialties.length > 2 && (
+                    <Tooltip
+                      title={
+                        <Stack spacing={0.5}>
+                          {row.secondary_specialties.slice(2).map((s) => (
+                            <Typography
+                              key={s.id}
+                              variant="body2"
+                              sx={{ fontSize: '0.75rem' }}
+                            >
+                              {s.name}
+                            </Typography>
+                          ))}
+                        </Stack>
+                      }
+                      arrow
+                      placement="top"
+                    >
+                      <Chip
+                        label={`+${row.secondary_specialties.length - 2}`}
+                        size="small"
+                        color="default"
+                        variant="outlined"
+                      />
+                    </Tooltip>
+                  )}
+                </Stack>
               ) : (
-                row.role.map((r) => r.name).join(',')
+                'Ninguna'
               )}
             </TableCell>
+
             <TableCell align="center">
-              {row.role.some((r) => r.name === 'GOD') ? (
-                <>
-                  <p>No es permitido actuar.</p>
-                </>
-              ) : (
-                <>
-                  <IconButton color="info" title="Información usuario">
-                    <FiUser title="Información usuario" size={18} />
-                  </IconButton>
-                  <IconButton color="secondary" title="Editar usuario">
-                    <FiEdit title="Editar usuario" size={18} />
-                  </IconButton>
-                  <IconButton
-                    color="error"
-                    title="Eliminar usuario"
-                    onClick={hook.handleShowDeleteModal}
-                  >
-                    <FiTrash title="Eliminar usuario" size={18} />
-                  </IconButton>
-                </>
-              )}
+              <Tooltip title="Información doctor">
+                <IconButton color="info">
+                  <LiaNotesMedicalSolid size={22} />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="Editar doctor">
+                <IconButton color="secondary">
+                  <FiEdit title="Editar doctor" size={18} />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="Eliminar doctor">
+                <IconButton color="error" onClick={hook.handleShowDeleteModal}>
+                  <FiTrash title="Eliminar doctor" size={18} />
+                </IconButton>
+              </Tooltip>
             </TableCell>
           </TableRow>
         ))}
@@ -135,3 +189,40 @@ function Doctor() {
 }
 
 export default Doctor;
+/* 
+hook.doctor.map((row) => (
+          <TableRow hover key={row.email}>
+            <TableCell align="left">{row.fullName}</TableCell>
+            <TableCell align="center">{row.email}</TableCell>
+            <TableCell align="center">{row.specialty}</TableCell>
+            <TableCell align="center">
+              {row.role.length === 0 ? (
+                <p>No posee roles</p>
+              ) : (
+                row.role.map((r) => r.name).join(',')
+              )}
+            </TableCell>
+            <TableCell align="center">
+              {row.role.some((r) => r.name === 'GOD') ? (
+                <>
+                  <p>No es permitido actuar.</p>
+                </>
+              ) : (
+                <>
+                 
+                  <IconButton color="secondary" title="Editar usuario">
+                    <FiEdit title="Editar usuario" size={18} />
+                  </IconButton>
+                  <IconButton
+                    color="error"
+                    title="Eliminar usuario"
+                    onClick={hook.handleShowDeleteModal}
+                  >
+                    <FiTrash title="Eliminar usuario" size={18} />
+                  </IconButton>
+                </>
+              )}
+            </TableCell>
+          </TableRow>
+        ))
+*/
