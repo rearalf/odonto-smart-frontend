@@ -6,9 +6,12 @@ import { useNavigate } from 'react-router';
 function useListDoctor() {
   const navigate = useNavigate();
   const storeNotification = useNotificationStore();
+
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+
   const [page, setPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [idDoctor, setIdDoctor] = useState<null | number>(null);
 
   const { data, isLoading, isError } = useGetAllDoctorsQuery({
     pagination: true,
@@ -16,24 +19,12 @@ function useListDoctor() {
     per_page: rowsPerPage,
   });
 
-  const breadCrumbs = [
-    {
-      link_name: 'Dashboard',
-      link_to: '/',
-    },
-    {
-      link_name: 'Doctores',
-      link_to: '/doctor',
-    },
-  ];
-
-  const handleShowDeleteModal = () => {
+  const handleShowDeleteModal = (id?: number) => {
+    if (id) setIdDoctor(id);
     setOpenDeleteModal(!openDeleteModal);
   };
 
-  const handleSetPage = (newPage: number) => {
-    setPage(newPage);
-  };
+  const handleSetPage = (newPage: number) => setPage(newPage);
 
   const handleSetRowsPerPage = (value: number) => {
     setRowsPerPage(value);
@@ -41,6 +32,13 @@ function useListDoctor() {
   };
 
   const handleNewDoctor = () => navigate('/doctor/new-doctor');
+
+  const handleDeleteDoctor = () => {
+    if (idDoctor) {
+      setIdDoctor(null);
+    }
+    handleShowDeleteModal();
+  };
 
   useEffect(() => {
     if (isError) {
@@ -59,9 +57,9 @@ function useListDoctor() {
     isLoading,
     rowsPerPage,
     openDeleteModal,
-    breadCrumbs,
     handleSetPage,
     handleNewDoctor,
+    handleDeleteDoctor,
     handleSetRowsPerPage,
     handleShowDeleteModal,
   };

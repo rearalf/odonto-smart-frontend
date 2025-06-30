@@ -1,8 +1,13 @@
 import type { Theme } from '@emotion/react';
-import type { SxProps } from '@mui/material';
+import { alpha, useTheme, type SxProps } from '@mui/material';
 import type { CSSProperties } from 'react';
 
 function useStyles() {
+  const theme = useTheme();
+
+  const alphafunction = (color: string, opacity: number) =>
+    alpha(color, opacity);
+
   const headerStyles: SxProps<Theme> = {
     mt: 2,
     mb: 4,
@@ -28,7 +33,9 @@ function useStyles() {
   };
 
   return {
+    theme,
     headerStyles,
+    alphafunction,
     headerIconStyles,
   };
 }

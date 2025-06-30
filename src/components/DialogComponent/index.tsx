@@ -1,13 +1,16 @@
-import { isValidElement, Children } from 'react';
+import { isValidElement, Children, forwardRef } from 'react';
 import {
+  Slide,
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
 } from '@mui/material';
 
-import type { DialogProps } from '@mui/material';
-import type { ReactNode } from 'react';
+import type { TransitionProps } from '@mui/material/transitions';
+import type { DialogProps, SxProps } from '@mui/material';
+import type { ReactElement, ReactNode } from 'react';
+import type { Theme } from '@emotion/react';
 
 interface IDialogComponentProps {
   open: boolean;
@@ -15,12 +18,22 @@ interface IDialogComponentProps {
   describedby?: string;
   fullWidth?: boolean;
   children: ReactNode;
-  dialogTitle: string;
+  dialogTitle?: string;
   titleId?: string;
   scroll?: DialogProps['scroll'];
   maxWidth?: DialogProps['maxWidth'];
   handleClose?: () => void;
+  sxBody?: SxProps<Theme>;
 }
+
+const Transition = forwardRef(function Transition(
+  props: TransitionProps & {
+    children: ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const DialogComponent = (props: IDialogComponentProps) => {
   let body: ReactNode = null;
@@ -37,9 +50,14 @@ const DialogComponent = (props: IDialogComponentProps) => {
     }
   });
 
+  if (!props.open) return null;
+
   return (
     <Dialog
       open={props.open}
+      slots={{
+        transition: Transition,
+      }}
       scroll={props.scroll}
       maxWidth={props.maxWidth}
       fullWidth={props.fullWidth}
@@ -49,7 +67,7 @@ const DialogComponent = (props: IDialogComponentProps) => {
     >
       <DialogTitle id={props.titleId}>{props.dialogTitle}</DialogTitle>
 
-      <DialogContent dividers>{body}</DialogContent>
+      <DialogContent sx={props.sxBody}>{body}</DialogContent>
 
       <DialogActions>{footer}</DialogActions>
     </Dialog>

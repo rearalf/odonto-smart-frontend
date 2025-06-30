@@ -94,6 +94,26 @@ const themeLight = createTheme({
         contained: {
           color: 'white',
         },
+        containedInherit: {
+          backgroundColor: '#f5f5f5',
+          color: '#0B1524',
+          '&:hover': {
+            backgroundColor: '#e0e0e0',
+            borderColor: '#bdbdbd',
+          },
+          '&:active': {
+            backgroundColor: '#d5d5d5',
+          },
+          '&:disabled': {
+            backgroundColor: '#f9f9f9',
+            color: '#c0c0c0',
+            borderColor: '#f0f0f0',
+          },
+          '&:focus': {
+            outline: '2px solid #19A7CE',
+            outlineOffset: '2px',
+          },
+        },
       },
     },
     MuiButtonBase: {
@@ -103,6 +123,12 @@ const themeLight = createTheme({
             boxShadow: 'none',
           },
           '&.MuiButton-contained:hover': {
+            boxShadow: 'none',
+          },
+          '&.MuiButton-containedInherit': {
+            boxShadow: 'none',
+          },
+          '&.MuiButton-containedInherit:hover': {
             boxShadow: 'none',
           },
         },
