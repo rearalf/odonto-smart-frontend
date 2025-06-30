@@ -1,6 +1,6 @@
 import useGetAllDoctorsQuery from '@features/doctor/query/useGetAllDoctors';
 import useNotificationStore from '@stores/useNotificationStore';
-import { useEffect, useState } from 'react';
+import { type ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 function useListDoctor() {
@@ -12,11 +12,13 @@ function useListDoctor() {
   const [page, setPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [idDoctor, setIdDoctor] = useState<null | number>(null);
+  const [search, setSearch] = useState<string>('');
 
   const { data, isLoading, isError } = useGetAllDoctorsQuery({
     pagination: true,
     page: page,
     per_page: rowsPerPage,
+    search,
   });
 
   const handleShowDeleteModal = (id?: number) => {
@@ -40,6 +42,13 @@ function useListDoctor() {
     handleShowDeleteModal();
   };
 
+  const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) =>
+    setSearch(e.target.value);
+
+  const handleClearFilter = () => {
+    setSearch('');
+  };
+
   useEffect(() => {
     if (isError) {
       storeNotification.handleShowNotification({
@@ -52,6 +61,7 @@ function useListDoctor() {
 
   return {
     page,
+    search,
     doctors: data && data.data ? data.data : [],
     pagination: data && data.pagination ? data.pagination : null,
     isLoading,
@@ -59,6 +69,8 @@ function useListDoctor() {
     openDeleteModal,
     handleSetPage,
     handleNewDoctor,
+    handleSearchInput,
+    handleClearFilter,
     handleDeleteDoctor,
     handleSetRowsPerPage,
     handleShowDeleteModal,

@@ -13,6 +13,7 @@ import {
 } from '@components/index';
 
 import { BREADCRUMBS, TABLE_HEADER_DOCTORS } from './constants/listDoctors';
+import FilterDoctors from './components/FilterDoctors';
 
 function Doctor() {
   const hook = useListDoctor();
@@ -42,6 +43,13 @@ function Doctor() {
           }
         />
       </Box>
+
+      <FilterDoctors
+        search={hook.search}
+        paperStyles={styles.paperStyles}
+        handleSearchInput={hook.handleSearchInput}
+        handleClearFilter={hook.handleClearFilter}
+      />
 
       <TableComponent
         pagination

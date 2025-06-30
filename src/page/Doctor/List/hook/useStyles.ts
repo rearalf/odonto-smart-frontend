@@ -8,6 +8,14 @@ function useStyles() {
   const alphafunction = (color: string, opacity: number) =>
     alpha(color, opacity);
 
+  const paperStyles = {
+    p: 3,
+    mb: 3,
+    backgroundColor: alpha(theme.palette.primary.main, 0.02),
+    border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+    borderRadius: 2,
+  };
+
   const headerStyles: SxProps<Theme> = {
     mt: 2,
     mb: 4,
@@ -34,6 +42,7 @@ function useStyles() {
 
   return {
     theme,
+    paperStyles,
     headerStyles,
     alphafunction,
     headerIconStyles,
