@@ -1,7 +1,9 @@
+import { type ChangeEvent, useEffect, useState } from 'react';
+import { useDebounce } from '@uidotdev/usehooks';
+import { useNavigate } from 'react-router';
+
 import useGetAllDoctorsQuery from '@features/doctor/query/useGetAllDoctors';
 import useNotificationStore from '@stores/useNotificationStore';
-import { type ChangeEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 
 function useListDoctor() {
   const navigate = useNavigate();
@@ -15,12 +17,15 @@ function useListDoctor() {
   const [search, setSearch] = useState<string>('');
   const [specialtyId, setSpecialtyId] = useState<number | null>(null);
 
+  const debouncedSearch = useDebounce(search, 1000);
+  const debouncedSpecialtyId = useDebounce(specialtyId, 1000);
+
   const { data, isLoading, isError, refetch } = useGetAllDoctorsQuery({
     pagination: true,
     page: page,
     per_page: rowsPerPage,
-    search,
-    specialtyId: specialtyId || undefined,
+    search: debouncedSearch,
+    specialtyId: debouncedSpecialtyId || undefined,
   });
 
   const handleShowDeleteModal = (id?: number) => {
