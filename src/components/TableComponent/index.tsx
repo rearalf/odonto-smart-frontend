@@ -1,71 +1,25 @@
-import { memo, useCallback } from 'react';
-import {
-  alpha,
-  Table,
-  Paper,
-  useTheme,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableContainer,
-  TablePagination,
-} from '@mui/material';
+import { alpha, Table, Paper, useTheme, TableContainer } from '@mui/material';
+import { memo } from 'react';
 
-import TablePaginationActions from './TablePaginationActions';
-import type {
-  HeaderObject,
-  ITableComponent,
-} from 'src/types/TableComponent.type';
-import TableEmptyState from './TableEmptyState';
+import type { ITableComponent } from 'src/types/TableComponent.type';
+
+import TablePaginationFooter from './TablePaginationFooter';
+import TableBodyContent from './TableBodyContent';
+import TableHeader from './TableHeaderCell';
 
 const TableComponent = memo((props: ITableComponent) => {
   const theme = useTheme();
   const {
+    loading = false,
+    rowsPerPage = 10,
+    emptyMessage = 'No hay datos disponibles',
     handleSetPage,
     handleSetRowsPerPage,
-    emptyMessage = 'No hay datos disponibles',
   } = props;
 
-  const isObjectHeader = (
-    headers: ITableComponent['headers'],
-  ): headers is HeaderObject[] => {
-    return (
-      Array.isArray(headers) &&
-      headers.length > 0 &&
-      headers[0] != null &&
-      typeof headers[0] === 'object' &&
-      'title' in headers[0] &&
-      'key' in headers[0]
-    );
-  };
-
-  const handleChangePage = useCallback(
-    (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) =>
-      handleSetPage(newPage + 1),
-    [handleSetPage],
-  );
-
-  const handleChangeRowsPerPage = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const value = parseInt(event.target.value, 10);
-      handleSetPage(0);
-      handleSetRowsPerPage(value);
-    },
-    [handleSetPage, handleSetRowsPerPage],
-  );
-
-  const slotPropsConst = {
-    select: {
-      inputProps: {
-        'aria-label': 'Filas por página',
-      },
-      native: true,
-    },
-  };
-
-  const isEmpty = props.totalData === 0 && !props.loading;
+  const isEmpty = props.totalData === 0 && !loading;
+  const shouldShowPagination =
+    props.totalData > 0 && props.pagination && !loading;
 
   return (
     <TableContainer
@@ -84,56 +38,30 @@ const TableComponent = memo((props: ITableComponent) => {
         aria-label={props.ariaLabelTable}
         size={props.dense ? 'small' : 'medium'}
       >
-        <TableHead>
-          <TableRow
-            sx={{
-              backgroundColor: alpha(theme.palette.primary.main, 0.1),
-            }}
-          >
-            {isObjectHeader(props.headers)
-              ? props.headers.map((header) => (
-                  <TableCell
-                    key={header.key}
-                    align={header.align || 'left'}
-                    sx={{
-                      fontWeight: 'bold',
-                      color: theme.palette.info.main,
-                    }}
-                  >
-                    {header.title}
-                  </TableCell>
-                ))
-              : props.headers}
-          </TableRow>
-        </TableHead>
+        <TableHeader
+          headers={props.headers}
+          loading={loading}
+          dense={props.dense}
+        />
 
-        <TableBody>
-          {isEmpty ? (
-            <TableEmptyState emptyMessage={emptyMessage}></TableEmptyState>
-          ) : (
-            props.body
-          )}
-        </TableBody>
-        {props.totalData > 0 && props.pagination && (
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                component="td"
-                page={Math.max(0, props.page - 1)}
-                count={props.totalData}
-                slotProps={slotPropsConst}
-                rowsPerPage={props.rowsPerPage}
-                onPageChange={handleChangePage}
-                labelRowsPerPage="Filas por página:"
-                ActionsComponent={TablePaginationActions}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                labelDisplayedRows={({ from, to, count }) =>
-                  `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`
-                }
-              />
-            </TableRow>
-          </TableFooter>
+        <TableBodyContent
+          loading={loading}
+          isEmpty={isEmpty}
+          body={props.body}
+          headers={props.headers}
+          rowsPerPage={rowsPerPage}
+          dense={props.dense}
+          emptyMessage={emptyMessage}
+        />
+
+        {shouldShowPagination && (
+          <TablePaginationFooter
+            totalData={props.totalData}
+            page={props.page}
+            rowsPerPage={props.rowsPerPage}
+            onSetPage={handleSetPage}
+            onSetRowsPerPage={handleSetRowsPerPage}
+          />
         )}
       </Table>
     </TableContainer>
