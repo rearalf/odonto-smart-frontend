@@ -6,10 +6,12 @@ import { useDeferredValue } from 'react';
 
 const useGetAllDoctorsQuery = (options: IGetPaginationOptions = {}) => {
   const deferredSearch = useDeferredValue(options.search);
+  const deferredSpecialtyId = useDeferredValue(options.specialtyId);
 
-  const queryOptions = {
+  const queryOptions: IGetPaginationOptions = {
     ...options,
     search: deferredSearch,
+    specialtyId: deferredSpecialtyId,
   };
 
   return useQuery({

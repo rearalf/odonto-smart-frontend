@@ -24,7 +24,13 @@ export const createDoctor = async (doctorData: FormData) => {
 
 export const getAllDoctors = async (options: IGetPaginationOptions = {}) => {
   try {
-    const { pagination = true, page = 1, per_page = 10, search = '' } = options;
+    const {
+      pagination = true,
+      page = 1,
+      per_page = 10,
+      search = '',
+      specialtyId,
+    } = options;
 
     const params: Record<string, any> = {
       pagination,
@@ -37,6 +43,10 @@ export const getAllDoctors = async (options: IGetPaginationOptions = {}) => {
 
     if (search) {
       params.search = search;
+    }
+
+    if (specialtyId) {
+      params.specialtyId = specialtyId;
     }
 
     const response = await axiosInstance.get<IListDoctors[]>(

@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
 
-function useFilter() {
+function useFilter(specialty_id: number | null) {
   const storeNotification = useNotificationStore();
 
   const { data, isError, isLoading } = useGetSpecialtiesQuery();
@@ -23,7 +23,7 @@ function useFilter() {
   };
 
   const getSelectedSpecialty = (): IAutocompleteOption | null => {
-    const selectedId = 4;
+    const selectedId = specialty_id;
     if (!selectedId) return null;
 
     const specialty =

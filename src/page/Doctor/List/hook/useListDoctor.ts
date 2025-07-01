@@ -13,12 +13,14 @@ function useListDoctor() {
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [idDoctor, setIdDoctor] = useState<null | number>(null);
   const [search, setSearch] = useState<string>('');
+  const [specialtyId, setSpecialtyId] = useState<number | null>(null);
 
-  const { data, isLoading, isError } = useGetAllDoctorsQuery({
+  const { data, isLoading, isError, refetch } = useGetAllDoctorsQuery({
     pagination: true,
     page: page,
     per_page: rowsPerPage,
     search,
+    specialtyId: specialtyId || undefined,
   });
 
   const handleShowDeleteModal = (id?: number) => {
@@ -47,6 +49,15 @@ function useListDoctor() {
 
   const handleClearFilter = () => {
     setSearch('');
+    setSpecialtyId(null);
+  };
+
+  const handleSetSpecialty = (id: number | null) => setSpecialtyId(id);
+
+  const handleSearch = () => {
+    if (search.trim().length > 0 || specialtyId !== null) {
+      refetch();
+    }
   };
 
   useEffect(() => {
@@ -66,12 +77,15 @@ function useListDoctor() {
     pagination: data && data.pagination ? data.pagination : null,
     isLoading,
     rowsPerPage,
+    specialtyId,
     openDeleteModal,
+    handleSearch,
     handleSetPage,
     handleNewDoctor,
     handleSearchInput,
     handleClearFilter,
     handleDeleteDoctor,
+    handleSetSpecialty,
     handleSetRowsPerPage,
     handleShowDeleteModal,
   };

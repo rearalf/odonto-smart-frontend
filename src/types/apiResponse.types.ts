@@ -19,4 +19,5 @@ export interface IGetPaginationOptions {
   page?: number;
   per_page?: number;
   search?: string;
+  specialtyId?: number;
 }

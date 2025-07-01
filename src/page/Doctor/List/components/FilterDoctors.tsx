@@ -11,12 +11,15 @@ import type { ChangeEvent } from 'react';
 interface IFilterDoctors {
   search: string;
   paperStyles: any;
+  specialtyId: number | null;
+  handleSearch: () => void;
   handleClearFilter: () => void;
+  handleSetSpecialty: (id: number | null) => void;
   handleSearchInput: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const FilterDoctors = (props: IFilterDoctors) => {
-  const filter = useFilter();
+  const filter = useFilter(props.specialtyId);
 
   const specialtyOptions = filter.getSpecialtyOptions(filter.specialties);
   const selectedSpecialty = filter.getSelectedSpecialty();
@@ -42,9 +45,9 @@ const FilterDoctors = (props: IFilterDoctors) => {
             inputMode="text"
             onChange={props.handleSearchInput}
             value={props.search}
-            placeholder="Juan..."
-            ariaLabel="Buscar doctor por nombre"
-            label="Buscar doctor por nombre"
+            placeholder="Juan... o juan.email@..."
+            ariaLabel="Buscar por nombre o correo"
+            label="Buscar por nombre o correo"
           />
         </Grid>
 
@@ -59,7 +62,11 @@ const FilterDoctors = (props: IFilterDoctors) => {
             label="Especialidad médica"
             loadingText="Cargando especialidades..."
             noOptionsText="No se encontraron especialidades"
-            onChange={(_newValue) => {}}
+            onChange={(newSpecialty) => {
+              props.handleSetSpecialty(
+                newSpecialty !== null ? Number(newSpecialty.id) : null,
+              );
+            }}
           />
         </Grid>
         <Grid
@@ -74,7 +81,11 @@ const FilterDoctors = (props: IFilterDoctors) => {
           gap={3}
         >
           <Tooltip title="Filtrar Doctores">
-            <IconButton color="primary" aria-label="Filtrar Doctores">
+            <IconButton
+              color="primary"
+              aria-label="Filtrar Doctores"
+              onClick={props.handleSearch}
+            >
               <FiFilter size={22} />
             </IconButton>
           </Tooltip>

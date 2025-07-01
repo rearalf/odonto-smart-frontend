@@ -46,9 +46,12 @@ function Doctor() {
 
       <FilterDoctors
         search={hook.search}
+        specialtyId={hook.specialtyId}
         paperStyles={styles.paperStyles}
+        handleSearch={hook.handleSearch}
         handleSearchInput={hook.handleSearchInput}
         handleClearFilter={hook.handleClearFilter}
+        handleSetSpecialty={hook.handleSetSpecialty}
       />
 
       <TableComponent
