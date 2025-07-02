@@ -15,6 +15,7 @@ import type { IListDoctors } from 'src/types/doctor.type';
 interface IRowDoctor {
   doctors: IListDoctors[];
   handleShowDeleteModal: (id: number) => void;
+  handleShowModalDoctorDetail: (id: number) => void;
 }
 
 const RowDoctor = (props: IRowDoctor) => {
@@ -78,7 +79,10 @@ const RowDoctor = (props: IRowDoctor) => {
 
       <TableCell align="center">
         <Tooltip title="Información doctor">
-          <IconButton color="info">
+          <IconButton
+            color="info"
+            onClick={() => props.handleShowModalDoctorDetail(row.id)}
+          >
             <LiaNotesMedicalSolid size={22} />
           </IconButton>
         </Tooltip>

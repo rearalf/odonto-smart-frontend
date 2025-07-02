@@ -61,15 +61,21 @@ const DialogComponent = (props: IDialogComponentProps) => {
       scroll={props.scroll}
       maxWidth={props.maxWidth}
       fullWidth={props.fullWidth}
-      onClose={props.handleClose}
+      onClose={(_event, reason) => {
+        if (reason !== 'backdropClick' && props.handleClose) {
+          props.handleClose();
+        }
+      }}
       aria-labelledby={props.labelledby}
       aria-describedby={props.describedby}
     >
-      <DialogTitle id={props.titleId}>{props.dialogTitle}</DialogTitle>
+      {props.dialogTitle && (
+        <DialogTitle id={props.titleId}>{props.dialogTitle}</DialogTitle>
+      )}
 
       <DialogContent sx={props.sxBody}>{body}</DialogContent>
 
-      <DialogActions>{footer}</DialogActions>
+      {footer && <DialogActions>{footer}</DialogActions>}
     </Dialog>
   );
 };

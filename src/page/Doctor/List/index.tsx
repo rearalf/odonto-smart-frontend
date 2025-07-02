@@ -20,30 +20,6 @@ function Doctor() {
   const hook = useListDoctor();
   const styles = useStyles();
 
-  const dummyDoctor = {
-    id: 1,
-    qualification: 'Expert in dental surgery',
-    specialty: {
-      id: 1,
-      name: 'Endodontics',
-      description: 'Root canal treatments',
-    },
-    specialties: [
-      { id: 2, name: 'Orthodontics', description: 'Braces and aligners' },
-      { id: 3, name: 'Prosthodontics', description: 'Dental prostheses' },
-    ],
-    first_name: 'John',
-    middle_name: 'A.',
-    last_name: 'Doe',
-    full_name: 'Dr. John A. Doe',
-    email: 'john.doe@example.com',
-    roles: [{ id: 1, name: 'Admin', description: 'System administrator' }],
-    permissions: [
-      { id: 2, name: 'Edit Doctors', description: 'Can edit doctor profiles' },
-      { id: 3, name: 'View Reports', description: 'Can access reports' },
-    ],
-  };
-
   return (
     <>
       <BreadCrumbs links={BREADCRUMBS} loading={false} />
@@ -95,6 +71,7 @@ function Doctor() {
           <RowDoctor
             doctors={hook.doctors}
             handleShowDeleteModal={hook.handleShowDeleteModal}
+            handleShowModalDoctorDetail={hook.handleShowModalDoctorDetail}
           />
         }
       />
@@ -107,7 +84,12 @@ function Doctor() {
         handleShowDeleteModal={hook.handleShowDeleteModal}
       />
 
-      <DoctorDetailModal open={true} onClose={() => {}} doctor={dummyDoctor} />
+      <DoctorDetailModal
+        open={hook.openModal}
+        doctor={hook.dataDoctorDetail}
+        onClose={hook.handleShowModalDoctorDetail}
+        isLoadingDoctorDetail={hook.isLoadingDoctorDetail}
+      />
     </>
   );
 }

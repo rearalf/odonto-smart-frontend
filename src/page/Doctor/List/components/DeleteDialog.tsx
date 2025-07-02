@@ -18,7 +18,6 @@ const DeleteDialog = (props: IDeleteDialog) => {
       fullWidth
       maxWidth="xs"
       describedby="Ventana de advertencia para eliminar un doctor de forma permanente"
-      titleId="delete-doctor-dialog-title"
       labelledby="delete-doctor-dialog-title"
       open={props.openDeleteModal}
       handleClose={props.handleShowDeleteModal}

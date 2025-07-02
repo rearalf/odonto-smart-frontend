@@ -3,7 +3,7 @@ import { doctorEndpoints } from '@api/endpoints';
 import type { IGetPaginationOptions } from 'src/types/apiResponse.types';
 import { handleError } from '@utils/handleError';
 import type { AxiosError } from 'axios';
-import type { IListDoctors } from 'src/types/doctor.type';
+import type { IDoctorDetail, IListDoctors } from 'src/types/doctor.type';
 
 export const createDoctor = async (doctorData: FormData) => {
   try {
@@ -65,6 +65,17 @@ export const getAllDoctors = async (options: IGetPaginationOptions = {}) => {
           }
         : null,
     };
+  } catch (error) {
+    throw handleError(error as AxiosError<{ message?: string }>);
+  }
+};
+
+export const getOneDoctor = async (id: number) => {
+  try {
+    const response = await axiosInstance.get<IDoctorDetail>(
+      doctorEndpoints.getOneDoctor + '/' + id,
+    );
+    return response;
   } catch (error) {
     throw handleError(error as AxiosError<{ message?: string }>);
   }

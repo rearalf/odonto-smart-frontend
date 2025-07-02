@@ -9,3 +9,17 @@ export interface IListDoctors {
   full_name: string;
   email: string;
 }
+
+export interface IDoctorDetail {
+  id: 1;
+  qualification: string;
+  specialty: IBasicIdNameDescription;
+  specialties: IBasicIdNameDescription[];
+  full_name: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  email: string;
+  roles: IBasicIdNameDescription[];
+  permissions: IBasicIdNameDescription[];
+}

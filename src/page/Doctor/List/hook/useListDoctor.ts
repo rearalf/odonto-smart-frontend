@@ -4,16 +4,23 @@ import { useNavigate } from 'react-router';
 
 import useGetAllDoctorsQuery from '@features/doctor/query/useGetAllDoctors';
 import useNotificationStore from '@stores/useNotificationStore';
+import useGetOneDoctor from '@features/doctor/query/useGetOneDoctor';
+import useLoadingStore from '@stores/useLoadingStore';
 
 function useListDoctor() {
   const navigate = useNavigate();
   const storeNotification = useNotificationStore();
+  const { handleLoading } = useLoadingStore();
 
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [showModalDoctorDetail, setShowModalDoctorDetail] =
+    useState<boolean>(false);
+
+  const [idDoctor, setIdDoctor] = useState<null | number>(null);
+  const [doctorDetailId, setDoctorDetailId] = useState<number | null>(null);
 
   const [page, setPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
-  const [idDoctor, setIdDoctor] = useState<null | number>(null);
   const [search, setSearch] = useState<string>('');
   const [specialtyId, setSpecialtyId] = useState<number | null>(null);
 
@@ -28,9 +35,20 @@ function useListDoctor() {
     specialtyId: debouncedSpecialtyId || undefined,
   });
 
+  const {
+    data: dataDoctorDetail,
+    isLoading: isLoadingDoctorDetail,
+    isError: isErrorDoctorDetail,
+  } = useGetOneDoctor(doctorDetailId);
+
   const handleShowDeleteModal = (id?: number) => {
     if (id) setIdDoctor(id);
     setOpenDeleteModal(!openDeleteModal);
+  };
+
+  const handleShowModalDoctorDetail = (id: number | null) => {
+    setDoctorDetailId(id);
+    setShowModalDoctorDetail(!showModalDoctorDetail);
   };
 
   const handleSetPage = (newPage: number) => setPage(newPage);
@@ -75,15 +93,33 @@ function useListDoctor() {
     }
   }, [isError, storeNotification]);
 
+  useEffect(() => {
+    if (isErrorDoctorDetail) {
+      storeNotification.handleShowNotification({
+        severity: 'error',
+        show: true,
+        text: 'Error al cargar los detalles de un doctor',
+      });
+    }
+  }, [isErrorDoctorDetail, storeNotification]);
+
+  useEffect(() => {
+    handleLoading(isLoadingDoctorDetail);
+  }, [isLoadingDoctorDetail, handleLoading]);
+
   return {
     page,
     search,
     doctors: data && data.data ? data.data : [],
     pagination: data && data.pagination ? data.pagination : null,
+    openModal: showModalDoctorDetail,
     isLoading,
     rowsPerPage,
     specialtyId,
     openDeleteModal,
+    dataDoctorDetail:
+      dataDoctorDetail && dataDoctorDetail.data ? dataDoctorDetail.data : null,
+    isLoadingDoctorDetail,
     handleSearch,
     handleSetPage,
     handleNewDoctor,
@@ -93,6 +129,7 @@ function useListDoctor() {
     handleSetSpecialty,
     handleSetRowsPerPage,
     handleShowDeleteModal,
+    handleShowModalDoctorDetail,
   };
 }
 
