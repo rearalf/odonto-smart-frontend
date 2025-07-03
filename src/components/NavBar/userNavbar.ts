@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router';
-import { useState } from 'react';
-
-import type { MouseEvent } from 'react';
+import { useCallback, useState, type MouseEvent } from 'react';
 
 // import { authService } from '../../api/services';
+
 import {
   useSidebarStore,
   useLoadingStore,
@@ -12,23 +11,26 @@ import {
 
 function useNavbar() {
   const navigate = useNavigate();
-  const loadingState = useLoadingStore();
+
   const sidebarStore = useSidebarStore();
-  // const { logOut } = useUserStore();
+  const loadingStore = useLoadingStore();
   const notificationStore = useNotificationStore();
 
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [userMenuAnchor, setUserMenuAnchor] = useState<HTMLElement | null>(
+    null,
+  );
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  const openUserMenu = useCallback((event: MouseEvent<HTMLElement>) => {
+    setUserMenuAnchor(event.currentTarget);
+  }, []);
+
+  const closeUserMenu = useCallback(() => {
+    setUserMenuAnchor(null);
+  }, []);
 
   const handleLogOut = async () => {
     try {
-      loadingState.setLoading(true);
+      loadingStore.setLoading(true);
       // await authService.logout();
       notificationStore.handleShowNotification({
         severity: 'success',
@@ -36,7 +38,6 @@ function useNavbar() {
         text: 'Has cerrado sesión correctamente.',
       });
       navigate('/auth');
-      // logOut();
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       notificationStore.handleShowNotification({
@@ -45,16 +46,19 @@ function useNavbar() {
         text: 'Has cerrado sesión, pero no pudimos comunicarnos con el servidor.',
       });
     } finally {
-      loadingState.setLoading(false);
+      loadingStore.setLoading(false);
     }
   };
 
   return {
+    userMenu: {
+      anchorEl: userMenuAnchor,
+      open: Boolean(userMenuAnchor),
+      openMenu: openUserMenu,
+      closeMenu: closeUserMenu,
+    },
     sidebarStore,
-    anchorElUser,
     handleLogOut,
-    handleOpenUserMenu,
-    handleCloseUserMenu,
   };
 }
 
