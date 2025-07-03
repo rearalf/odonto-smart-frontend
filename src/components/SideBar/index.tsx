@@ -1,4 +1,5 @@
 import { Box, Drawer, IconButton, Typography } from '@mui/material';
+import { HiOutlineUserGroup } from 'react-icons/hi';
 import { FiChevronsLeft } from 'react-icons/fi';
 import { CiMedicalMask } from 'react-icons/ci';
 import { NavLink } from 'react-router';
@@ -115,6 +116,13 @@ const SideBar = () => {
               text="Doctores"
               isOpen={sidebarStore.open}
               iconSize={24}
+            />
+            <SidebarItem
+              to="/rol"
+              text="Roles"
+              iconSize={24}
+              icon={HiOutlineUserGroup}
+              isOpen={sidebarStore.open}
             />
           </Box>
         </Box>

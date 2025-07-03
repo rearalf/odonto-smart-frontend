@@ -3,12 +3,6 @@ import type { IFormValues } from '../types/newDoctor.types';
 import { CONTACT_TYPE_ENUM, type IContactForm } from 'src/types/common.types';
 import type { IRadioButtonComponentOption } from 'src/types/RadioButtonComponent.types';
 
-export const STEPS = [
-  'Formulario principal',
-  'Agregar especialidades y contactos',
-  'Agregar roles y permisos',
-];
-
 export const BREADCRUMBS: ILink[] = [
   { link_name: 'Dashboard', link_to: '/' },
   { link_name: 'Doctores', link_to: '/doctor' },

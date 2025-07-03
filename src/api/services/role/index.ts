@@ -3,6 +3,7 @@ import { roleEndpoints } from '@api/endpoints';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
 import { handleError } from '@utils/handleError';
 import type { AxiosError } from 'axios';
+import type { ICreateRole } from 'src/types/role.type';
 
 export const getAllRole = async () => {
   try {
@@ -11,6 +12,15 @@ export const getAllRole = async () => {
     );
     return response;
   } catch (error) {
-    return handleError(error as AxiosError);
+    return handleError(error as AxiosError<{ message?: string }>);
+  }
+};
+
+export const createRole = async (params: ICreateRole) => {
+  try {
+    const response = await axiosInstance.post(roleEndpoints.createRole, params);
+    return response;
+  } catch (error) {
+    return handleError(error as AxiosError<{ message?: string }>);
   }
 };
