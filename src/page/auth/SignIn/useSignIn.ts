@@ -31,7 +31,7 @@ function useSignIn() {
     { setSubmitting }: FormikHelpers<ISignInForm>,
   ) => {
     try {
-      loadingState.handleLoading();
+      loadingState.setLoading(true);
       notificationStore.handleShowNotification({
         severity: 'success',
         show: true,
@@ -41,7 +41,7 @@ function useSignIn() {
 
       setSubmitting(false);
     } finally {
-      loadingState.handleLoading();
+      loadingState.setLoading(false);
     }
   };
 

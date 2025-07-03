@@ -12,7 +12,7 @@ function useListUsers() {
 
   const handleGetUsers = async () => {
     try {
-      loadingStore.handleLoading();
+      loadingStore.setLoading(true);
       const response = await getUsers();
       if (response.success) {
         if (Array.isArray(response.data)) setUsers(response.data);
@@ -36,7 +36,7 @@ function useListUsers() {
         });
       }
     } finally {
-      loadingStore.handleLoading();
+      loadingStore.setLoading(false);
     }
   };
 

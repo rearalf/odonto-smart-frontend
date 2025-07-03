@@ -28,7 +28,7 @@ function useNavbar() {
 
   const handleLogOut = async () => {
     try {
-      loadingState.handleLoading();
+      loadingState.setLoading(true);
       // await authService.logout();
       notificationStore.handleShowNotification({
         severity: 'success',
@@ -45,7 +45,7 @@ function useNavbar() {
         text: 'Has cerrado sesión, pero no pudimos comunicarnos con el servidor.',
       });
     } finally {
-      loadingState.handleLoading();
+      loadingState.setLoading(false);
     }
   };
 

@@ -8,12 +8,12 @@ function useAuth() {
     showAuthenticatedModa,
     setShowAuthenticatedModa,
   } = useUserStore();
-  const { handleLoading } = useLoadingStore();
+  const { setLoading } = useLoadingStore();
   const { handleShowNotification } = useNotificationStore();
 
   const handleLogOut = async () => {
     try {
-      handleLoading();
+      setLoading(true);
       await authService.logout();
       handleShowNotification({
         severity: 'success',
@@ -29,13 +29,13 @@ function useAuth() {
         text: 'Has cerrado sesión, pero no pudimos comunicarnos con el servidor.',
       });
     } finally {
-      handleLoading();
+      setLoading(false);
     }
   };
 
   const handleRefreshToken = async () => {
     try {
-      handleLoading();
+      setLoading(true);
 
       const response = await authService.refreshToken();
 
@@ -70,7 +70,7 @@ function useAuth() {
         text: 'Error al conectar con el servidor. Intenta nuevamente.',
       });
     } finally {
-      handleLoading();
+      setLoading(false);
     }
   };
 

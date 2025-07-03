@@ -10,7 +10,7 @@ import useLoadingStore from '@stores/useLoadingStore';
 function useListDoctor() {
   const navigate = useNavigate();
   const storeNotification = useNotificationStore();
-  const { handleLoading } = useLoadingStore();
+  const { setLoading } = useLoadingStore();
 
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [showModalDoctorDetail, setShowModalDoctorDetail] =
@@ -104,8 +104,8 @@ function useListDoctor() {
   }, [isErrorDoctorDetail, storeNotification]);
 
   useEffect(() => {
-    handleLoading(isLoadingDoctorDetail);
-  }, [isLoadingDoctorDetail, handleLoading]);
+    setLoading(isLoadingDoctorDetail);
+  }, [isLoadingDoctorDetail, setLoading]);
 
   return {
     page,
