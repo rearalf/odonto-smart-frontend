@@ -1,14 +1,21 @@
 import { Box, Typography } from '@mui/material';
 import { FaUserTag } from 'react-icons/fa';
 
-import { BreadCrumbs, ButtonComponent } from '@components/index';
+import {
+  BreadCrumbs,
+  TableComponent,
+  ButtonComponent,
+} from '@components/index';
+
 import CreateRoleModal from './components/CreateRoleModal';
+import RowRole from './components/RowRole';
+
+import { BREADCRUMBS, TABLE_HEADER_ROLES } from './constants';
 import { headerStyles } from '@styles/index';
-import { BREADCRUMBS } from './constants';
 import useListRols from './hook/useListRols';
 
 function ListRols() {
-  const { showCreateRolModal, handleToggleShowCreateRolModal } = useListRols();
+  const hook = useListRols();
 
   return (
     <>
@@ -16,15 +23,15 @@ function ListRols() {
 
       <Box component="header" sx={headerStyles}>
         <Typography variant="h4" component="h1">
-          Doctores
+          Roles
         </Typography>
         <ButtonComponent
           type="button"
           color="primary"
           position="left"
-          text="Nuevo doctor"
+          text="Nuevo rol"
           variant="contained"
-          onClick={handleToggleShowCreateRolModal}
+          onClick={hook.handleToggleShowCreateRolModal}
           icon={
             <FaUserTag
               size={20}
@@ -35,9 +42,24 @@ function ListRols() {
         />
       </Box>
 
+      <TableComponent
+        pagination
+        key="roles"
+        ariaLabelTable="roles"
+        handleSetPage={hook.handleSetPage}
+        handleSetRowsPerPage={hook.handleSetRowsPerPage}
+        page={hook.page}
+        loading={hook.isLoading}
+        rowsPerPage={hook.rowsPerPage}
+        totalData={hook.pagination?.total ?? 0}
+        emptyMessage="No hay roles registrados"
+        headers={TABLE_HEADER_ROLES}
+        body={<RowRole roles={hook.roles} />}
+      />
+
       <CreateRoleModal
-        onClose={handleToggleShowCreateRolModal}
-        open={showCreateRolModal}
+        onClose={hook.handleToggleShowCreateRolModal}
+        open={hook.showCreateRolModal}
       />
     </>
   );
