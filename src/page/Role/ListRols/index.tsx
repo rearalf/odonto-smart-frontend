@@ -13,6 +13,7 @@ import RowRole from './components/RowRole';
 import { BREADCRUMBS, TABLE_HEADER_ROLES } from './constants';
 import { headerStyles } from '@styles/index';
 import useListRols from './hook/useListRols';
+import FilterRoles from './components/FilterRoles';
 
 function ListRols() {
   const hook = useListRols();
@@ -41,6 +42,8 @@ function ListRols() {
           }
         />
       </Box>
+
+      <FilterRoles search={hook.search} themeStyle={hook.theme} />
 
       <TableComponent
         pagination

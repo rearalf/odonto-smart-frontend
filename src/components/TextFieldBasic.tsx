@@ -19,6 +19,7 @@ interface ITextFieldBasicProps {
   handleOnBlur?: () => void;
   handleShowPassword?: () => void;
   onSubmit?: () => void;
+  maxLength?: number;
   inputMode?:
     | 'email'
     | 'search'
@@ -47,7 +48,13 @@ const TextFieldBasic = (props: ITextFieldBasicProps) => (
     inputMode={props.inputMode}
     multiline={props.multiline}
     aria-label={props.ariaLabel}
-    helperText={props.helperText}
+    helperText={
+      props.helperText
+        ? props.helperText
+        : props.maxLength
+          ? `${String(props.value).length} / ${props.maxLength} caracteres`
+          : undefined
+    }
     placeholder={props.placeholder}
     autoComplete={props.autoComplete}
     onKeyDown={(e) => {

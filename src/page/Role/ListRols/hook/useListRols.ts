@@ -3,8 +3,10 @@ import { useDebounce } from '@uidotdev/usehooks';
 
 import useGetListAllRoles from '@features/role/query/useGetListAllRoles';
 import useNotificationStore from '@stores/useNotificationStore';
+import { useTheme } from '@mui/material/styles';
 
 function useListRols() {
+  const theme = useTheme();
   const storeNotification = useNotificationStore();
 
   const [page, setPage] = useState<number>(1);
@@ -51,6 +53,7 @@ function useListRols() {
 
   return {
     page,
+    theme,
     search,
     isLoading,
     rowsPerPage,

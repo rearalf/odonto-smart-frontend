@@ -80,6 +80,7 @@ function CreateRoleModal({ onClose, open }: ICreateRoleModalProps) {
                     <TextFieldBasic
                       required
                       multiline
+                      maxLength={254}
                       type="text"
                       id="description"
                       label="Descripción detallada"
