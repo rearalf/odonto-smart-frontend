@@ -12,7 +12,7 @@ export const getAllRole = async () => {
     );
     return response;
   } catch (error) {
-    return handleError(error as AxiosError<{ message?: string }>);
+    throw handleError(error as AxiosError<{ message?: string }>);
   }
 };
 
@@ -21,6 +21,6 @@ export const createRole = async (params: ICreateRole) => {
     const response = await axiosInstance.post(roleEndpoints.createRole, params);
     return response;
   } catch (error) {
-    return handleError(error as AxiosError<{ message?: string }>);
+    throw handleError(error as AxiosError<{ message?: string }>);
   }
 };

@@ -17,11 +17,14 @@ const RenderInput = (
     label={props.label}
     placeholder={props.placeholder}
     error={props.error}
-    required={props.required}
+    // required={props.required}
     helperText={props.helperText}
     disabled={props.disabled}
     onBlur={props.onBlur}
     sx={textField}
+    InputLabelProps={{
+      required: props.required,
+    }}
     InputProps={{
       ...params.InputProps,
       endAdornment: (

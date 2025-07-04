@@ -4,6 +4,21 @@ import type { Theme } from '@emotion/react';
 export const headerStyles: SxProps<Theme> = {
   mt: 2,
   mb: 4,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  flexDirection: {
+    xs: 'column',
+    sm: 'row',
+  },
+  gap: {
+    xs: 2,
+    sm: 0,
+  },
+  textAlign: {
+    xs: 'center',
+    sm: 'inherit',
+  },
 };
 
 export const btnGroupStyles: SxProps<Theme> = {
