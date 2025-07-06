@@ -53,6 +53,45 @@ function useCreateRole() {
     fromState.resetForm();
   };
 
+  const handleSelectAllPermissions = (
+    formikProps: FormikProps<IFormValues>,
+  ) => {
+    const allPermissions = dataPermissions?.data || [];
+    const selectedPermissions = formikProps.values.permission_id || [];
+
+    // Estados del checkbox
+    const isAllSelected =
+      allPermissions.length > 0 &&
+      selectedPermissions.length === allPermissions.length;
+    const isIndeterminate =
+      selectedPermissions.length > 0 &&
+      selectedPermissions.length < allPermissions.length;
+
+    // Función para manejar el cambio del checkbox
+    const handleToggleAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.checked) {
+        // Seleccionar todos los permisos
+        const allPermissionIds = allPermissions.map(
+          (permission) => permission.id,
+        );
+        formikProps.setFieldValue('permission_id', allPermissionIds);
+      } else {
+        // Deseleccionar todos los permisos
+        formikProps.setFieldValue('permission_id', []);
+      }
+      // formikProps.setFieldTouched('permission_id', true);
+    };
+
+    return {
+      isAllSelected,
+      isIndeterminate,
+      handleToggleAll,
+      totalPermissions: allPermissions.length,
+      selectedCount: selectedPermissions.length,
+      isDisabled: formikProps.isSubmitting || allPermissions.length === 0,
+    };
+  };
+
   const handleSubmit = (
     values: IFormValues,
     formikHelpers: FormikHelpers<IFormValues>,
@@ -104,6 +143,7 @@ function useCreateRole() {
     handleSubmit,
     handleCancelForm,
     handleSelectedPermissions,
+    handleSelectAllPermissions,
     convertToAutocompleteOptions,
   };
 }

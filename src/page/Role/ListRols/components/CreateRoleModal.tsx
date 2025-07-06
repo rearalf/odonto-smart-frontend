@@ -1,4 +1,11 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Paper,
+  Typography,
+} from '@mui/material';
 import { FiSave, FiXCircle } from 'react-icons/fi';
 import { Form, Formik } from 'formik';
 import {
@@ -52,6 +59,10 @@ function CreateRoleModal({ onClose, open }: ICreateRoleModalProps) {
                   mb: 0,
                 }}
               >
+                <Typography variant="h5" component="h5" mb={4}>
+                  Nuevo rol
+                </Typography>
+
                 <Grid container spacing={4} display="grid">
                   <Grid size={{ xs: 12 }}>
                     <TextFieldBasic
@@ -105,6 +116,42 @@ function CreateRoleModal({ onClose, open }: ICreateRoleModalProps) {
                     />
                   </Grid>
                   <Grid size={{ xs: 12 }}>
+                    <Box sx={{ mb: 2 }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={
+                              hook.handleSelectAllPermissions(props)
+                                .isAllSelected
+                            }
+                            indeterminate={
+                              hook.handleSelectAllPermissions(props)
+                                .isIndeterminate
+                            }
+                            onChange={
+                              hook.handleSelectAllPermissions(props)
+                                .handleToggleAll
+                            }
+                            disabled={
+                              hook.handleSelectAllPermissions(props).isDisabled
+                            }
+                            color="primary"
+                          />
+                        }
+                        label={
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: hook.theme.palette.text.primary,
+                              fontWeight: 500,
+                            }}
+                          >
+                            Seleccionar todos los permisos
+                          </Typography>
+                        }
+                      />
+                    </Box>
+
                     <AutocompleteComponent
                       multiple
                       required
