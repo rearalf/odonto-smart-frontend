@@ -13,6 +13,13 @@ export interface IBasicIdNameDescription {
   label?: string;
 }
 
+export interface IPermissionGrouped {
+  id: number;
+  name: string;
+  label: string;
+  children: IBasicIdNameDescription[];
+}
+
 export interface IRadioButtonOptions {
   value: string | number;
   label: string;

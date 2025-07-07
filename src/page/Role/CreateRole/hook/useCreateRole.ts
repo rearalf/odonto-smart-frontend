@@ -1,57 +1,89 @@
 import type { FormikHelpers, FormikProps } from 'formik';
+import { useNavigate } from 'react-router';
 import { useTheme } from '@mui/material';
 import { useEffect } from 'react';
 
-import useGetAllPermission from '@features/permission/query/useGetAllPermissionQuery';
+import useGetAllPermissionGrouped from '@features/permission/query/useGetAllPermissionGrouped';
+import useCreateRoleQuery from '@features/role/mutation/useCreateRole';
 import useNotificationStore from '@stores/useNotificationStore';
 
-import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
 import type { IFormValues } from '../types';
 
 function useCreateRole() {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const storeNotification = useNotificationStore();
 
   const {
     data: dataPermissions,
     isError: isErrorPermissions,
     isLoading: isLoadingPermissions,
-  } = useGetAllPermission();
+  } = useGetAllPermissionGrouped();
 
-  const convertToAutocompleteOptions = (
-    items: IBasicIdNameDescription[],
-    permissions?: boolean,
-  ): IAutocompleteOption[] => {
-    if (permissions) {
-      return items.map((item) => ({
-        id: item.id,
-        label: item.label || item.name,
-        name: item.label || item.name,
-        description: item.description,
-      }));
-    }
-    return items.map((item) => ({
-      id: item.id,
-      label: item.name,
-      name: item.name,
-      description: item.description,
-    }));
+  const { mutate } = useCreateRoleQuery();
+
+  const handleTogglePermission = (
+    formikProps: FormikProps<IFormValues>,
+    permission: IBasicIdNameDescription,
+  ) => {
+    const current = formikProps.values.permission_id || [];
+    const isSelected = current.includes(permission.id);
+    const updated = isSelected
+      ? current.filter((id) => id !== permission.id)
+      : [...current, permission.id];
+    formikProps.setFieldValue('permission_id', updated);
   };
 
-  const handleSelectedPermissions = (formikProps: FormikProps<IFormValues>) =>
-    dataPermissions && dataPermissions.data
-      ? dataPermissions.data.filter((permission: IBasicIdNameDescription) =>
-          formikProps.values.permission_id?.includes(permission.id),
-        )
-      : [];
+  const handleToggleGroupPermissions = (
+    formikProps: FormikProps<IFormValues>,
+    groupPermissions: number[],
+    allSelected: boolean,
+  ) => {
+    const current = formikProps.values.permission_id || [];
+
+    const updated = allSelected
+      ? current.filter((id) => !groupPermissions.includes(id))
+      : [...new Set([...current, ...groupPermissions])];
+
+    formikProps.setFieldValue('permission_id', updated);
+  };
 
   const handleSubmit = (
     values: IFormValues,
-    _formikHelpers: FormikHelpers<IFormValues>,
+    formikHelpers: FormikHelpers<IFormValues>,
   ) => {
-    // eslint-disable-next-line no-console
-    console.log(values);
+    formikHelpers.setSubmitting(true);
+    mutate(values, {
+      onSuccess: () => {
+        formikHelpers.setSubmitting(false);
+        formikHelpers.resetForm();
+        storeNotification.handleShowNotification({
+          text: 'Rol creado exitosamente.',
+          show: true,
+          severity: 'success',
+        });
+        navigate('/rol');
+      },
+      onError: (error) => {
+        formikHelpers.setSubmitting(false);
+        storeNotification.handleShowNotification({
+          text:
+            Array.isArray(error.message) && error.message.length > 0
+              ? error.message[0]
+              : error.message
+                ? error.message
+                : 'Error al crear el rol.',
+          show: true,
+          severity: 'error',
+        });
+      },
+    });
+  };
+
+  const handleCancelForm = () => {
+    navigate('/rol');
   };
 
   useEffect(() => {
@@ -70,8 +102,9 @@ function useCreateRole() {
     isLoadingPermissions,
     permissions: dataPermissions?.data || [],
     handleSubmit,
-    handleSelectedPermissions,
-    convertToAutocompleteOptions,
+    handleCancelForm,
+    handleTogglePermission,
+    handleToggleGroupPermissions,
   };
 }
 

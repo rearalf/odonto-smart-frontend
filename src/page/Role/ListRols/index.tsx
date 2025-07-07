@@ -32,7 +32,7 @@ function ListRols() {
           position="left"
           text="Nuevo rol"
           variant="contained"
-          onClick={hook.handleToggleShowCreateRolModal}
+          onClick={hook.handleGoToCreateRol}
           icon={
             <FaUserTag
               size={20}

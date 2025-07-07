@@ -4,9 +4,11 @@ import { useDebounce } from '@uidotdev/usehooks';
 import useGetListAllRoles from '@features/role/query/useGetListAllRoles';
 import useNotificationStore from '@stores/useNotificationStore';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router';
 
 function useListRols() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const storeNotification = useNotificationStore();
 
   const [page, setPage] = useState<number>(1);
@@ -41,6 +43,8 @@ function useListRols() {
     if (refreshData) refetch();
   };
 
+  const handleGoToCreateRol = () => navigate('/rol/new-rol');
+
   useEffect(() => {
     if (isError) {
       storeNotification.handleShowNotification({
@@ -63,6 +67,7 @@ function useListRols() {
     handleSetPage,
     handleSearchInput,
     handleClearFilter,
+    handleGoToCreateRol,
     handleSetRowsPerPage,
     handleToggleShowCreateRolModal,
   };
