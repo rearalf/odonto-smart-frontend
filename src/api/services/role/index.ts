@@ -79,3 +79,15 @@ export const getOneRolebyId = async (id: number) => {
     throw handleError(error as AxiosError<{ message?: string }>);
   }
 };
+
+export const updateRole = async (id: number, params: ICreateRole) => {
+  try {
+    const response = await axiosInstance.put(
+      roleEndpoints.getAllRoles + '/' + id,
+      params,
+    );
+    return response;
+  } catch (error) {
+    throw handleError(error as AxiosError<{ message?: string }>);
+  }
+};

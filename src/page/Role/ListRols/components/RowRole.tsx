@@ -16,17 +16,17 @@ const RowRole = (props: IRowRoleProps) => {
 
       <TableCell align="center">
         <Tooltip title="Información rol">
-          <Link to={`/rol/${row.id}`}>
-            <IconButton color="info">
-              <LiaNotesMedicalSolid size={22} />
-            </IconButton>
-          </Link>
+          <IconButton color="info">
+            <LiaNotesMedicalSolid size={22} />
+          </IconButton>
         </Tooltip>
 
         <Tooltip title="Editar rol">
-          <IconButton color="secondary">
-            <FiEdit title="Editar rol" size={18} />
-          </IconButton>
+          <Link to={`/rol/${row.id}`}>
+            <IconButton color="secondary">
+              <FiEdit title="Editar rol" size={18} />
+            </IconButton>
+          </Link>
         </Tooltip>
 
         <Tooltip title="Eliminar rol">
