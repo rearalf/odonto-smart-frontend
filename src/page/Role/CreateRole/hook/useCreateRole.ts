@@ -11,6 +11,7 @@ import useGetOneRoleQuery from '@features/role/query/useGetOneRoleQuery';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
 import { INITIAL_VALUES } from '../constants';
 import type { IFormValues } from '../types';
+import useUpdateRole from '@features/role/mutation/useUpdateRole';
 
 function useCreateRole() {
   const { id } = useParams();
@@ -30,7 +31,8 @@ function useCreateRole() {
     id ? Number(id) : undefined,
   );
 
-  const { mutate } = useCreateRoleQuery();
+  const { mutate: createRole } = useCreateRoleQuery();
+  const { mutate: updateRole } = useUpdateRole();
 
   const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
 
@@ -65,31 +67,63 @@ function useCreateRole() {
     formikHelpers: FormikHelpers<IFormValues>,
   ) => {
     formikHelpers.setSubmitting(true);
-    mutate(values, {
-      onSuccess: () => {
-        formikHelpers.setSubmitting(false);
-        formikHelpers.resetForm();
-        storeNotification.handleShowNotification({
-          text: 'Rol creado exitosamente.',
-          show: true,
-          severity: 'success',
-        });
-        navigate('/rol');
-      },
-      onError: (error) => {
-        formikHelpers.setSubmitting(false);
-        storeNotification.handleShowNotification({
-          text:
-            Array.isArray(error.message) && error.message.length > 0
-              ? error.message[0]
-              : error.message
-                ? error.message
-                : 'Error al crear el rol.',
-          show: true,
-          severity: 'error',
-        });
-      },
-    });
+
+    if (id) {
+      updateRole(
+        { params: values, id: Number(id) },
+        {
+          onSuccess: () => {
+            formikHelpers.setSubmitting(false);
+            formikHelpers.resetForm();
+            storeNotification.handleShowNotification({
+              text: 'Rol actualizado exitosamente.',
+              show: true,
+              severity: 'success',
+            });
+            navigate('/rol');
+          },
+          onError: (error) => {
+            formikHelpers.setSubmitting(false);
+            storeNotification.handleShowNotification({
+              text:
+                Array.isArray(error.message) && error.message.length > 0
+                  ? error.message[0]
+                  : error.message
+                    ? error.message
+                    : 'Error al actualizar el rol.',
+              show: true,
+              severity: 'error',
+            });
+          },
+        },
+      );
+    } else {
+      createRole(values, {
+        onSuccess: () => {
+          formikHelpers.setSubmitting(false);
+          formikHelpers.resetForm();
+          storeNotification.handleShowNotification({
+            text: 'Rol creado exitosamente.',
+            show: true,
+            severity: 'success',
+          });
+          navigate('/rol');
+        },
+        onError: (error) => {
+          formikHelpers.setSubmitting(false);
+          storeNotification.handleShowNotification({
+            text:
+              Array.isArray(error.message) && error.message.length > 0
+                ? error.message[0]
+                : error.message
+                  ? error.message
+                  : 'Error al crear el rol.',
+            show: true,
+            severity: 'error',
+          });
+        },
+      });
+    }
   };
 
   const handleCancelForm = () => navigate('/rol');
