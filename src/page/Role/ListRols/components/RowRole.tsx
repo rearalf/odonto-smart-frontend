@@ -1,6 +1,7 @@
 import { IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import { LiaNotesMedicalSolid } from 'react-icons/lia';
+import { Link } from 'react-router';
 import type { IListRoles } from 'src/types/role.type';
 
 interface IRowRoleProps {
@@ -15,9 +16,11 @@ const RowRole = (props: IRowRoleProps) => {
 
       <TableCell align="center">
         <Tooltip title="Información rol">
-          <IconButton color="info">
-            <LiaNotesMedicalSolid size={22} />
-          </IconButton>
+          <Link to={`/rol/${row.id}`}>
+            <IconButton color="info">
+              <LiaNotesMedicalSolid size={22} />
+            </IconButton>
+          </Link>
         </Tooltip>
 
         <Tooltip title="Editar rol">

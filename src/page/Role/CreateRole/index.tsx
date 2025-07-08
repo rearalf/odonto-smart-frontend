@@ -1,11 +1,11 @@
 import {
   Box,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
   Grid,
   Paper,
+  Checkbox,
+  FormGroup,
   Typography,
+  FormControlLabel,
 } from '@mui/material';
 import { FiSave, FiXCircle } from 'react-icons/fi';
 import { Form, Formik } from 'formik';
@@ -17,25 +17,27 @@ import {
   BreadCrumbs,
 } from '@components/index';
 
-import { BREADCRUMBS, INITIAL_VALUES } from './constants';
 import { newRoleSchema } from './validation/newRole.schema';
 import useCreateRole from './hook/useCreateRole';
+import { BREADCRUMBS } from './constants';
 
 function CreateRole() {
   const hook = useCreateRole();
+
   return (
     <>
       <BreadCrumbs links={BREADCRUMBS} loading={false} />
       <Box component="header" sx={headerStyles}>
         <Typography variant="h4" component="h1">
-          Nuevo rol
+          {hook.id ? 'Actaulizar ' : 'Nuevo '} rol
         </Typography>
       </Box>
 
       <Formik
-        validationSchema={newRoleSchema}
-        initialValues={INITIAL_VALUES}
+        enableReinitialize
         onSubmit={hook.handleSubmit}
+        validationSchema={newRoleSchema}
+        initialValues={hook.initialValues}
       >
         {(props) => (
           <Form>
@@ -114,6 +116,7 @@ function CreateRole() {
                       md: 6,
                       xl: 4,
                     }}
+                    key={permission.id}
                   >
                     <Paper
                       elevation={0}
@@ -121,7 +124,6 @@ function CreateRole() {
                         hook.theme.palette.primary.main,
                         hook.theme.palette.primary.main,
                       )}
-                      key={permission.id}
                     >
                       <Grid
                         container
@@ -236,12 +238,12 @@ function CreateRole() {
               />
               <ButtonComponent
                 type="submit"
-                text="Guardar"
                 color="success"
                 position="left"
                 icon={<FiSave />}
                 variant="contained"
                 loading={props.isSubmitting}
+                text={hook.id ? 'Actualizar' : 'Guardar'}
                 disabled={!props.isValid || !props.dirty || props.isSubmitting}
               />
             </Box>
