@@ -59,6 +59,10 @@ const router = createBrowserRouter([
                 path: 'new-rol',
                 element: <CreateRole />,
               },
+              {
+                path: ':id',
+                element: <CreateRole />,
+              },
             ],
           },
         ],

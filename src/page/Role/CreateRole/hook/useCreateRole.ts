@@ -1,16 +1,20 @@
 import type { FormikHelpers, FormikProps } from 'formik';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useTheme } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import useGetAllPermissionGrouped from '@features/permission/query/useGetAllPermissionGrouped';
 import useCreateRoleQuery from '@features/role/mutation/useCreateRole';
 import useNotificationStore from '@stores/useNotificationStore';
 
+import useGetOneRoleQuery from '@features/role/query/useGetOneRoleQuery';
 import type { IBasicIdNameDescription } from 'src/types/common.types';
+import { INITIAL_VALUES } from '../constants';
 import type { IFormValues } from '../types';
 
 function useCreateRole() {
+  const { id } = useParams();
+
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -22,7 +26,13 @@ function useCreateRole() {
     isLoading: isLoadingPermissions,
   } = useGetAllPermissionGrouped();
 
+  const { data: roleData, isError: isErrorRole } = useGetOneRoleQuery(
+    id ? Number(id) : undefined,
+  );
+
   const { mutate } = useCreateRoleQuery();
+
+  const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
 
   const handleTogglePermission = (
     formikProps: FormikProps<IFormValues>,
@@ -82,9 +92,7 @@ function useCreateRole() {
     });
   };
 
-  const handleCancelForm = () => {
-    navigate('/rol');
-  };
+  const handleCancelForm = () => navigate('/rol');
 
   useEffect(() => {
     if (isErrorPermissions) {
@@ -97,8 +105,32 @@ function useCreateRole() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isErrorPermissions]);
 
+  useEffect(() => {
+    if (isErrorRole) {
+      storeNotification.handleShowNotification({
+        show: true,
+        severity: 'error',
+        text: 'Error al obtener el rol',
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isErrorRole]);
+
+  useEffect(() => {
+    if (id && roleData) {
+      setInitialValues({
+        name: roleData.data.name,
+        description: roleData.data.description || '',
+        permission_id: roleData.data.permission,
+      });
+    }
+  }, [id, roleData]);
+
   return {
+    id,
     theme,
+    roleData,
+    initialValues,
     isLoadingPermissions,
     permissions: dataPermissions?.data || [],
     handleSubmit,

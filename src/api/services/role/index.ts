@@ -65,3 +65,17 @@ export const listAllRole = async (options: IGetPaginationOptions = {}) => {
     throw handleError(error as AxiosError<{ message?: string }>);
   }
 };
+
+export const getOneRolebyId = async (id: number) => {
+  try {
+    const response = await axiosInstance.get<{
+      id: number;
+      name: string;
+      description: string;
+      permission: number[];
+    }>(roleEndpoints.getAllRoles + '/' + id);
+    return response;
+  } catch (error) {
+    throw handleError(error as AxiosError<{ message?: string }>);
+  }
+};
