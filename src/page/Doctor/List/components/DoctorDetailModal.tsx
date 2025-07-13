@@ -48,41 +48,54 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
       handleClose={() => onClose(null)}
       sxContent={{
         position: 'relative',
+        // Padding responsivo para el modal
+        p: { xs: 2, sm: 3 },
+        // Altura máxima para evitar overflow en móviles
+        maxHeight: { xs: '90vh', sm: '85vh' },
+        overflow: 'auto',
       }}
     >
+      {/* Botón de cierre con posición responsiva */}
       <IconButton
         onClick={() => onClose(null)}
         sx={{
           position: 'absolute',
-          right: 36,
-          top: 26,
+          right: { xs: 16, sm: 36 },
+          top: { xs: 16, sm: 26 },
+          zIndex: 1,
+          backgroundColor: alpha(theme.palette.background.paper, 0.9),
+          '&:hover': {
+            backgroundColor: alpha(theme.palette.background.paper, 1),
+          },
         }}
       >
         <RiCloseFill />
       </IconButton>
+
+      {/* Sección de información personal */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          mb: 3,
+          p: { xs: 2, sm: 3 },
+          mb: { xs: 2, sm: 3 },
           backgroundColor: alpha(theme.palette.primary.main, 0.04),
           border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
           borderRadius: 2,
         }}
       >
-        <Grid container size={12} spacing={3}>
+        <Grid container spacing={{ xs: 2, sm: 3 }}>
+          {/* Avatar con mejor responsive */}
           <Grid
-            size={{ xs: 12, sm: 3, md: 3, xl: 3 }}
+            size={{ xs: 12, sm: 3 }}
             display="flex"
             justifyContent="center"
             alignItems="center"
           >
             <Avatar
-              // src={props.values.person.profile_picture}
               sx={{
-                width: { xs: 100, sm: 125, md: 150 },
-                height: { xs: 100, sm: 125, md: 150 },
-                fontSize: { xs: 24, sm: 32, md: 40 },
+                width: { xs: 80, sm: 100, md: 125, lg: 150 },
+                height: { xs: 80, sm: 100, md: 125, lg: 150 },
+                fontSize: { xs: 20, sm: 24, md: 32, lg: 40 },
                 bgcolor: alpha(theme.palette.primary.main, 0.1),
                 border: `2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
               }}
@@ -90,7 +103,7 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
               <Box
                 component="span"
                 sx={{
-                  fontSize: { xs: 24, sm: 32, md: 40 },
+                  fontSize: { xs: 20, sm: 24, md: 32, lg: 40 },
                   color: (theme) => theme.palette.primary.main,
                 }}
               >
@@ -99,154 +112,163 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
             </Avatar>
           </Grid>
 
+          {/* Información personal */}
           <Grid
-            size={{ xs: 12, sm: 9, md: 9, xl: 9 }}
-            gap={{
-              xs: 1,
-              sm: 2,
-            }}
-            display="grid"
+            size={{ xs: 12, sm: 9 }}
+            display="flex"
+            flexDirection="column"
+            gap={{ xs: 1, sm: 2 }}
           >
-            <Grid size={12}>
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: 500 }}
-                textAlign={{
-                  sx: 'center',
-                  md: 'left',
-                }}
-              >
-                Información personal
-              </Typography>
-            </Grid>
-            <Grid container spacing={{ xs: 1, sm: 2 }}>
-              <Grid
-                size={{
-                  xs: 12,
-                }}
-              >
-                <Grid container direction="column" spacing={1}>
-                  <Grid>
-                    <Typography>
-                      <strong>Nombre completo:</strong> {doctor.full_name}
-                    </Typography>
-                  </Grid>
-                  <Grid>
-                    <Typography>
-                      <strong>Correo:</strong>{' '}
-                      <Link
-                        href={`mailto:${doctor.email}`}
-                        underline="hover"
-                        color="primary"
-                      >
-                        {doctor.email}
-                      </Link>
-                    </Typography>
-                  </Grid>
-                  <Grid>
-                    <Typography
-                      component="div"
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 500,
+                fontSize: { xs: '1.1rem', sm: '1.25rem' },
+              }}
+              textAlign={{ xs: 'center', sm: 'left' }}
+            >
+              Información personal
+            </Typography>
+
+            <Stack spacing={{ xs: 1, sm: 1.5 }}>
+              {/* Nombre completo */}
+              <Box>
+                <Typography
+                  sx={{
+                    fontSize: { xs: '0.9rem', sm: '1rem' },
+                    wordBreak: 'break-word',
+                  }}
+                >
+                  <strong>Nombre completo:</strong> {doctor.full_name}
+                </Typography>
+              </Box>
+
+              {/* Correo */}
+              <Box>
+                <Typography
+                  sx={{
+                    fontSize: { xs: '0.9rem', sm: '1rem' },
+                    wordBreak: 'break-word',
+                  }}
+                >
+                  <strong>Correo:</strong>{' '}
+                  <Link
+                    href={`mailto:${doctor.email}`}
+                    underline="hover"
+                    color="primary"
+                    sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}
+                  >
+                    {doctor.email}
+                  </Link>
+                </Typography>
+              </Box>
+
+              {/* Especialidad principal */}
+              <Box>
+                <Typography
+                  component="div"
+                  sx={{
+                    display: 'flex',
+                    alignItems: { xs: 'flex-start', sm: 'center' },
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    gap: { xs: 0.5, sm: 1 },
+                    fontSize: { xs: '0.9rem', sm: '1rem' },
+                  }}
+                >
+                  <strong>Especialidad:</strong>
+                  <Tooltip title={doctor.specialty.description} arrow>
+                    <Chip
+                      label={doctor.specialty.name}
+                      color="primary"
+                      variant="filled"
                       sx={{
-                        my: 0.6,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 1,
+                        borderRadius: '999px',
+                        px: { xs: 1, sm: 2 },
+                        py: 0.5,
+                        fontSize: { xs: 12, sm: 14 },
+                        fontWeight: 500,
+                        textTransform: 'capitalize',
+                        bgcolor: (theme) =>
+                          alpha(theme.palette.primary.main, 0.15),
+                        color: 'primary.main',
+                        '& .MuiChip-label': {
+                          px: { xs: 0.5, sm: 1 },
+                        },
                       }}
+                    />
+                  </Tooltip>
+                </Typography>
+              </Box>
+
+              {/* Especialidades adicionales */}
+              {doctor.specialties.length > 0 && (
+                <Box>
+                  <Typography
+                    component="div"
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      flexDirection: 'column',
+                      gap: { xs: 0.5, sm: 1 },
+                      fontSize: { xs: '0.9rem', sm: '1rem' },
+                    }}
+                  >
+                    <strong>Especialidades:</strong>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      flexWrap="wrap"
+                      gap={1}
+                      sx={{ width: '100%' }}
                     >
-                      <strong>Especialidad: </strong>{' '}
-                      <Tooltip title={doctor.specialty.description} arrow>
-                        <Chip
-                          label={doctor.specialty.name}
-                          color="primary"
-                          variant="filled"
-                          sx={{
-                            borderRadius: '999px',
-                            px: 2,
-                            py: 0.5,
-                            fontSize: 14,
-                            fontWeight: 500,
-                            textTransform: 'capitalize',
-                            bgcolor: (theme) =>
-                              alpha(theme.palette.primary.main, 0.15),
-                            color: 'primary.main',
-                            '& .MuiChip-label': {
-                              px: 1,
-                            },
-                          }}
-                        />
-                      </Tooltip>
-                    </Typography>
-                  </Grid>
-                  {doctor.specialties.length > 0 && (
-                    <Grid>
-                      <Typography
-                        component="div"
-                        sx={{
-                          my: 0.6,
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 1,
-                        }}
-                      >
-                        <strong>Especialidades: </strong>{' '}
-                        <Stack
-                          direction="row"
-                          spacing={1}
-                          flexWrap="wrap"
-                          gap={1}
-                        >
-                          {doctor.specialties.map((s) => (
-                            <Tooltip title={s.description} arrow key={s.id}>
-                              <Chip
-                                label={s.name}
-                                variant="outlined"
-                                color="secondary"
-                                avatar={
-                                  <Avatar
-                                    sx={{
-                                      bgcolor: (theme) =>
-                                        alpha(
-                                          theme.palette.secondary.main,
-                                          0.2,
-                                        ),
-                                      color: 'secondary.main',
-                                      fontSize: 14,
-                                      width: 24,
-                                      height: 24,
-                                    }}
-                                  >
-                                    {s.name.charAt(0).toUpperCase()}
-                                  </Avatar>
-                                }
+                      {doctor.specialties.map((s) => (
+                        <Tooltip title={s.description} arrow key={s.id}>
+                          <Chip
+                            label={s.name}
+                            variant="outlined"
+                            color="secondary"
+                            avatar={
+                              <Avatar
                                 sx={{
-                                  borderRadius: '999px',
-                                  px: 1,
-                                  py: 0.35,
-                                  fontSize: 14,
-                                  fontWeight: 500,
-                                  textTransform: 'capitalize',
-                                  borderColor: (theme) =>
-                                    alpha(theme.palette.secondary.main, 0.5),
+                                  bgcolor: (theme) =>
+                                    alpha(theme.palette.secondary.main, 0.2),
+                                  color: 'secondary.main',
+                                  fontSize: { xs: 12, sm: 14 },
+                                  width: { xs: 20, sm: 24 },
+                                  height: { xs: 20, sm: 24 },
                                 }}
-                              />
-                            </Tooltip>
-                          ))}
-                        </Stack>
-                      </Typography>
-                    </Grid>
-                  )}
-                </Grid>
-              </Grid>
-            </Grid>
+                              >
+                                {s.name.charAt(0).toUpperCase()}
+                              </Avatar>
+                            }
+                            sx={{
+                              borderRadius: '999px',
+                              px: { xs: 0.5, sm: 1 },
+                              py: 0.35,
+                              fontSize: { xs: 12, sm: 14 },
+                              fontWeight: 500,
+                              textTransform: 'capitalize',
+                              borderColor: (theme) =>
+                                alpha(theme.palette.secondary.main, 0.5),
+                            }}
+                          />
+                        </Tooltip>
+                      ))}
+                    </Stack>
+                  </Typography>
+                </Box>
+              )}
+            </Stack>
           </Grid>
         </Grid>
       </Paper>
 
+      {/* Sección de cualificación académica */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          mb: 3,
+          p: { xs: 2, sm: 3 },
+          mb: { xs: 2, sm: 3 },
           backgroundColor: alpha(theme.palette.info.main, 0.04),
           border: `1px solid ${alpha(theme.palette.info.main, 0.2)}`,
           borderRadius: 2,
@@ -256,29 +278,53 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
           <Skeleton variant="rounded" height={100} />
         ) : (
           <>
-            <Typography variant="h6">
+            <Typography
+              variant="h6"
+              sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}
+            >
               Cualificación académica y experiencia
             </Typography>
             <Divider sx={{ mt: 1, mb: 2 }} />
-            <Typography>{doctor.qualification ?? '—'}</Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: '0.9rem', sm: '1rem' },
+                wordBreak: 'break-word',
+                whiteSpace: 'pre-wrap',
+              }}
+            >
+              {doctor.qualification ?? '—'}
+            </Typography>
           </>
         )}
       </Paper>
 
+      {/* Sección de roles y permisos */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           backgroundColor: alpha(theme.palette.info.main, 0.04),
           border: `1px solid ${alpha(theme.palette.info.main, 0.2)}`,
           borderRadius: 2,
         }}
       >
-        <Grid display="grid" gap={2}>
-          <Box component="div">
-            <Typography variant="h6">Roles</Typography>
+        <Stack spacing={{ xs: 2, sm: 3 }}>
+          {/* Roles */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}
+            >
+              Roles
+            </Typography>
             <Divider sx={{ mt: 1, mb: 2 }} />
-            <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
+            <Stack
+              direction="row"
+              spacing={1}
+              flexWrap="wrap"
+              gap={1}
+              sx={{ width: '100%' }}
+            >
               {doctor.roles.map((r) => (
                 <Tooltip title={r.description} key={r.id} arrow>
                   <Chip
@@ -291,9 +337,9 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
                           bgcolor: (theme) =>
                             alpha(theme.palette.warning.main, 0.2),
                           color: 'warning.main',
-                          fontSize: 14,
-                          width: 24,
-                          height: 24,
+                          fontSize: { xs: 12, sm: 14 },
+                          width: { xs: 20, sm: 24 },
+                          height: { xs: 20, sm: 24 },
                         }}
                       >
                         {r.name.charAt(0).toUpperCase()}
@@ -301,9 +347,9 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
                     }
                     sx={{
                       borderRadius: '999px',
-                      px: 1,
+                      px: { xs: 0.5, sm: 1 },
                       py: 0.35,
-                      fontSize: 14,
+                      fontSize: { xs: 12, sm: 14 },
                       fontWeight: 500,
                       textTransform: 'capitalize',
                       borderColor: (theme) =>
@@ -317,11 +363,24 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
               ))}
             </Stack>
           </Box>
+
+          {/* Permisos */}
           {doctor.permissions.length > 0 && (
-            <Box component="div">
-              <Typography variant="h6">Permisos</Typography>
+            <Box>
+              <Typography
+                variant="h6"
+                sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}
+              >
+                Permisos
+              </Typography>
               <Divider sx={{ mt: 1, mb: 2 }} />
-              <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
+              <Stack
+                direction="row"
+                spacing={1}
+                flexWrap="wrap"
+                gap={1}
+                sx={{ width: '100%' }}
+              >
                 {doctor.permissions.map((p) => (
                   <Tooltip title={p.description} key={p.id} arrow>
                     <Chip
@@ -333,9 +392,9 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
                             bgcolor: (theme) =>
                               alpha(theme.palette.error.main, 0.15),
                             color: theme.palette.error.main,
-                            fontSize: 14,
-                            width: 24,
-                            height: 24,
+                            fontSize: { xs: 12, sm: 14 },
+                            width: { xs: 20, sm: 24 },
+                            height: { xs: 20, sm: 24 },
                           }}
                         >
                           {p.name.charAt(0).toUpperCase()}
@@ -343,9 +402,9 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
                       }
                       sx={{
                         borderRadius: '999px',
-                        px: 1,
+                        px: { xs: 0.5, sm: 1 },
                         py: 0.35,
-                        fontSize: 14,
+                        fontSize: { xs: 12, sm: 14 },
                         fontWeight: 500,
                         textTransform: 'capitalize',
                         borderColor: (theme) =>
@@ -360,7 +419,7 @@ const DoctorDetailModal: FC<IDoctorDetailModalProps> = ({
               </Stack>
             </Box>
           )}
-        </Grid>
+        </Stack>
       </Paper>
     </DialogComponent>
   );
