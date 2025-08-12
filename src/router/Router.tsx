@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router';
 
 import Dashboard from '@pages/Dashboard';
-import SignIn from '@pages/auth/SignIn';
 import Private from '@modules/shared/Layouts/Private';
 import Public from '@modules/shared/Layouts/public';
 import App from '../App';
@@ -17,12 +16,7 @@ const router = createBrowserRouter([
       {
         path: 'auth',
         element: <Public />,
-        children: [
-          {
-            path: '',
-            element: <SignIn />,
-          },
-        ],
+        children: [],
       },
       {
         path: '',

@@ -1,15 +1,20 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useDeferredValue } from 'react';
 
-import { roleService } from '@api/services';
-
 import type { IGetPaginationOptions } from 'src/modules/shared/types/apiResponse.types';
 import type { ICreateRole } from '@type/role.type';
+import {
+  createRole,
+  getAllRole,
+  updateRole,
+  listAllRole,
+  getOneRolebyId,
+} from '../services/role.service';
 
 export const useGetAllRoleQuery = (enabled: boolean = true) => {
   return useQuery({
     queryKey: ['roles'],
-    queryFn: () => roleService.getAllRole(),
+    queryFn: () => getAllRole(),
     enabled,
   });
 };
@@ -24,7 +29,7 @@ export const useGetListAllRoles = (options: IGetPaginationOptions = {}) => {
 
   return useQuery({
     queryKey: ['roles', queryOptions],
-    queryFn: () => roleService.listAllRole(queryOptions),
+    queryFn: () => listAllRole(queryOptions),
     enabled: true,
   });
 };
@@ -32,20 +37,20 @@ export const useGetListAllRoles = (options: IGetPaginationOptions = {}) => {
 export const useGetOneRoleQuery = (id?: number) => {
   return useQuery({
     queryKey: ['role', id],
-    queryFn: () => (id ? roleService.getOneRolebyId(id) : null),
+    queryFn: () => (id ? getOneRolebyId(id) : null),
     enabled: !!id,
   });
 };
 
 export const useCreateRoleQuery = () => {
   return useMutation({
-    mutationFn: async (role: ICreateRole) => roleService.createRole(role),
+    mutationFn: async (role: ICreateRole) => createRole(role),
   });
 };
 
 export const useUpdateRole = () => {
   return useMutation({
     mutationFn: async ({ id, params }: { id: number; params: ICreateRole }) =>
-      roleService.updateRole(id, params),
+      updateRole(id, params),
   });
 };

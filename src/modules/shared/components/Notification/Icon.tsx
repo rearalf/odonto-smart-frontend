@@ -1,3 +1,4 @@
+import type { Severity } from '@type/common.types';
 import {
   FiAlertCircle,
   FiAlertTriangle,
