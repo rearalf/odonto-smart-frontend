@@ -1,90 +1,59 @@
-import { isValidElement, Children, forwardRef } from 'react';
-import {
-  Slide,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from '@mui/material';
-
+import { type ReactElement, type ReactNode, forwardRef } from 'react';
 import type { TransitionProps } from '@mui/material/transitions';
+import { Slide, Dialog, DialogContent } from '@mui/material';
 import type { DialogProps, SxProps } from '@mui/material';
-import type { ReactElement, ReactNode } from 'react';
 import type { Theme } from '@emotion/react';
 
 interface IDialogComponentProps {
   open: boolean;
+  children: ReactNode;
+  fullWidth?: boolean;
   labelledby?: string;
   describedby?: string;
-  fullWidth?: boolean;
-  children: ReactNode;
-  dialogTitle?: string;
-  titleId?: string;
+  handleClose?: () => void;
+  sxContent?: SxProps<Theme>;
   scroll?: DialogProps['scroll'];
   maxWidth?: DialogProps['maxWidth'];
-  handleClose?: () => void;
-  sxBody?: SxProps<Theme>;
 }
 
 const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: ReactElement<any, any>;
-  },
+  props: TransitionProps & { children: ReactElement },
   ref: React.Ref<unknown>,
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DialogComponent = (props: IDialogComponentProps) => {
-  let body: ReactNode = null;
-  let footer: ReactNode = null;
-
-  Children.forEach(props.children, (child) => {
-    if (isValidElement(child)) {
-      if (child.type === DialogComponent.Body) {
-        body = child.props.children;
-      }
-      if (child.type === DialogComponent.Footer) {
-        footer = child.props.children;
-      }
-    }
-  });
-
-  if (!props.open) return null;
+const DialogComponent = ({
+  open,
+  children,
+  sxContent,
+  labelledby,
+  describedby,
+  handleClose,
+  maxWidth = 'sm',
+  fullWidth = true,
+  scroll = 'paper',
+}: IDialogComponentProps) => {
+  if (!open) return null;
 
   return (
     <Dialog
-      open={props.open}
-      slots={{
-        transition: Transition,
-      }}
-      scroll={props.scroll}
-      maxWidth={props.maxWidth}
-      fullWidth={props.fullWidth}
-      onClose={(_event, reason) => {
-        if (reason !== 'backdropClick' && props.handleClose) {
-          props.handleClose();
+      open={open}
+      onClose={(_, reason) => {
+        if (reason !== 'backdropClick') {
+          handleClose?.();
         }
       }}
-      aria-labelledby={props.labelledby}
-      aria-describedby={props.describedby}
+      TransitionComponent={Transition}
+      scroll={scroll}
+      maxWidth={maxWidth}
+      fullWidth={fullWidth}
+      aria-labelledby={labelledby}
+      aria-describedby={describedby}
     >
-      {props.dialogTitle && (
-        <DialogTitle id={props.titleId}>{props.dialogTitle}</DialogTitle>
-      )}
-
-      <DialogContent sx={props.sxBody}>{body}</DialogContent>
-
-      {footer && <DialogActions>{footer}</DialogActions>}
+      <DialogContent sx={sxContent}>{children}</DialogContent>
     </Dialog>
   );
 };
-
-DialogComponent.Body = ({ children }: { children: ReactNode }) => (
-  <>{children}</>
-);
-DialogComponent.Footer = ({ children }: { children: ReactNode }) => (
-  <>{children}</>
-);
 
 export default DialogComponent;

@@ -22,60 +22,58 @@ const DeleteDialog = (props: IDeleteDialog) => {
       open={props.openDeleteModal}
       handleClose={props.handleShowDeleteModal}
     >
-      <DialogComponent.Body>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
         <Box
           sx={{
+            p: 2,
+            mb: 3,
             display: 'flex',
+            borderRadius: 6,
             alignItems: 'center',
-            flexDirection: 'column',
             justifyContent: 'center',
+            backgroundColor: props.alphafunction(
+              props.theme.palette.error.main,
+              0.1,
+            ),
           }}
         >
-          <Box
-            sx={{
-              p: 2,
-              mb: 3,
-              display: 'flex',
-              borderRadius: 6,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: props.alphafunction(
-                props.theme.palette.error.main,
-                0.1,
-              ),
-            }}
-          >
-            <FiTrash size={36} color={props.theme.palette.error.main} />
-          </Box>
-          <Typography variant="h6" component="h2" color="textPrimary">
-            Eliminar el doctor
-          </Typography>
-          <Typography align="center" color="textSecondary">
-            ¿Seguro que quiere eliminar al doctor? Esta acción no se puede
-            deshacer.
-          </Typography>
-          <Box
-            sx={{
-              mt: 4,
-              gap: 4,
-              display: 'flex',
-            }}
-          >
-            <ButtonComponent
-              color="inherit"
-              text="Cancelar"
-              variant="contained"
-              onClick={props.handleShowDeleteModal}
-            />
-            <ButtonComponent
-              color="error"
-              text="Confirmar"
-              variant="contained"
-              onClick={props.handleDeleteDoctor}
-            />
-          </Box>
+          <FiTrash size={36} color={props.theme.palette.error.main} />
         </Box>
-      </DialogComponent.Body>
+        <Typography variant="h6" component="h2" color="textPrimary">
+          Eliminar el doctor
+        </Typography>
+        <Typography align="center" color="textSecondary">
+          ¿Seguro que quiere eliminar al doctor? Esta acción no se puede
+          deshacer.
+        </Typography>
+        <Box
+          sx={{
+            mt: 4,
+            gap: 4,
+            display: 'flex',
+          }}
+        >
+          <ButtonComponent
+            color="inherit"
+            text="Cancelar"
+            variant="contained"
+            onClick={props.handleShowDeleteModal}
+          />
+          <ButtonComponent
+            color="error"
+            text="Confirmar"
+            variant="contained"
+            onClick={props.handleDeleteDoctor}
+          />
+        </Box>
+      </Box>
     </DialogComponent>
   );
 };
