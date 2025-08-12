@@ -1,18 +1,16 @@
 import type { AxiosError } from 'axios';
 
-import permissionEndpoints from '@api/endpoints/permission';
 import { axiosInstance } from '@api/axios/axiosInstance';
-import { handleError } from 'src/modules/shared/utils/handleError';
+import { handleError } from '@utils/handleError';
 import type {
   IPermissionGrouped,
   IBasicIdNameDescription,
-} from 'src/modules/shared/types/common.types';
+} from '@type/common.types';
 
 export const getAllPermission = async () => {
   try {
-    const response = await axiosInstance.get<IBasicIdNameDescription[]>(
-      permissionEndpoints.getAllPermissions,
-    );
+    const response =
+      await axiosInstance.get<IBasicIdNameDescription[]>('/permission');
     return response;
   } catch (error) {
     throw handleError(error as AxiosError<{ message?: string }>);
@@ -22,7 +20,7 @@ export const getAllPermission = async () => {
 export const getAllPermissionGrouped = async () => {
   try {
     const response = await axiosInstance.get<IPermissionGrouped[]>(
-      permissionEndpoints.getAllPermissionsGrouped,
+      '/permission/grouped',
     );
     return response;
   } catch (error) {
