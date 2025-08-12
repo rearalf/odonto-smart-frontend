@@ -1,6 +1,6 @@
 import type { AxiosError } from 'axios';
 
-import { axiosInstance } from '@api/axios/axiosInstance';
+import { axiosInstance } from '@api/axiosInstance';
 import { handleError } from '@utils/handleError';
 
 import type { IGetPaginationOptions } from '@type/apiResponse.types';

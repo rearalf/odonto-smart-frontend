@@ -1,4 +1,4 @@
-import { axiosInstance } from '@api/axios/axiosInstance';
+import { axiosInstance } from '@api/axiosInstance';
 import type { IGetPaginationOptions } from 'src/modules/shared/types/apiResponse.types';
 import { handleError } from 'src/modules/shared/utils/handleError';
 import type { AxiosError } from 'axios';

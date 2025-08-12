@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import useUserStore from '../modules/shared/stores/useUserStore';
 import { useLocation, useNavigate } from 'react-router';
-import { useNotificationStore } from '../modules/shared/stores';
-import { axiosInstanceWithAuth } from '../api/axios/axiosInstance';
+import { useNotificationStore } from '../stores';
+import useUserStore from '../stores/useUserStore';
+import { axiosInstanceWithAuth } from '@api/axiosInstance';
 
 function useAuthentication() {
   const { access_token, setShowAuthenticatedModa } = useUserStore();

@@ -1,8 +1,8 @@
-import useAuthentication from '@hooks/useAuthentication';
+// import useAuthentication from '@hooks/useAuthentication';
 import { Outlet } from 'react-router';
 
 function Public() {
-  useAuthentication();
+  // useAuthentication();
   return (
     <>
       <Outlet />
