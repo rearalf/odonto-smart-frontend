@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"src/**/*.ts\"",
     "prepare": "husky"
   },
@@ -50,9 +50,9 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
-      "eslint --max-warnings 0 ."
+      "eslint --max-warnings 0 src"
     ],
-    "**/*.{html,json,css,scss,md,mdx}": [
+    "**/*.{html,json,css,scss,md,mdx,ts,tsx}": [
       "prettier -w"
     ]
   }
