@@ -1,21 +1,16 @@
 import type { AxiosError } from 'axios';
 
 import { axiosInstance } from '@api/axios/axiosInstance';
-import { handleError } from 'src/modules/shared/utils/handleError';
-import { roleEndpoints } from '@api/endpoints';
+import { handleError } from '@utils/handleError';
 
-import type { IBasicIdNameDescription } from 'src/modules/shared/types/common.types';
-import type {
-  ICreateRole,
-  IListRoles,
-} from 'src/modules/shared/types/role.type';
-import type { IGetPaginationOptions } from 'src/modules/shared/types/apiResponse.types';
+import type { IGetPaginationOptions } from '@type/apiResponse.types';
+import type { IBasicIdNameDescription } from '@type/common.types';
+import type { IListRoles, ICreateRole } from '@type/role.type';
 
 export const getAllRole = async () => {
   try {
-    const response = await axiosInstance.get<IBasicIdNameDescription[]>(
-      roleEndpoints.getAllRoles,
-    );
+    const response =
+      await axiosInstance.get<IBasicIdNameDescription[]>('/role');
     return response;
   } catch (error) {
     throw handleError(error as AxiosError<{ message?: string }>);
@@ -24,7 +19,7 @@ export const getAllRole = async () => {
 
 export const createRole = async (params: ICreateRole) => {
   try {
-    const response = await axiosInstance.post(roleEndpoints.createRole, params);
+    const response = await axiosInstance.post('/role/create-role', params);
     return response;
   } catch (error) {
     throw handleError(error as AxiosError<{ message?: string }>);
@@ -48,10 +43,7 @@ export const listAllRole = async (options: IGetPaginationOptions = {}) => {
       params.search = search;
     }
 
-    const response = await axiosInstance.get<IListRoles[]>(
-      roleEndpoints.getAllRoles,
-      { params },
-    );
+    const response = await axiosInstance.get<IListRoles[]>('/role', { params });
 
     return {
       data: response.data,
@@ -76,7 +68,7 @@ export const getOneRolebyId = async (id: number) => {
       name: string;
       description: string;
       permission: number[];
-    }>(roleEndpoints.getAllRoles + '/' + id);
+    }>('/role' + '/' + id);
     return response;
   } catch (error) {
     throw handleError(error as AxiosError<{ message?: string }>);
@@ -85,10 +77,7 @@ export const getOneRolebyId = async (id: number) => {
 
 export const updateRole = async (id: number, params: ICreateRole) => {
   try {
-    const response = await axiosInstance.put(
-      roleEndpoints.getAllRoles + '/' + id,
-      params,
-    );
+    const response = await axiosInstance.put('/role' + '/' + id, params);
     return response;
   } catch (error) {
     throw handleError(error as AxiosError<{ message?: string }>);

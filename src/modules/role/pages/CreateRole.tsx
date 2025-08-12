@@ -12,21 +12,22 @@ import { Form, Formik } from 'formik';
 
 import { headerStyles, paperStylesBase } from '@modules/shared/styles/index';
 import {
-  ButtonComponent,
-  TextFieldBasic,
   BreadCrumbs,
+  TextFieldBasic,
+  ButtonComponent,
 } from 'src/modules/shared/components/index';
 
-import { newRoleSchema } from './validation/newRole.schema';
-import useCreateRole from './hook/useCreateRole';
-import { BREADCRUMBS } from './constants';
+import { newRoleSchema } from '../validation/newRole.schema';
+
+import { BREADCRUMBSCREATEROLE } from '../constants';
+import useCreateRole from '@modules/role/hooks/useCreateRole';
 
 function CreateRole() {
   const hook = useCreateRole();
 
   return (
     <>
-      <BreadCrumbs links={BREADCRUMBS} loading={false} />
+      <BreadCrumbs links={BREADCRUMBSCREATEROLE} loading={false} />
       <Box component="header" sx={headerStyles}>
         <Typography variant="h4" component="h1">
           {hook.id ? 'Actaulizar ' : 'Nuevo '} rol

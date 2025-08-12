@@ -7,13 +7,12 @@ import {
   ButtonComponent,
 } from 'src/modules/shared/components/index';
 
-import CreateRoleModal from './components/CreateRoleModal';
-import RowRole from './components/RowRole';
+import RowRole from '../components/RowRole';
 
-import { BREADCRUMBS, TABLE_HEADER_ROLES } from './constants';
+import { BREADCRUMBS, TABLE_HEADER_ROLES } from '../constants';
 import { headerStyles } from '@modules/shared/styles/index';
-import useListRols from './hook/useListRols';
-import FilterRoles from './components/FilterRoles';
+import useListRols from '../hooks/useListRols';
+import FilterRoles from '../components/FilterRoles';
 
 function ListRols() {
   const hook = useListRols();
@@ -58,11 +57,6 @@ function ListRols() {
         emptyMessage="No hay roles registrados"
         headers={TABLE_HEADER_ROLES}
         body={<RowRole roles={hook.roles} />}
-      />
-
-      <CreateRoleModal
-        onClose={hook.handleToggleShowCreateRolModal}
-        open={hook.showCreateRolModal}
       />
     </>
   );

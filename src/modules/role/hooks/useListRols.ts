@@ -1,10 +1,10 @@
 import { type ChangeEvent, useEffect, useState } from 'react';
 import { useDebounce } from '@uidotdev/usehooks';
-
-import useGetListAllRoles from '@features/role/query/useGetListAllRoles';
-import useNotificationStore from 'src/modules/shared/stores/useNotificationStore';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router';
+
+import useNotificationStore from '@stores/useNotificationStore';
+import { useGetListAllRoles } from './useRolQueries';
 
 function useListRols() {
   const theme = useTheme();
@@ -17,7 +17,7 @@ function useListRols() {
 
   const debouncedSearch = useDebounce(search, 1000);
 
-  const { data, refetch, isLoading, isError } = useGetListAllRoles({
+  const { data, isLoading, isError } = useGetListAllRoles({
     pagination: true,
     page: page,
     per_page: rowsPerPage,
@@ -35,13 +35,6 @@ function useListRols() {
     setSearch(e.target.value);
 
   const handleClearFilter = () => setSearch('');
-
-  const [showCreateRolModal, setshowCreateRolModal] = useState<boolean>(false);
-
-  const handleToggleShowCreateRolModal = (refreshData?: boolean) => {
-    setshowCreateRolModal(!showCreateRolModal);
-    if (refreshData) refetch();
-  };
 
   const handleGoToCreateRol = () => navigate('/rol/new-rol');
 
@@ -61,7 +54,6 @@ function useListRols() {
     search,
     isLoading,
     rowsPerPage,
-    showCreateRolModal,
     roles: data && data.data ? data.data : [],
     pagination: data && data.pagination ? data.pagination : null,
     handleSetPage,
@@ -69,7 +61,6 @@ function useListRols() {
     handleClearFilter,
     handleGoToCreateRol,
     handleSetRowsPerPage,
-    handleToggleShowCreateRolModal,
   };
 }
 

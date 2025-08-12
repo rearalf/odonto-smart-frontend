@@ -5,9 +5,9 @@ import SignIn from '@pages/auth/SignIn';
 import Private from '@modules/shared/Layouts/Private';
 import Public from '@modules/shared/Layouts/public';
 import App from '../App';
-import { CreateRole, ListRols } from '@pages/Role';
 
 import DoctorRoutes from '@modules/doctors/Doctor.route';
+import RoleRoutes from '@modules/role/Role.route';
 
 const router = createBrowserRouter([
   {
@@ -33,25 +33,7 @@ const router = createBrowserRouter([
             element: <Dashboard />,
           },
           ...DoctorRoutes,
-          {
-            id: 'rol',
-            path: 'rol',
-            children: [
-              {
-                id: 'lista-roles',
-                path: '',
-                element: <ListRols />,
-              },
-              {
-                path: 'new-rol',
-                element: <CreateRole />,
-              },
-              {
-                path: ':id',
-                element: <CreateRole />,
-              },
-            ],
-          },
+          ...RoleRoutes,
         ],
       },
     ],

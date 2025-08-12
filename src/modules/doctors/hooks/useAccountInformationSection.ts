@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import useGetAllPermission from '@modules/permissions/hooks/useGetAllPermissionQuery';
-import useGetAllRoleQuery from '@features/role/query/useGetAllRoleQuery';
+
 import useNotificationStore from 'src/modules/shared/stores/useNotificationStore';
 
+import { useGetAllRoleQuery } from '@modules/role/hooks/useRolQueries';
 import type { IAutocompleteOption } from '@components/AutocompleteComponent/type';
 import type { IBasicIdNameDescription } from 'src/modules/shared/types/common.types';
 import type { IComponentFormProps } from '../types/newDoctor.types';
