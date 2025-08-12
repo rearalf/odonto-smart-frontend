@@ -14,7 +14,7 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, 'src/modules/shared/utils'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
       '@api': path.resolve(__dirname, 'src/api'),
-      '@layouts': path.resolve(__dirname, 'src/Layouts'),
+      '@layouts': path.resolve(__dirname, 'src/modules/shared/Layouts'),
       '@stores': path.resolve(__dirname, 'src/modules/shared/stores'),
       '@styles': path.resolve(__dirname, 'src/modules/shared/styles'),
       '@modules': path.resolve(__dirname, 'src/modules'),

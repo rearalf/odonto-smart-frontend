@@ -2,8 +2,8 @@ import { createBrowserRouter } from 'react-router';
 
 import Dashboard from '@pages/Dashboard';
 import SignIn from '@pages/auth/SignIn';
-import Private from '@layouts/Private';
-import Public from '@layouts/public';
+import Private from '@modules/shared/Layouts/Private';
+import Public from '@modules/shared/Layouts/public';
 import App from '../App';
 import { CreateRole, ListRols } from '@pages/Role';
 

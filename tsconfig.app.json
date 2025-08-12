@@ -32,7 +32,7 @@
       "@utils/*": ["src/modules/shared/utils/*"],
       "@hooks/*": ["src/hooks/*"],
       "@api/*": ["src/api/*"],
-      "@layouts/*": ["src/Layouts/*"],
+      "@layouts/*": ["src/modules/shared/Layouts/*"],
       "@stores/*": ["src/modules/shared/stores/*"],
       "@styles/*": ["src/modules/shared/styles/*"],
       // New estructure
