@@ -1,4 +1,4 @@
-import type { ILink } from 'src/types/BreadCrumbsComponent.type';
+import type { ILink } from '@components/BreadCrumbs/type';
 import type { IFormValues } from '../types';
 
 export const BREADCRUMBS: ILink[] = [

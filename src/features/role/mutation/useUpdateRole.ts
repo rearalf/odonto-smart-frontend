@@ -1,6 +1,6 @@
 import { roleService } from '@api/services';
 import { useMutation } from '@tanstack/react-query';
-import type { ICreateRole } from 'src/types/role.type';
+import type { ICreateRole } from 'src/modules/shared/types/role.type';
 
 const useUpdateRole = () => {
   return useMutation({

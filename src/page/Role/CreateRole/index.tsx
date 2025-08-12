@@ -10,12 +10,12 @@ import {
 import { FiSave, FiXCircle } from 'react-icons/fi';
 import { Form, Formik } from 'formik';
 
-import { headerStyles, paperStylesBase } from '@styles/index';
+import { headerStyles, paperStylesBase } from '@modules/shared/styles/index';
 import {
   ButtonComponent,
   TextFieldBasic,
   BreadCrumbs,
-} from '@components/index';
+} from 'src/modules/shared/components/index';
 
 import { newRoleSchema } from './validation/newRole.schema';
 import useCreateRole from './hook/useCreateRole';

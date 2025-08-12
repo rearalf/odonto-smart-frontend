@@ -5,13 +5,13 @@ import {
   BreadCrumbs,
   TableComponent,
   ButtonComponent,
-} from '@components/index';
+} from 'src/modules/shared/components/index';
 
 import CreateRoleModal from './components/CreateRoleModal';
 import RowRole from './components/RowRole';
 
 import { BREADCRUMBS, TABLE_HEADER_ROLES } from './constants';
-import { headerStyles } from '@styles/index';
+import { headerStyles } from '@modules/shared/styles/index';
 import useListRols from './hook/useListRols';
 import FilterRoles from './components/FilterRoles';
 

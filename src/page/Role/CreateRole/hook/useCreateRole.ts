@@ -3,12 +3,12 @@ import { useNavigate, useParams } from 'react-router';
 import { useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import useGetAllPermissionGrouped from '@features/permission/query/useGetAllPermissionGrouped';
+import useGetAllPermissionGrouped from '@modules/permissions/hooks/useGetAllPermissionGrouped';
 import useCreateRoleQuery from '@features/role/mutation/useCreateRole';
-import useNotificationStore from '@stores/useNotificationStore';
+import useNotificationStore from 'src/modules/shared/stores/useNotificationStore';
 
 import useGetOneRoleQuery from '@features/role/query/useGetOneRoleQuery';
-import type { IBasicIdNameDescription } from 'src/types/common.types';
+import type { IBasicIdNameDescription } from 'src/modules/shared/types/common.types';
 import { INITIAL_VALUES } from '../constants';
 import type { IFormValues } from '../types';
 import useUpdateRole from '@features/role/mutation/useUpdateRole';

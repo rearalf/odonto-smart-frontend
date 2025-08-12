@@ -2,7 +2,7 @@ import { IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import { LiaNotesMedicalSolid } from 'react-icons/lia';
 import { Link } from 'react-router';
-import type { IListRoles } from 'src/types/role.type';
+import type { IListRoles } from 'src/modules/shared/types/role.type';
 
 interface IRowRoleProps {
   roles: IListRoles[];

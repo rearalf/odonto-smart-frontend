@@ -1,7 +1,7 @@
 import { Button, IconButton, TableCell, TableRow } from '@mui/material';
 import { FiEdit, FiTrash, FiUser, FiUserPlus } from 'react-icons/fi';
 
-import TableComponent from '@components/TableComponent';
+import TableComponent from 'src/modules/shared/components/TableComponent';
 import useListUsers from './useListUsers';
 import './styles.css';
 

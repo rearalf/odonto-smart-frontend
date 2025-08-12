@@ -1,6 +1,6 @@
-import type { ILink } from 'src/types/BreadCrumbsComponent.type';
+import type { ILink } from '@components/BreadCrumbs/type';
 import type { IFormValues } from '../types';
-import type { HeaderObject } from 'src/types/TableComponent.type';
+import type { HeaderObject } from '@components/TableComponent/type';
 
 export const BREADCRUMBS: ILink[] = [
   { link_name: 'Dashboard', link_to: '/' },

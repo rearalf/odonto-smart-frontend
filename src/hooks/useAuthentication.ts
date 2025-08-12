@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import useUserStore from '../stores/useUserStore';
+import useUserStore from '../modules/shared/stores/useUserStore';
 import { useLocation, useNavigate } from 'react-router';
-import { useNotificationStore } from '../stores';
+import { useNotificationStore } from '../modules/shared/stores';
 import { axiosInstanceWithAuth } from '../api/axios/axiosInstance';
 
 function useAuthentication() {

@@ -2,8 +2,11 @@ import type { FormikHelpers } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
-import { useLoadingStore, useNotificationStore } from '@stores/index';
-import type { ISignInForm } from 'src/types/auth';
+import {
+  useLoadingStore,
+  useNotificationStore,
+} from 'src/modules/shared/stores/index';
+import type { ISignInForm } from 'src/modules/shared/types/auth';
 import { useNavigate } from 'react-router';
 
 function useSignIn() {

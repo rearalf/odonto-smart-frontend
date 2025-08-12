@@ -2,7 +2,7 @@ import { type ChangeEvent, useEffect, useState } from 'react';
 import { useDebounce } from '@uidotdev/usehooks';
 
 import useGetListAllRoles from '@features/role/query/useGetListAllRoles';
-import useNotificationStore from '@stores/useNotificationStore';
+import useNotificationStore from 'src/modules/shared/stores/useNotificationStore';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router';
 

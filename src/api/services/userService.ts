@@ -3,8 +3,11 @@ import { isAxiosError } from 'axios';
 import { axiosInstanceWithAuth } from '../axios/axiosInstance';
 import { userEndpoints } from '../endpoints';
 
-import type { IApiErrorData, IApiResponse } from 'src/types/apiResponse.types';
-import type { IUsers } from 'src/types/user';
+import type {
+  IApiErrorData,
+  IApiResponse,
+} from 'src/modules/shared/types/apiResponse.types';
+import type { IUsers } from 'src/modules/shared/types/user';
 
 export const getUsers = async (): Promise<
   IApiResponse<IUsers[] & IApiErrorData>

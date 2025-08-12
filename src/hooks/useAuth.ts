@@ -1,4 +1,8 @@
-import { useLoadingStore, useNotificationStore, useUserStore } from '../stores';
+import {
+  useLoadingStore,
+  useNotificationStore,
+  useUserStore,
+} from '../modules/shared/stores';
 import { authService } from '../api/services';
 
 function useAuth() {

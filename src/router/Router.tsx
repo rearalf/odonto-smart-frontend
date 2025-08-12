@@ -1,12 +1,13 @@
 import { createBrowserRouter } from 'react-router';
 
-import { Doctor, NewDoctor } from '@pages/Doctor';
 import Dashboard from '@pages/Dashboard';
 import SignIn from '@pages/auth/SignIn';
 import Private from '@layouts/Private';
 import Public from '@layouts/public';
 import App from '../App';
 import { CreateRole, ListRols } from '@pages/Role';
+
+import DoctorRoutes from '@modules/doctors/Doctor.route';
 
 const router = createBrowserRouter([
   {
@@ -31,21 +32,7 @@ const router = createBrowserRouter([
             path: '',
             element: <Dashboard />,
           },
-          {
-            id: 'doctor',
-            path: 'doctor',
-            children: [
-              {
-                id: 'list-doctor',
-                path: '',
-                element: <Doctor />,
-              },
-              {
-                path: 'new-doctor',
-                element: <NewDoctor />,
-              },
-            ],
-          },
+          ...DoctorRoutes,
           {
             id: 'rol',
             path: 'rol',

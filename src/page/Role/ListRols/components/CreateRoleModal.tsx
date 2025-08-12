@@ -13,12 +13,12 @@ import {
   ButtonComponent,
   DialogComponent,
   AutocompleteComponent,
-} from '@components/index';
+} from 'src/modules/shared/components/index';
 
 import { INITIAL_VALUES } from '@pages/Role/CreateRole/constants';
 import { newRoleSchema } from '../validation/newRole.schema';
 import useCreateRole from '../hook/useCreateRole';
-import { paperStylesBase } from '@styles/index';
+import { paperStylesBase } from '@modules/shared/styles/index';
 
 interface ICreateRoleModalProps {
   open: boolean;

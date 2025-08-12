@@ -1,8 +1,8 @@
 import specialtyEndpoints from '@api/endpoints/specialty';
 import { axiosInstance } from '@api/axios/axiosInstance';
-import { handleError } from '@utils/handleError';
+import { handleError } from 'src/modules/shared/utils/handleError';
 
-import type { IBasicIdNameDescription } from 'src/types/common.types';
+import type { IBasicIdNameDescription } from 'src/modules/shared/types/common.types';
 import type { AxiosError } from 'axios';
 
 export const getAllSpecialty = async () => {

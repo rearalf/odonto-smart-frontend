@@ -2,11 +2,11 @@ import type { FormikHelpers, FormikProps } from 'formik';
 import { useTheme } from '@mui/material';
 import { useEffect } from 'react';
 
-import useGetAllPermission from '@features/permission/query/useGetAllPermissionQuery';
-import useNotificationStore from '@stores/useNotificationStore';
+import useGetAllPermission from '@modules/permissions/hooks/useGetAllPermissionQuery';
+import useNotificationStore from 'src/modules/shared/stores/useNotificationStore';
 
-import type { IAutocompleteOption } from 'src/types/AutocompleteComponent.type';
-import type { IBasicIdNameDescription } from 'src/types/common.types';
+import type { IAutocompleteOption } from '@components/AutocompleteComponent/type';
+import type { IBasicIdNameDescription } from 'src/modules/shared/types/common.types';
 import type { IFormValues } from '../types';
 import useCreateRoleQuery from '@features/role/mutation/useCreateRole';
 

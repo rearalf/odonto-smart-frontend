@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import { useLoadingStore, useNotificationStore } from '@stores/index';
+import {
+  useLoadingStore,
+  useNotificationStore,
+} from 'src/modules/shared/stores/index';
 import { getUsers } from '@api/services/userService';
 
-import type { IUsers } from 'src/types/user';
+import type { IUsers } from 'src/modules/shared/types/user';
 
 function useListUsers() {
   const notificationStore = useNotificationStore();

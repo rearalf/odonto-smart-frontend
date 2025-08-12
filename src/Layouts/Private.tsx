@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router';
 
 // import useAuthentication from '@hooks/useAuthentication';
-import useSidebarStore from '@stores/useSidebarStore';
-import { Navbar, SideBar } from '@components/index';
+import useSidebarStore from 'src/modules/shared/stores/useSidebarStore';
+import { Navbar, SideBar } from 'src/modules/shared/components/index';
 
 function Private() {
   // useAuthentication();

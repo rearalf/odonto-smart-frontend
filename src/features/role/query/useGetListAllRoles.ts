@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useDeferredValue } from 'react';
 
-import type { IGetPaginationOptions } from 'src/types/apiResponse.types';
+import type { IGetPaginationOptions } from 'src/modules/shared/types/apiResponse.types';
 import { roleService } from '@api/services';
 
 const useGetListAllRoles = (options: IGetPaginationOptions = {}) => {

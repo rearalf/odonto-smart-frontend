@@ -2,8 +2,8 @@ import { Grid, IconButton, Paper, Tooltip } from '@mui/material';
 import { FiFilter, FiRotateCw } from 'react-icons/fi';
 import type { Theme } from '@mui/material/styles';
 
-import TextFieldBasic from '@components/TextFieldBasic';
-import { paperStylesBase } from '@styles/index';
+import TextFieldBasic from 'src/modules/shared/components/TextFieldBasic';
+import { paperStylesBase } from '@modules/shared/styles/index';
 
 interface IFilterRolesProps {
   search: string;

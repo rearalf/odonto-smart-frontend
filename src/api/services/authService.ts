@@ -1,9 +1,16 @@
-import type { IApiErrorData, IApiResponse } from 'src/types/apiResponse.types';
+import type {
+  IApiErrorData,
+  IApiResponse,
+} from 'src/modules/shared/types/apiResponse.types';
 import { axiosInstance, axiosInstanceWithAuth } from '../axios/axiosInstance';
 import { authEndpoints } from '../endpoints';
 import { isAxiosError } from 'axios';
 
-import type { IRefresToken, ISignIn, ISignInForm } from 'src/types/auth';
+import type {
+  IRefresToken,
+  ISignIn,
+  ISignInForm,
+} from 'src/modules/shared/types/auth';
 
 export const signin = async (
   credentials: ISignInForm,

@@ -1,12 +1,15 @@
 import type { AxiosError } from 'axios';
 
 import { axiosInstance } from '@api/axios/axiosInstance';
-import { handleError } from '@utils/handleError';
+import { handleError } from 'src/modules/shared/utils/handleError';
 import { roleEndpoints } from '@api/endpoints';
 
-import type { IBasicIdNameDescription } from 'src/types/common.types';
-import type { ICreateRole, IListRoles } from 'src/types/role.type';
-import type { IGetPaginationOptions } from 'src/types/apiResponse.types';
+import type { IBasicIdNameDescription } from 'src/modules/shared/types/common.types';
+import type {
+  ICreateRole,
+  IListRoles,
+} from 'src/modules/shared/types/role.type';
+import type { IGetPaginationOptions } from 'src/modules/shared/types/apiResponse.types';
 
 export const getAllRole = async () => {
   try {
