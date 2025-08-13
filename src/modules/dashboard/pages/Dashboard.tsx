@@ -1,5 +1,3 @@
-import './styles.css';
-
 function Dashboard() {
   return (
     <div style={{ height: '200vh' }}>

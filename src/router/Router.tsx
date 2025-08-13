@@ -1,12 +1,12 @@
 import { createBrowserRouter } from 'react-router';
 
-import Dashboard from '@pages/Dashboard';
 import Private from '@modules/shared/Layouts/Private';
 import Public from '@modules/shared/Layouts/public';
 import App from '../App';
 
 import DoctorRoutes from '@modules/doctors/Doctor.route';
 import RoleRoutes from '@modules/role/Role.route';
+import DashboardRoutes from '@modules/dashboard/Dashboard.route';
 
 const router = createBrowserRouter([
   {
@@ -21,14 +21,7 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <Private />,
-        children: [
-          {
-            path: '',
-            element: <Dashboard />,
-          },
-          ...DoctorRoutes,
-          ...RoleRoutes,
-        ],
+        children: [...DashboardRoutes, ...DoctorRoutes, ...RoleRoutes],
       },
     ],
   },
