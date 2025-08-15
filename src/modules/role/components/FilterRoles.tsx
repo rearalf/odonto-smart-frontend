@@ -1,13 +1,17 @@
 import { Grid, IconButton, Paper, Tooltip } from '@mui/material';
-import { FiFilter, FiRotateCw } from 'react-icons/fi';
+import { FiRotateCw } from 'react-icons/fi';
 import type { Theme } from '@mui/material/styles';
 
 import TextFieldBasic from 'src/modules/shared/components/TextFieldBasic';
 import { paperStylesBase } from '@modules/shared/styles/index';
+import type { ChangeEvent } from 'react';
 
 interface IFilterRolesProps {
   search: string;
   themeStyle: Theme;
+  isLoading: boolean;
+  handleClearFilter: () => void;
+  handleSearchInput: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const FilterRoles = (props: IFilterRolesProps) => {
@@ -36,11 +40,12 @@ const FilterRoles = (props: IFilterRolesProps) => {
             id="search"
             type="text"
             inputMode="text"
-            onChange={() => {}}
+            onChange={props.handleSearchInput}
             value={props.search}
             label="Buscar por nombre"
             ariaLabel="Buscar por nombre"
             placeholder="Odontologo... o Administrador..."
+            disabled={props.isLoading}
           />
         </Grid>
         <Grid
@@ -54,21 +59,11 @@ const FilterRoles = (props: IFilterRolesProps) => {
           }}
           gap={3}
         >
-          <Tooltip title="Filtrar Doctores">
-            <IconButton
-              color="primary"
-              aria-label="Filtrar Doctores"
-              onClick={() => {}}
-            >
-              <FiFilter size={22} />
-            </IconButton>
-          </Tooltip>
-
           <Tooltip title="Limpiar filtro">
             <IconButton
               color="error"
               aria-label="Limpiar filtro"
-              onClick={() => {}}
+              onClick={props.handleClearFilter}
             >
               <FiRotateCw size={22} />
             </IconButton>

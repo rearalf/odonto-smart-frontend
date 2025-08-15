@@ -42,7 +42,13 @@ function ListRols() {
         />
       </Box>
 
-      <FilterRoles search={hook.search} themeStyle={hook.theme} />
+      <FilterRoles
+        search={hook.search}
+        themeStyle={hook.theme}
+        isLoading={hook.isLoading}
+        handleSearchInput={hook.handleSearchInput}
+        handleClearFilter={hook.handleClearFilter}
+      />
 
       <TableComponent
         pagination
