@@ -1,5 +1,6 @@
-import { CONTACT_TYPE_ENUM } from 'src/modules/shared/types/common.types';
 import type { IContactCardProps } from '../types/newDoctor.types';
+import { CONTACT_TYPE_ENUM } from '@type/common.types';
+import alphaStyles from '@utils/alphaStyles.utils';
 import useStyles from './useStyles';
 
 function useContactCard(props: IContactCardProps) {
@@ -14,7 +15,7 @@ function useContactCard(props: IContactCardProps) {
           : props.contact.contact_type === CONTACT_TYPE_ENUM.PHONE
             ? styles.theme.palette.secondary.main
             : styles.theme.palette.success.main,
-      boxShadow: `0 2px 8px ${styles.alphafunction(styles.theme.palette.success.main, 0.15)}`,
+      boxShadow: `0 2px 8px ${alphaStyles(styles.theme.palette.success.main, 0.15)}`,
     },
   };
 
@@ -31,7 +32,7 @@ function useContactCard(props: IContactCardProps) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: styles.alphafunction(
+    backgroundColor: alphaStyles(
       props.contact.contact_type === CONTACT_TYPE_ENUM.EMAIL
         ? styles.theme.palette.info.main
         : props.contact.contact_type === CONTACT_TYPE_ENUM.PHONE
@@ -59,10 +60,7 @@ function useContactCard(props: IContactCardProps) {
     opacity: 0.7,
     '&:hover': {
       opacity: 1,
-      backgroundColor: styles.alphafunction(
-        styles.theme.palette.error.main,
-        0.08,
-      ),
+      backgroundColor: alphaStyles(styles.theme.palette.error.main, 0.08),
     },
   };
 

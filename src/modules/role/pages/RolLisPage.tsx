@@ -3,18 +3,19 @@ import { FaUserTag } from 'react-icons/fa';
 
 import {
   BreadCrumbs,
+  DeleteDialog,
   TableComponent,
   ButtonComponent,
-} from 'src/modules/shared/components/index';
+} from '@components/index';
 
+import FilterRoles from '../components/FilterRoles';
 import RowRole from '../components/RowRole';
 
 import { BREADCRUMBS, TABLE_HEADER_ROLES } from '../constants';
 import { headerStyles } from '@modules/shared/styles/index';
 import useListRols from '../hooks/useListRols';
-import FilterRoles from '../components/FilterRoles';
 
-function ListRols() {
+function RolLisPage() {
   const hook = useListRols();
 
   return (
@@ -62,10 +63,24 @@ function ListRols() {
         totalData={hook.pagination?.total ?? 0}
         emptyMessage="No hay roles registrados"
         headers={TABLE_HEADER_ROLES}
-        body={<RowRole roles={hook.roles} />}
+        body={
+          <RowRole
+            roles={hook.roles}
+            handleShowDeleteModal={hook.handleShowDeleteModal}
+          />
+        }
+      />
+
+      <DeleteDialog
+        title="Eliminar rol"
+        description="¿Seguro que quiere eliminar el rol? Esta acción no se puede deshacer."
+        theme={hook.theme}
+        openDeleteModal={hook.openDeleteModal}
+        handleDeleteAction={hook.handleDeleteRole}
+        handleShowDeleteModal={hook.handleShowDeleteModal}
       />
     </>
   );
 }
 
-export default ListRols;
+export default RolLisPage;

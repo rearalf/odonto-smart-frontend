@@ -5,9 +5,6 @@ import type { CSSProperties } from 'react';
 function useStyles() {
   const theme = useTheme();
 
-  const alphafunction = (color: string, opacity: number) =>
-    alpha(color, opacity);
-
   const paperStyles = {
     p: 3,
     mb: 3,
@@ -81,7 +78,6 @@ function useStyles() {
     theme,
     paperStyles,
     headerStyles,
-    alphafunction,
     headerIconStyles,
     cardRolsStyles,
     boxContactCardStyles,

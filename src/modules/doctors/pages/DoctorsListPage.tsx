@@ -4,10 +4,10 @@ import { Box, Typography } from '@mui/material';
 import useListDoctor from '../hooks/useListDoctor';
 import useStyles from '../hooks/useStyles';
 
-import DeleteDialog from '../components/DeleteDialog';
 import RowDoctor from '../components/RowDoctor';
 import {
   BreadCrumbs,
+  DeleteDialog,
   TableComponent,
   ButtonComponent,
 } from 'src/modules/shared/components/index';
@@ -77,10 +77,11 @@ function DoctorListPage() {
       />
 
       <DeleteDialog
+        title="Eliminar doctor"
+        description="¿Seguro que quiere eliminar al doctor? Esta acción no se puede deshacer."
         theme={styles.theme}
-        alphafunction={styles.alphafunction}
         openDeleteModal={hook.openDeleteModal}
-        handleDeleteDoctor={hook.handleDeleteDoctor}
+        handleDeleteAction={hook.handleDeleteDoctor}
         handleShowDeleteModal={hook.handleShowDeleteModal}
       />
 

@@ -11,6 +11,9 @@ function useListRols() {
   const navigate = useNavigate();
   const storeNotification = useNotificationStore();
 
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [idRole, setIdRole] = useState<null | number>(null);
+
   const [page, setPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [search, setSearch] = useState<string>('');
@@ -38,6 +41,18 @@ function useListRols() {
 
   const handleGoToCreateRol = () => navigate('/rol/new-rol');
 
+  const handleShowDeleteModal = (id?: number) => {
+    if (id) setIdRole(id);
+    setOpenDeleteModal(!openDeleteModal);
+  };
+
+  const handleDeleteRole = () => {
+    if (idRole) {
+      setIdRole(null);
+    }
+    handleShowDeleteModal();
+  };
+
   useEffect(() => {
     if (isError) {
       storeNotification.handleShowNotification({
@@ -54,13 +69,16 @@ function useListRols() {
     search,
     isLoading,
     rowsPerPage,
+    openDeleteModal,
     roles: data && data.data ? data.data : [],
     pagination: data && data.pagination ? data.pagination : null,
     handleSetPage,
     handleSearchInput,
     handleClearFilter,
+    handleDeleteRole,
     handleGoToCreateRol,
     handleSetRowsPerPage,
+    handleShowDeleteModal,
   };
 }
 

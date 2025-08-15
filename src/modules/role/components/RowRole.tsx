@@ -1,11 +1,13 @@
 import { IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
-import { FiEdit, FiTrash } from 'react-icons/fi';
 import { LiaNotesMedicalSolid } from 'react-icons/lia';
+import { FiEdit, FiTrash } from 'react-icons/fi';
 import { Link } from 'react-router';
-import type { IListRoles } from 'src/modules/shared/types/role.type';
+
+import type { IListRoles } from '@type/role.type';
 
 interface IRowRoleProps {
   roles: IListRoles[];
+  handleShowDeleteModal: (id: number) => void;
 }
 
 const RowRole = (props: IRowRoleProps) => {
@@ -30,7 +32,10 @@ const RowRole = (props: IRowRoleProps) => {
         </Tooltip>
 
         <Tooltip title="Eliminar rol">
-          <IconButton color="error">
+          <IconButton
+            color="error"
+            onClick={() => props.handleShowDeleteModal(row.id)}
+          >
             <FiTrash title="Eliminar rol" size={18} />
           </IconButton>
         </Tooltip>

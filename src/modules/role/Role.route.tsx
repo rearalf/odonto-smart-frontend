@@ -1,6 +1,6 @@
 import type { RouteObject } from 'react-router';
 import CreateRole from './pages/CreateRole';
-import ListRoles from './pages/ListRoles';
+import RolLisPage from './pages/RolLisPage';
 
 const RoleRoutes: RouteObject[] = [
   {
@@ -10,7 +10,7 @@ const RoleRoutes: RouteObject[] = [
       {
         id: 'lista-roles',
         path: '',
-        element: <ListRoles />,
+        element: <RolLisPage />,
       },
       {
         id: 'create-role',
