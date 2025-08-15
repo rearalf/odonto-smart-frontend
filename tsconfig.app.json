@@ -25,16 +25,18 @@
     /* Alias */
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@types/*": ["src/types/*"],
+      "@components/*": ["src/modules/shared/components/*"],
+      "@type/*": ["src/modules/shared/types/*"],
       "@features/*": ["src/features/*"],
       "@pages/*": ["src/page/*"],
-      "@utils/*": ["src/utils/*"],
+      "@utils/*": ["src/modules/shared/utils/*"],
       "@hooks/*": ["src/hooks/*"],
       "@api/*": ["src/api/*"],
-      "@layouts/*": ["src/Layouts/*"],
-      "@stores/*": ["src/stores/*"],
-      "@styles/*": ["src/styles/*"]
+      "@layouts/*": ["src/modules/shared/Layouts/*"],
+      "@stores/*": ["src/modules/shared/stores/*"],
+      "@styles/*": ["src/modules/shared/styles/*"],
+      // New estructure
+      "@modules/*": ["src/modules/*"]
     }
   },
   "include": ["src"]

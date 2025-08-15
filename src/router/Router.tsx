@@ -1,12 +1,12 @@
 import { createBrowserRouter } from 'react-router';
 
-import { Doctor, NewDoctor } from '@pages/Doctor';
-import Dashboard from '@pages/Dashboard';
-import SignIn from '@pages/auth/SignIn';
-import Private from '@layouts/Private';
-import Public from '@layouts/public';
+import Private from '@modules/shared/Layouts/Private';
+import Public from '@modules/shared/Layouts/public';
 import App from '../App';
-import { CreateRole, ListRols } from '@pages/Role';
+
+import DoctorRoutes from '@modules/doctors/Doctor.route';
+import RoleRoutes from '@modules/role/Role.route';
+import DashboardRoutes from '@modules/dashboard/Dashboard.route';
 
 const router = createBrowserRouter([
   {
@@ -16,56 +16,12 @@ const router = createBrowserRouter([
       {
         path: 'auth',
         element: <Public />,
-        children: [
-          {
-            path: '',
-            element: <SignIn />,
-          },
-        ],
+        children: [],
       },
       {
         path: '',
         element: <Private />,
-        children: [
-          {
-            path: '',
-            element: <Dashboard />,
-          },
-          {
-            id: 'doctor',
-            path: 'doctor',
-            children: [
-              {
-                id: 'list-doctor',
-                path: '',
-                element: <Doctor />,
-              },
-              {
-                path: 'new-doctor',
-                element: <NewDoctor />,
-              },
-            ],
-          },
-          {
-            id: 'rol',
-            path: 'rol',
-            children: [
-              {
-                id: 'lista-roles',
-                path: '',
-                element: <ListRols />,
-              },
-              {
-                path: 'new-rol',
-                element: <CreateRole />,
-              },
-              {
-                path: ':id',
-                element: <CreateRole />,
-              },
-            ],
-          },
-        ],
+        children: [...DashboardRoutes, ...DoctorRoutes, ...RoleRoutes],
       },
     ],
   },
