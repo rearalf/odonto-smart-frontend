@@ -83,3 +83,12 @@ export const updateRole = async (id: number, params: ICreateRole) => {
     throw handleError(error as AxiosError<{ message?: string }>);
   }
 };
+
+export const deletedRole = async (id: number) => {
+  try {
+    const response = await axiosInstance.delete('/role' + '/' + id);
+    return response;
+  } catch (error) {
+    throw handleError(error as AxiosError<{ message?: string }>);
+  }
+};

@@ -9,6 +9,7 @@ import {
   updateRole,
   listAllRole,
   getOneRolebyId,
+  deletedRole,
 } from '../services/role.service';
 
 export const useGetAllRoleQuery = (enabled: boolean = true) => {
@@ -52,5 +53,11 @@ export const useUpdateRole = () => {
   return useMutation({
     mutationFn: async ({ id, params }: { id: number; params: ICreateRole }) =>
       updateRole(id, params),
+  });
+};
+
+export const useDeleteRole = () => {
+  return useMutation({
+    mutationFn: async (id: number) => deletedRole(id),
   });
 };

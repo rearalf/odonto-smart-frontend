@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router';
 
 import useNotificationStore from '@stores/useNotificationStore';
-import { useGetListAllRoles } from './useRolQueries';
+import { useDeleteRole, useGetListAllRoles } from './useRolQueries';
 
 function useListRols() {
   const theme = useTheme();
@@ -20,12 +20,14 @@ function useListRols() {
 
   const debouncedSearch = useDebounce(search, 1000);
 
-  const { data, isLoading, isError } = useGetListAllRoles({
+  const { data, isLoading, isError, refetch } = useGetListAllRoles({
     pagination: true,
     page: page,
     per_page: rowsPerPage,
     search: debouncedSearch,
   });
+
+  const { mutate: deletedService } = useDeleteRole();
 
   const handleSetPage = (newPage: number) => setPage(newPage);
 
@@ -42,12 +44,39 @@ function useListRols() {
   const handleGoToCreateRol = () => navigate('/rol/new-rol');
 
   const handleShowDeleteModal = (id?: number) => {
-    if (id) setIdRole(id);
+    if (id !== undefined && typeof id === 'number') setIdRole(id);
+    else setIdRole(null);
     setOpenDeleteModal(!openDeleteModal);
   };
 
   const handleDeleteRole = () => {
-    if (idRole) {
+    if (idRole !== null) {
+      deletedService(idRole, {
+        onSuccess: () => {
+          storeNotification.handleShowNotification({
+            severity: 'success',
+            show: true,
+            text: 'Rol eliminado correctamente',
+          });
+          setOpenDeleteModal(false);
+          setIdRole(null);
+          refetch();
+        },
+        onError: (data) => {
+          storeNotification.handleShowNotification({
+            severity: 'error',
+            show: true,
+            text: (data && data.message) || 'Error al eliminar el rol',
+          });
+        },
+      });
+    } else {
+      storeNotification.handleShowNotification({
+        severity: 'error',
+        show: true,
+        text: 'No se ha seleccionado un rol para eliminar',
+      });
+      setOpenDeleteModal(false);
       setIdRole(null);
     }
     handleShowDeleteModal();
