@@ -7,6 +7,7 @@ import App from '../App';
 import DoctorRoutes from '@modules/doctors/Doctor.route';
 import RoleRoutes from '@modules/role/Role.route';
 import DashboardRoutes from '@modules/dashboard/Dashboard.route';
+import PatientRoutes from '@modules/patients/Patient.route';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,12 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <Private />,
-        children: [...DashboardRoutes, ...DoctorRoutes, ...RoleRoutes],
+        children: [
+          ...DashboardRoutes,
+          ...DoctorRoutes,
+          ...RoleRoutes,
+          ...PatientRoutes,
+        ],
       },
     ],
   },
