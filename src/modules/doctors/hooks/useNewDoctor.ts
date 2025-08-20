@@ -4,10 +4,7 @@ import type { FormikHelpers } from 'formik';
 import useNotificationStore from '@modules/shared/stores/useNotificationStore';
 import { useCreateDoctor } from './useDoctorsQueries';
 
-import type {
-  IFormValues,
-  INewDoctorPersonFormData,
-} from '../types/newDoctor.types';
+import type { IFormValues } from '../types/newDoctor.types';
 
 function useNewDoctor() {
   const navigate = useNavigate();
@@ -22,53 +19,51 @@ function useNewDoctor() {
     formikHelpers.setSubmitting(true);
     const formData = new FormData();
 
-    if (values.qualification.trim().length > 0)
-      formData.append('qualification', values.qualification);
-    if (values.specialty_ids.length > 0)
-      formData.append('specialty_ids', JSON.stringify(values.specialty_ids));
+    formData.append('email', values.person.user.email.trim());
+    formData.append('password', values.person.user.password.trim());
+    formData.append('role_ids', values.person.user.role_ids.toString());
+    if (values.person.user.permission_ids.length > 0)
+      formData.append(
+        'permission_ids',
+        values.person.user.permission_ids.toString(),
+      );
 
-    if (values.specialty_id !== null)
-      formData.append('specialty_id', values.specialty_id.toString());
-
-    const person: INewDoctorPersonFormData = {
-      first_name: values.person.first_name.trim(),
-      last_name: values.person.last_name.trim(),
-      person_type_id: 4,
-      user: {
-        email: values.person.user.email.trim(),
-        password: values.person.user.password.trim(),
-        role_ids: values.person.user.role_ids,
-      },
-    };
-
-    if (values.person.user.permission_ids)
-      person.user.permission_ids = values.person.user.permission_ids;
-
+    formData.append('first_name', values.person.first_name.trim());
     if (
       values.person.middle_name &&
       values.person.middle_name.trim().length > 0
     )
-      person.middle_name = values.person.middle_name.trim();
+      formData.append('middle_name', values.person.middle_name.trim());
+    formData.append('last_name', values.person.last_name.trim());
+    formData.append('person_type_id', '4');
 
     if (
       values.person.profile_picture_name &&
       values.person.profile_picture_name.trim().length > 0
     )
-      person.profile_picture_name = values.person.profile_picture_name.trim();
+      formData.append(
+        'profile_picture_name',
+        values.person.profile_picture_name.trim(),
+      );
 
     if (
       values.person.profile_picture &&
       values.person.profile_picture.trim().length > 0
     )
-      person.profile_picture = values.person.profile_picture;
+      formData.append('profile_picture', values.person.profile_picture.trim());
 
     if (values.person.personContact.length > 0)
-      person.personContact = values.person.personContact.map((contact) => ({
-        contact_value: contact.contact_value.trim(),
-        contact_type: contact.contact_type,
-      }));
+      formData.append(
+        'personContact',
+        JSON.stringify(values.person.personContact),
+      );
 
-    formData.append('person', JSON.stringify(person));
+    if (values.qualification.trim().length > 0)
+      formData.append('qualification', values.qualification);
+    if (values.specialty_id !== null)
+      formData.append('specialty_id', values.specialty_id.toString());
+    if (values.specialty_ids.length > 0)
+      formData.append('specialty_ids', JSON.stringify(values.specialty_ids));
 
     mutate(formData, {
       onSuccess: (_value) => {

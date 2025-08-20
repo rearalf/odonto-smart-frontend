@@ -27,22 +27,6 @@ export interface IFormValues {
   person: IPerson;
 }
 
-export interface INewDoctorPersonFormData {
-  first_name: string;
-  middle_name?: string;
-  last_name: string;
-  profile_picture_name?: string;
-  profile_picture?: string;
-  personContact?: IContactForm[];
-  person_type_id: 4;
-  user: {
-    email: string;
-    password: string;
-    role_ids: number[];
-    permission_ids?: number[];
-  };
-}
-
 export interface IComponentFormProps {
   formikProps: FormikProps<IFormValues>;
 }
