@@ -33,6 +33,12 @@ export enum CONTACT_TYPE_ENUM {
   WHATSAPP = 'WHATSAPP',
 }
 
+export enum GENDER {
+  MALE = 'male',
+  FEMALE = 'female',
+  OTHER = 'other',
+}
+
 export interface IContactForm {
   contact_value: string;
   contact_type: CONTACT_TYPE_TYPE;

@@ -1,7 +1,9 @@
-import { type SxProps, type Theme } from '@mui/material';
+import { useTheme, type SxProps, type Theme } from '@mui/material';
 import type { CSSProperties } from 'react';
 
 function useStyles() {
+  const theme = useTheme();
+
   const headerStyles: SxProps<Theme> = {
     mt: 2,
     mb: 4,
@@ -27,6 +29,7 @@ function useStyles() {
   };
 
   return {
+    theme,
     headerStyles,
     headerIconStyles,
   };

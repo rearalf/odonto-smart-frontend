@@ -1,3 +1,4 @@
+export { default as ContactInformationSection } from './ContactInformationSection';
 export { default as AutocompleteComponent } from './AutocompleteComponent';
 export { default as RadioButtonComponent } from './RadioButtonComponent';
 export { default as LoadingProgress } from './LoadingProgress';

@@ -1,5 +1,5 @@
 import type { FormikProps } from 'formik';
-import type { IContactForm } from 'src/modules/shared/types/common.types';
+import type { IContactForm } from '@type/common.types';
 
 interface IUser {
   email: string;
@@ -13,7 +13,6 @@ export interface IPerson {
   first_name: string;
   middle_name?: string;
   last_name: string;
-  // person_type_id: number;
   profile_picture_name?: string;
   profile_picture?: string;
   user: IUser;

@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 
 import { BreadCrumbs, ButtonComponent } from '@components/index';
 
-import { BREADCRUMBS } from '../constants/patientsList.const';
+import { BREADCRUMBSPATIENTSLIST } from '../constants/index.const';
 import useStyles from '../hooks/useStyles';
 import usePatientsListPage from '../hooks/usePatientsListPage';
 
@@ -12,7 +12,7 @@ function PatientsListPage() {
   const styles = useStyles();
   return (
     <>
-      <BreadCrumbs links={BREADCRUMBS} loading={false} />
+      <BreadCrumbs links={BREADCRUMBSPATIENTSLIST} loading={false} />
 
       <Box component="header" sx={styles.headerStyles}>
         <Typography variant="h4" component="h1">

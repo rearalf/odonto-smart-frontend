@@ -2,8 +2,7 @@ import * as Yup from 'yup';
 
 import { validateStrongPassword } from 'src/modules/shared/utils/passwordValidation';
 import { CONTACT_TYPE_ENUM } from 'src/modules/shared/types/common.types';
-
-const SALVADOR_PHONE_REGEX = /^(?:\+503[- ]?)?(2|6|7|9)\d{3}[- ]?\d{4}$/;
+import { SALVADOR_PHONE_REGEX } from '@utils/constants';
 
 export const newDoctorSchema = Yup.object().shape({
   qualification: Yup.string(),
