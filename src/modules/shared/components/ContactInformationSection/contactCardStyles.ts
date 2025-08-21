@@ -1,20 +1,18 @@
 import type { Theme } from '@mui/material/styles';
-import type { FormikProps } from 'formik';
 
 import { CONTACT_TYPE_ENUM, type IContactForm } from '@type/common.types';
 import alphaStyles from '@utils/alphaStyles.utils';
 import { paperStylesBase } from '@styles/index';
 
-interface IContactCardStyles<T> {
-  formikProps: FormikProps<T>;
-  contact: IContactForm;
-  themeStyle: Theme;
+interface IContactCardStyles {
   index: number;
+  themeStyle: Theme;
+  contact: IContactForm;
+  personContact: IContactForm[];
+  handleSetFieldValue: (field: string, value: any) => void;
 }
 
-function useContactCard<T extends { personContact: IContactForm[] }>(
-  props: IContactCardStyles<T>,
-) {
+function useContactCard(props: IContactCardStyles) {
   const cardContainerStyles = {
     ...paperStylesBase(
       props.themeStyle.palette.background.paper,
@@ -77,9 +75,9 @@ function useContactCard<T extends { personContact: IContactForm[] }>(
   };
 
   const handleDeleteContact = () => {
-    const newContacts = [...props.formikProps.values.personContact];
+    const newContacts = [...props.personContact];
     newContacts.splice(props.index, 1);
-    props.formikProps.setFieldValue('personContact', newContacts);
+    props.handleSetFieldValue('personContact', newContacts);
   };
 
   return {

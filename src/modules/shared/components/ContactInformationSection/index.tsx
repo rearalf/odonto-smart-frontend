@@ -1,5 +1,5 @@
+import { Formik, type FormikHelpers } from 'formik';
 import { Box, Grid, Paper, Typography } from '@mui/material';
-import { Formik, type FormikProps } from 'formik';
 import type { Theme } from '@mui/material/styles';
 import { FiPhone, FiPlus } from 'react-icons/fi';
 
@@ -10,20 +10,32 @@ import {
   CONTACT_OPTIONS,
   CONTACT_SCHEMA,
 } from '@utils/constants';
-import RadioButtonComponent from '@components/RadioButtonComponent';
-import TextFieldBasic from '@components/TextFieldBasic';
-import TextFieldPhone from '@components/TextFieldPhone';
-import ButtonComponent from '@components/ButtonComponent';
+import {
+  TextFieldPhone,
+  TextFieldBasic,
+  ButtonComponent,
+  RadioButtonComponent,
+} from '@components/index';
 import ContactCard from './ContactCard';
 
-interface IContactInformationSectionProps<T> {
+interface IContactInformationSectionProps {
   themeStyle: Theme;
-  formikProps: FormikProps<T>;
+  isSubmitting: boolean;
+  personContact: IContactForm[];
+  handleSetFieldValue: (field: string, value: any) => void;
 }
 
-const ContactInformationSection = <T extends { personContact: IContactForm[] }>(
-  props: IContactInformationSectionProps<T>,
-) => {
+const ContactInformationSection = (props: IContactInformationSectionProps) => {
+  const handleOnSubmit = (
+    values: IContactForm,
+    formikHelpers: FormikHelpers<IContactForm>,
+  ) => {
+    const newArray = [...props.personContact, values];
+    props.handleSetFieldValue('personContact', newArray);
+    formikHelpers.resetForm();
+    formikHelpers.setSubmitting(true);
+  };
+
   return (
     <Paper
       elevation={0}
@@ -45,14 +57,9 @@ const ContactInformationSection = <T extends { personContact: IContactForm[] }>(
       </Box>
 
       <Formik
-        initialValues={CONTACT_INITIAL_VALUES}
+        onSubmit={handleOnSubmit}
         validationSchema={CONTACT_SCHEMA}
-        onSubmit={(values, formikHelpers) => {
-          const newArray = [...props.formikProps.values.personContact, values];
-          props.formikProps.setFieldValue('personContact', newArray);
-          formikHelpers.resetForm();
-          formikHelpers.setSubmitting(true);
-        }}
+        initialValues={CONTACT_INITIAL_VALUES}
       >
         {(formik) => (
           <>
@@ -83,7 +90,7 @@ const ContactInformationSection = <T extends { personContact: IContactForm[] }>(
                 }}
                 options={CONTACT_OPTIONS}
                 sx={{ mb: 2.5 }}
-                disabled={props.formikProps.isSubmitting}
+                disabled={props.isSubmitting}
               />
 
               {/* Contact Value Input */}
@@ -99,7 +106,7 @@ const ContactInformationSection = <T extends { personContact: IContactForm[] }>(
                       autoComplete="email"
                       placeholder="doctor@clinica.com"
                       value={formik.values.contact_value}
-                      disabled={props.formikProps.isSubmitting}
+                      disabled={props.isSubmitting}
                       onSubmit={formik.submitForm}
                       onChange={(e) => {
                         formik.setFieldValue('contact_value', e.target.value);
@@ -129,7 +136,7 @@ const ContactInformationSection = <T extends { personContact: IContactForm[] }>(
                           : 'WhatsApp'
                       }
                       value={formik.values.contact_value}
-                      disabled={props.formikProps.isSubmitting}
+                      disabled={props.isSubmitting}
                       onChange={(e) => {
                         formik.setFieldValue('contact_value', e);
                       }}
@@ -161,9 +168,7 @@ const ContactInformationSection = <T extends { personContact: IContactForm[] }>(
                     icon={<FiPlus />}
                     onClick={formik.submitForm}
                     disabled={
-                      !formik.isValid ||
-                      !formik.dirty ||
-                      props.formikProps.isSubmitting
+                      !formik.isValid || !formik.dirty || props.isSubmitting
                     }
                     sx={{
                       backgroundColor: props.themeStyle.palette.success.main,
@@ -182,16 +187,18 @@ const ContactInformationSection = <T extends { personContact: IContactForm[] }>(
       </Formik>
 
       {/* Contact List Display */}
-      {props.formikProps.values.personContact.length > 0 && (
+      {props.personContact.length > 0 && (
         <Box sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            {props.formikProps.values.personContact.map((contact, index) => (
+            {props.personContact.map((contact, index) => (
               <ContactCard
                 key={index}
                 index={index}
                 contact={contact}
                 themeStyle={props.themeStyle}
-                formikProps={props.formikProps}
+                isSubmitting={props.isSubmitting}
+                personContact={props.personContact}
+                handleSetFieldValue={props.handleSetFieldValue}
               />
             ))}
           </Grid>

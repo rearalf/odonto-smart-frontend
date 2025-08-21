@@ -2,22 +2,21 @@ import { Box, Grid, Typography, IconButton } from '@mui/material';
 import { FiMail, FiPhone, FiTrash2 } from 'react-icons/fi';
 import type { Theme } from '@mui/material/styles';
 import { FaWhatsapp } from 'react-icons/fa';
-import type { FormikProps } from 'formik';
 
 import { CONTACT_TYPE_ENUM, type IContactForm } from '@type/common.types';
 import useContactCard from './contactCardStyles';
 
-export interface IContactCardProps<T> {
-  formikProps: FormikProps<T>;
-  contact: IContactForm;
-  themeStyle: Theme;
+export interface IContactCardProps {
   index: number;
+  themeStyle: Theme;
+  isSubmitting: boolean;
+  contact: IContactForm;
+  personContact: IContactForm[];
+  handleSetFieldValue: (field: string, value: any) => void;
 }
 
-const ContactCard = <T extends { personContact: IContactForm[] }>(
-  props: IContactCardProps<T>,
-) => {
-  const hook = useContactCard<T>(props);
+const ContactCard = (props: IContactCardProps) => {
+  const hook = useContactCard(props);
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4 }} key={props.index}>
@@ -47,7 +46,7 @@ const ContactCard = <T extends { personContact: IContactForm[] }>(
           <IconButton
             size="small"
             color="error"
-            disabled={props.formikProps.isSubmitting}
+            disabled={props.isSubmitting}
             onClick={hook.handleDeleteContact}
             sx={hook.deleteButtonStyles}
           >

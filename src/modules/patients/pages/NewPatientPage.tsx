@@ -83,9 +83,11 @@ function NewPatientPage() {
               }}
             />
 
-            <ContactInformationSection<INewPatientFormValues>
+            <ContactInformationSection
               themeStyle={styles.theme}
-              formikProps={props}
+              isSubmitting={props.isSubmitting}
+              handleSetFieldValue={props.setFieldValue}
+              personContact={props.values.personContact}
             />
           </Form>
         )}
