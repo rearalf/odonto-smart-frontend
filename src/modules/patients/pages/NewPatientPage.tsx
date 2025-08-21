@@ -10,6 +10,7 @@ import {
   INITIAL_VALUES,
   BREADCRUMBSNEWPATIENT,
 } from '../constants/index.const';
+import PersonalInformationSection from '@components/PersonalInformationSection';
 
 function NewPatientPage() {
   const styles = useStyles();
@@ -32,6 +33,56 @@ function NewPatientPage() {
       >
         {(props) => (
           <Form>
+            <PersonalInformationSection
+              themeStyle={styles.theme}
+              textFieldName={{
+                id: 'first_name',
+                value: props.values.first_name,
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('first_name');
+                  props.setFieldTouched('first_name', true);
+                },
+                helperText: props.touched.first_name
+                  ? props.errors.first_name
+                  : undefined,
+                error:
+                  props.touched.first_name && Boolean(props.errors.first_name),
+              }}
+              textFieldLastName={{
+                id: 'last_name',
+                value: props.values.last_name,
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('last_name');
+                  props.setFieldTouched('last_name', true);
+                },
+                helperText: props.touched.last_name
+                  ? props.errors.last_name
+                  : undefined,
+                error:
+                  props.touched.last_name && Boolean(props.errors.last_name),
+              }}
+              textFieldMiddleName={{
+                id: 'middle_name',
+                value: props.values.middle_name || '',
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('middle_name');
+                  props.setFieldTouched('middle_name', true);
+                },
+                helperText: props.touched.middle_name
+                  ? props.errors.middle_name
+                  : undefined,
+                error:
+                  props.touched.middle_name &&
+                  Boolean(props.errors.middle_name),
+              }}
+            />
+
             <ContactInformationSection<INewPatientFormValues>
               themeStyle={styles.theme}
               formikProps={props}
