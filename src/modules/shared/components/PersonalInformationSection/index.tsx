@@ -1,34 +1,31 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
 import { FiUser } from 'react-icons/fi';
+import {
+  Box,
+  Grid,
+  Paper,
+  Checkbox,
+  Typography,
+  FormControlLabel,
+} from '@mui/material';
 
-import type { Theme } from '@mui/material/styles';
-
+import {
+  TextFieldBasic,
+  TextFieldPhone,
+  AvatarComponent,
+  DatePickerComponent,
+} from '@components/index';
 import { paperStylesBase } from '@styles/index';
-import TextFieldBasic from '@components/TextFieldBasic';
-import AvatarComponent from '@components/AvatarComponent';
-
-interface ITextFields {
-  id: string;
-  value: string;
-  disabled: boolean;
-  handleChange: (e: string | React.ChangeEvent<any>) => void;
-  handleOnBlur: () => void;
-  helperText: string | undefined;
-  error: boolean | undefined;
-}
-
-interface IPersonalInformationSection {
-  themeStyle: Theme;
-  textFieldName: ITextFields;
-  textFieldMiddleName: ITextFields;
-  textFieldLastName: ITextFields;
-}
+import type { IPersonalInformationSection } from './type';
 
 const PersonalInformationSection = ({
   themeStyle,
+  birth_date,
   textFieldName,
+  textFieldAddress,
   textFieldLastName,
   textFieldMiddleName,
+  textFieldOccupation,
+  complete_odontogram,
 }: IPersonalInformationSection) => {
   return (
     <Paper
@@ -125,6 +122,75 @@ const PersonalInformationSection = ({
             error={textFieldLastName.error}
           />
         </Grid>
+
+        {birth_date && (
+          <Grid size={{ xs: 12, md: 3, lg: 4 }}>
+            <DatePickerComponent
+              required
+              id="birth_date"
+              value={birth_date.value}
+              error={birth_date.error}
+              label="Fecha de Nacimiento"
+              onChange={birth_date.onChange}
+              helperText={birth_date.helperText}
+            />
+          </Grid>
+        )}
+        <Grid size={{ xs: 12, md: 3, lg: 4 }}>
+          <TextFieldPhone
+            id="contact_value"
+            label={'Teléfono'}
+            value={''}
+            onChange={() => {}}
+          />
+        </Grid>
+        {textFieldAddress && (
+          <Grid size={{ xs: 12, md: 3, lg: 4 }}>
+            <TextFieldBasic
+              type="text"
+              placeholder="Calle Falsa 123"
+              label="Dirección"
+              ariaLabel="Dirección"
+              id={textFieldAddress.id}
+              value={textFieldAddress.value}
+              disabled={textFieldAddress.disabled}
+              onChange={textFieldAddress.handleChange}
+              handleOnBlur={textFieldAddress.handleOnBlur}
+              helperText={textFieldAddress.helperText}
+              error={textFieldAddress.error}
+            />
+          </Grid>
+        )}
+        {textFieldOccupation && (
+          <Grid size={{ xs: 12, md: 3, lg: 4 }}>
+            <TextFieldBasic
+              type="text"
+              label="Ocupación"
+              ariaLabel="Ocupación"
+              id={textFieldOccupation.id}
+              value={textFieldOccupation.value}
+              disabled={textFieldOccupation.disabled}
+              onChange={textFieldOccupation.handleChange}
+              handleOnBlur={textFieldOccupation.handleOnBlur}
+              helperText={textFieldOccupation.helperText}
+              error={textFieldOccupation.error}
+            />
+          </Grid>
+        )}
+        {complete_odontogram && (
+          <Grid size={{ xs: 12, md: 4, lg: 4 }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  id="complete_odontogram"
+                  checked={complete_odontogram.checked}
+                  onChange={complete_odontogram.onChange}
+                />
+              }
+              label="Odontograma Completo"
+            />
+          </Grid>
+        )}
       </Grid>
     </Paper>
   );

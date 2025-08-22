@@ -1,6 +1,9 @@
+export { default as PersonalInformationSection } from './PersonalInformationSection';
 export { default as ContactInformationSection } from './ContactInformationSection';
 export { default as AutocompleteComponent } from './AutocompleteComponent';
 export { default as RadioButtonComponent } from './RadioButtonComponent';
+export { default as DatePickerComponent } from './DatePickerComponent';
+export { default as AvatarComponent } from './AvatarComponent';
 export { default as LoadingProgress } from './LoadingProgress';
 export { default as ButtonComponent } from './ButtonComponent';
 export { default as SelectComponent } from './SelectComponent';

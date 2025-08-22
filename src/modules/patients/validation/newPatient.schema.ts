@@ -1,5 +1,6 @@
 import { CONTACT_TYPE_ENUM, GENDER } from '@type/common.types';
 import * as Yup from 'yup';
+import dayjs from 'dayjs';
 
 export const newPatientSchema = Yup.object().shape({
   first_name: Yup.string().required('El nombre es obligatorio'),
@@ -25,7 +26,17 @@ export const newPatientSchema = Yup.object().shape({
     }),
   ),
 
-  birth_date: Yup.date().required('La fecha de nacimiento es obligatoria'),
+  birth_date: Yup.date()
+    .nullable()
+    .required('La fecha de nacimiento es obligatoria')
+    .max(
+      dayjs().subtract(1, 'year'),
+      'El paciente debe tener al menos 1 año de edad',
+    )
+    .min(
+      dayjs().subtract(100, 'year'),
+      'La fecha no puede ser mayor a 100 años atrás',
+    ),
   phone: Yup.string(),
   address: Yup.string(),
   occupation: Yup.string(),

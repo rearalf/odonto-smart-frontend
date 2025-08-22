@@ -1,7 +1,12 @@
+import type { PickerValue } from '@mui/x-date-pickers/internals';
 import { Box, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
 
-import { ContactInformationSection, BreadCrumbs } from '@components/index';
+import {
+  ContactInformationSection,
+  BreadCrumbs,
+  PersonalInformationSection,
+} from '@components/index';
 
 import { newPatientSchema } from '../validation/newPatient.schema';
 import type { INewPatientFormValues } from '../types/types';
@@ -10,7 +15,6 @@ import {
   INITIAL_VALUES,
   BREADCRUMBSNEWPATIENT,
 } from '../constants/index.const';
-import PersonalInformationSection from '@components/PersonalInformationSection';
 
 function NewPatientPage() {
   const styles = useStyles();
@@ -80,6 +84,52 @@ function NewPatientPage() {
                 error:
                   props.touched.middle_name &&
                   Boolean(props.errors.middle_name),
+              }}
+              textFieldAddress={{
+                id: 'address',
+                value: props.values.address || '',
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('address');
+                  props.setFieldTouched('address', true);
+                },
+                helperText: props.touched.address
+                  ? props.errors.address
+                  : undefined,
+                error: props.touched.address && Boolean(props.errors.address),
+              }}
+              textFieldOccupation={{
+                id: 'occupation',
+                value: props.values.occupation || '',
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('occupation');
+                  props.setFieldTouched('occupation', true);
+                },
+                helperText: props.touched.occupation
+                  ? props.errors.occupation
+                  : undefined,
+                error:
+                  props.touched.occupation && Boolean(props.errors.occupation),
+              }}
+              complete_odontogram={{
+                checked: props.values.complete_odontogram,
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  props.setFieldValue('complete_odontogram', e.target.checked);
+                },
+              }}
+              birth_date={{
+                helperText: props.touched.birth_date
+                  ? props.errors.birth_date
+                  : undefined,
+                error:
+                  props.touched.birth_date && Boolean(props.errors.birth_date),
+                value: props.values.birth_date,
+                onChange: (newValue: PickerValue) => {
+                  props.setFieldValue('birth_date', newValue);
+                },
               }}
             />
 

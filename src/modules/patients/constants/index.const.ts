@@ -1,5 +1,6 @@
 import type { ILink } from '@components/BreadCrumbs/type';
 import type { INewPatientFormValues } from '../types/types';
+// import dayjs from 'dayjs';
 
 export const BREADCRUMBSPATIENTSLIST: ILink[] = [
   {
@@ -34,4 +35,9 @@ export const INITIAL_VALUES: INewPatientFormValues = {
   profile_picture_name: '',
   profile_picture: '',
   personContact: [],
+  address: '',
+  occupation: '',
+  complete_odontogram: false,
+  // birth_date: dayjs().subtract(1, 'year'),
+  birth_date: null,
 };
