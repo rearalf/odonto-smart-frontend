@@ -1,4 +1,4 @@
-import type { IContactForm } from '@type/common.types';
+import type { GENDER, IContactForm } from '@type/common.types';
 import type { Dayjs } from 'dayjs';
 
 export interface INewPatientFormValues {
@@ -12,4 +12,5 @@ export interface INewPatientFormValues {
   occupation?: string;
   complete_odontogram: boolean;
   birth_date: Dayjs | null;
+  gender: GENDER | null;
 }

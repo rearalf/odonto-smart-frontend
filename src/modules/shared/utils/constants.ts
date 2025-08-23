@@ -3,6 +3,8 @@ import * as Yup from 'yup';
 import type { IRadioButtonComponentOption } from '@components/RadioButtonComponent/types';
 import {
   CONTACT_TYPE_ENUM,
+  GENDER,
+  type IBasicIdNameDescription,
   type IContactForm,
   type IContentNotification,
 } from '@type/common.types';
@@ -73,3 +75,17 @@ export const CONTACT_OPTIONS: IRadioButtonComponentOption[] = [
     color: '#2e7d32',
   },
 ];
+
+const genderTranslations: Record<GENDER, string> = {
+  [GENDER.MALE]: 'Masculino',
+  [GENDER.FEMALE]: 'Femenino',
+  [GENDER.OTHER]: 'Otro',
+};
+
+export const GENDER_OPTIONS: IBasicIdNameDescription[] = Object.entries(
+  GENDER,
+).map(([, value], index) => ({
+  id: index + 1,
+  name: genderTranslations[value as GENDER],
+  label: value,
+}));

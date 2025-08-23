@@ -4,6 +4,7 @@ import type {
   DateValidationError,
   PickerChangeHandlerContext,
 } from '@mui/x-date-pickers/models';
+import type { GENDER } from '@type/common.types';
 
 interface ITextFields {
   id: string;
@@ -22,10 +23,15 @@ export interface IPersonalInformationSection {
   textFieldLastName: ITextFields;
   textFieldAddress?: ITextFields;
   textFieldOccupation?: ITextFields;
+  selectGender?: {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    value: GENDER | null;
+  };
   birth_date?: {
     error: boolean | undefined;
     value: PickerValue | undefined;
     helperText: string | undefined;
+    handleOnBlur: () => void;
     onChange: (
       newValue: PickerValue,
       context: PickerChangeHandlerContext<DateValidationError>,

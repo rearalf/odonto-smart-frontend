@@ -13,13 +13,16 @@ import {
   TextFieldPhone,
   AvatarComponent,
   DatePickerComponent,
+  SelectComponent,
 } from '@components/index';
 import { paperStylesBase } from '@styles/index';
 import type { IPersonalInformationSection } from './type';
+import { GENDER_OPTIONS } from '@utils/constants';
 
 const PersonalInformationSection = ({
   themeStyle,
   birth_date,
+  selectGender,
   textFieldName,
   textFieldAddress,
   textFieldLastName,
@@ -133,6 +136,7 @@ const PersonalInformationSection = ({
               label="Fecha de Nacimiento"
               onChange={birth_date.onChange}
               helperText={birth_date.helperText}
+              handleOnBlur={birth_date.handleOnBlur}
             />
           </Grid>
         )}
@@ -174,6 +178,17 @@ const PersonalInformationSection = ({
               handleOnBlur={textFieldOccupation.handleOnBlur}
               helperText={textFieldOccupation.helperText}
               error={textFieldOccupation.error}
+            />
+          </Grid>
+        )}
+        {selectGender && (
+          <Grid size={{ xs: 12, md: 4, lg: 4 }}>
+            <SelectComponent
+              id="gender"
+              label="Género"
+              onChange={selectGender.onChange}
+              options={GENDER_OPTIONS}
+              value={selectGender.value || ''}
             />
           </Grid>
         )}

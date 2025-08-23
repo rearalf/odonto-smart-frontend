@@ -15,6 +15,7 @@ export interface IDatePickerComponent {
   disabled?: boolean;
   helperText?: string;
   value: PickerValue | undefined;
+  handleOnBlur?: () => void;
   onChange: (
     newValue: PickerValue,
     context: PickerChangeHandlerContext<DateValidationError>,
@@ -30,6 +31,7 @@ const DatePickerComponent = ({
   required,
   disabled,
   helperText,
+  handleOnBlur,
 }: IDatePickerComponent) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -50,6 +52,7 @@ const DatePickerComponent = ({
             fullWidth: true,
             required: required,
             helperText: helperText || 'dd/mm/yyyy',
+            onBlur: handleOnBlur,
           },
         }}
       />

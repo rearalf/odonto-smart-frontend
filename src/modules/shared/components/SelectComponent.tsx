@@ -11,6 +11,7 @@ interface ISelectComponentProps {
   required?: boolean;
   disabled?: boolean;
   ariaLabel?: string;
+  placeholder?: string;
   options: IBasicIdNameDescription[];
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   handleOnBlur?: () => void;
@@ -40,6 +41,7 @@ const SelectComponent = (props: ISelectComponentProps) => {
       helperText={props.helperText}
       onBlur={props.handleOnBlur}
       value={props.value}
+      placeholder={props.placeholder || 'Seleccionar una opción'}
     >
       <MenuItem value="">
         <em>Seleccionar una opción</em>

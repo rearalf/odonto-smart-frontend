@@ -121,14 +121,24 @@ function NewPatientPage() {
                 },
               }}
               birth_date={{
-                helperText: props.errors.birth_date
+                helperText: props.touched.birth_date
                   ? props.errors.birth_date
                   : undefined,
                 error:
                   props.touched.birth_date && Boolean(props.errors.birth_date),
                 value: props.values.birth_date,
+                handleOnBlur: () => {
+                  props.validateField('birth_date');
+                  props.setFieldTouched('birth_date', true);
+                },
                 onChange: (newValue: PickerValue) => {
                   props.setFieldValue('birth_date', newValue);
+                },
+              }}
+              selectGender={{
+                value: props.values.gender,
+                onChange: (e) => {
+                  props.setFieldValue('gender', e.target.value);
                 },
               }}
             />
