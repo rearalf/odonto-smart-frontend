@@ -121,7 +121,7 @@ function NewPatientPage() {
                 },
               }}
               birth_date={{
-                helperText: props.touched.birth_date
+                helperText: props.errors.birth_date
                   ? props.errors.birth_date
                   : undefined,
                 error:

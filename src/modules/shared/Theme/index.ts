@@ -49,6 +49,19 @@ const themeLight = createTheme({
     },
   },
   components: {
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          '&.MuiPickersTextField-root fieldset': {
+            borderColor: '#0B1524',
+          },
+          '&.MuiPickersTextField-root .MuiPickersInputBase-root.MuiPickersOutlinedInput-root:hover fieldset':
+            {
+              borderColor: '#19A7CE',
+            },
+        },
+      },
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
