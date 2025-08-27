@@ -15,6 +15,7 @@ import {
   INITIAL_VALUES,
   BREADCRUMBSNEWPATIENT,
 } from '../constants/index.const';
+import GeneralMedicalHistory from '../components/GeneralMedicalHistory';
 
 function NewPatientPage() {
   const styles = useStyles();
@@ -142,6 +143,8 @@ function NewPatientPage() {
                 },
               }}
             />
+
+            <GeneralMedicalHistory themeStyle={styles.theme} />
 
             <ContactInformationSection
               themeStyle={styles.theme}
