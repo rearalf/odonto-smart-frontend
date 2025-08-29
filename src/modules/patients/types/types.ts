@@ -17,4 +17,14 @@ export interface INewPatientFormValues {
   allergic_reactions?: string;
   current_systemic_treatment?: string;
   lab_results?: string;
+  snc?: boolean;
+  svc?: boolean;
+  se?: boolean;
+  sme?: boolean;
+  systemNotes1?: string;
+  sr?: boolean;
+  su?: boolean;
+  sgu?: boolean;
+  sgi?: boolean;
+  systemNotes2?: string;
 }

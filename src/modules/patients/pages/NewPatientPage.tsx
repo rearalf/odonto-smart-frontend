@@ -16,6 +16,7 @@ import {
   BREADCRUMBSNEWPATIENT,
 } from '../constants/index.const';
 import GeneralMedicalHistory from '../components/GeneralMedicalHistory';
+import HealthHistoryBySystem from '../components/HealthHistoryBySystem';
 
 function NewPatientPage() {
   const styles = useStyles();
@@ -209,6 +210,98 @@ function NewPatientPage() {
                 error:
                   props.touched.medical_history &&
                   Boolean(props.errors.medical_history),
+              }}
+            />
+
+            <HealthHistoryBySystem
+              themeStyle={styles.theme}
+              systemNotes1={{
+                id: 'systemNotes1',
+                value: props.values.systemNotes1 || '',
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('systemNotes1');
+                  props.setFieldTouched('systemNotes1', true);
+                },
+                helperText: props.touched.systemNotes1
+                  ? props.errors.systemNotes1
+                  : undefined,
+                error:
+                  props.touched.systemNotes1 &&
+                  Boolean(props.errors.systemNotes1),
+              }}
+              systemNotes2={{
+                id: 'systemNotes2',
+                value: props.values.systemNotes2 || '',
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('systemNotes2');
+                  props.setFieldTouched('systemNotes2', true);
+                },
+                helperText: props.touched.systemNotes2
+                  ? props.errors.systemNotes2
+                  : undefined,
+                error:
+                  props.touched.systemNotes2 &&
+                  Boolean(props.errors.systemNotes2),
+              }}
+              se={{
+                checked: props.values.se || false,
+                onChange: (_event, checked) => {
+                  props.setFieldValue('se', checked);
+                },
+                disabled: props.isSubmitting,
+              }}
+              sgi={{
+                checked: props.values.sgi || false,
+                onChange: (_event, checked) => {
+                  props.setFieldValue('sgi', checked);
+                },
+                disabled: props.isSubmitting,
+              }}
+              sgu={{
+                checked: props.values.sgu || false,
+                onChange: (_event, checked) => {
+                  props.setFieldValue('sgu', checked);
+                },
+                disabled: props.isSubmitting,
+              }}
+              sme={{
+                checked: props.values.sme || false,
+                onChange: (_event, checked) => {
+                  props.setFieldValue('sme', checked);
+                },
+                disabled: props.isSubmitting,
+              }}
+              snc={{
+                checked: props.values.snc || false,
+                onChange: (_event, checked) => {
+                  props.setFieldValue('snc', checked);
+                },
+                disabled: props.isSubmitting,
+              }}
+              sr={{
+                checked: props.values.sr || false,
+                onChange: (_event, checked) => {
+                  props.setFieldValue('sr', checked);
+                },
+                disabled: props.isSubmitting,
+              }}
+              su={{
+                checked: props.values.su || false,
+                onChange: (_event, checked) => {
+                  props.setFieldValue('su', checked);
+                },
+                disabled: props.isSubmitting,
+              }}
+              svc={{
+                checked: props.values.svc || false,
+                onChange: (_event, checked) => {
+                  props.setFieldValue('svc', checked);
+                },
+                disabled: props.isSubmitting,
               }}
             />
 

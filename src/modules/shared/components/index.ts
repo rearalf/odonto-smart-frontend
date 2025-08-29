@@ -3,6 +3,7 @@ export { default as ContactInformationSection } from './ContactInformationSectio
 export { default as AutocompleteComponent } from './AutocompleteComponent';
 export { default as RadioButtonComponent } from './RadioButtonComponent';
 export { default as DatePickerComponent } from './DatePickerComponent';
+export { default as CheckboxComponent } from './CheckboxComponent';
 export { default as AvatarComponent } from './AvatarComponent';
 export { default as LoadingProgress } from './LoadingProgress';
 export { default as ButtonComponent } from './ButtonComponent';
