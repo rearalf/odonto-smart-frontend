@@ -6,7 +6,7 @@ import type {
 } from '@mui/x-date-pickers/models';
 import type { GENDER } from '@type/common.types';
 
-interface ITextFields {
+export interface ITextFields {
   id: string;
   value: string;
   disabled: boolean;

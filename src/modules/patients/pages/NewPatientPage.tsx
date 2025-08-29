@@ -144,7 +144,73 @@ function NewPatientPage() {
               }}
             />
 
-            <GeneralMedicalHistory themeStyle={styles.theme} />
+            <GeneralMedicalHistory
+              themeStyle={styles.theme}
+              textAllergicReactions={{
+                id: 'allergic_reactions',
+                value: props.values.allergic_reactions || '',
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('allergic_reactions');
+                  props.setFieldTouched('allergic_reactions', true);
+                },
+                helperText: props.touched.allergic_reactions
+                  ? props.errors.allergic_reactions
+                  : undefined,
+                error:
+                  props.touched.allergic_reactions &&
+                  Boolean(props.errors.allergic_reactions),
+              }}
+              textCurrentSystemicTreatment={{
+                id: 'current_systemic_treatment',
+                value: props.values.current_systemic_treatment || '',
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('current_systemic_treatment');
+                  props.setFieldTouched('current_systemic_treatment', true);
+                },
+                helperText: props.touched.current_systemic_treatment
+                  ? props.errors.current_systemic_treatment
+                  : undefined,
+                error:
+                  props.touched.current_systemic_treatment &&
+                  Boolean(props.errors.current_systemic_treatment),
+              }}
+              textLabResults={{
+                id: 'lab_results',
+                value: props.values.lab_results || '',
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('lab_results');
+                  props.setFieldTouched('lab_results', true);
+                },
+                helperText: props.touched.lab_results
+                  ? props.errors.lab_results
+                  : undefined,
+                error:
+                  props.touched.lab_results &&
+                  Boolean(props.errors.lab_results),
+              }}
+              textMedicalHistory={{
+                id: 'medical_history',
+                value: props.values.medical_history || '',
+                disabled: props.isSubmitting,
+                handleChange: props.handleChange,
+                handleOnBlur: () => {
+                  props.validateField('medical_history');
+                  props.setFieldTouched('medical_history', true);
+                },
+                helperText: props.touched.medical_history
+                  ? props.errors.medical_history
+                  : undefined,
+                error:
+                  props.touched.medical_history &&
+                  Boolean(props.errors.medical_history),
+              }}
+            />
 
             <ContactInformationSection
               themeStyle={styles.theme}

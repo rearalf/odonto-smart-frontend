@@ -13,4 +13,8 @@ export interface INewPatientFormValues {
   complete_odontogram: boolean;
   birth_date: Dayjs | null;
   gender: GENDER | null;
+  medical_history?: string;
+  allergic_reactions?: string;
+  current_systemic_treatment?: string;
+  lab_results?: string;
 }
