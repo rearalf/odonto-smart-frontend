@@ -1,11 +1,20 @@
 import { FaHeartbeat, FaPlus } from 'react-icons/fa';
 import { Box, Typography } from '@mui/material';
 
-import { BreadCrumbs, ButtonComponent } from '@components/index';
+import {
+  BreadCrumbs,
+  ButtonComponent,
+  TableComponent,
+} from '@components/index';
 
-import { BREADCRUMBSPATIENTSLIST } from '../constants/index.const';
-import useStyles from '../hooks/useStyles';
+import {
+  BREADCRUMBSPATIENTSLIST,
+  TABLE_HEADER_PATIENTS,
+} from '../constants/index.const';
 import usePatientsListPage from '../hooks/usePatientsListPage';
+import FilterPatient from '../components/FilterPatient';
+import RowPatient from '../components/RowPatient';
+import useStyles from '../hooks/useStyles';
 
 function PatientsListPage() {
   const hook = usePatientsListPage();
@@ -16,7 +25,7 @@ function PatientsListPage() {
 
       <Box component="header" sx={styles.headerStyles}>
         <Typography variant="h4" component="h1">
-          Doctores
+          Pacientes
         </Typography>
         <ButtonComponent
           type="button"
@@ -40,6 +49,35 @@ function PatientsListPage() {
           }
         />
       </Box>
+
+      <FilterPatient
+        themeStyle={styles.theme}
+        handleClearFilter={hook.handleClearFilter}
+        handleSearch={hook.handleSearch}
+        handleSearchInput={hook.handleSearchInput}
+        search={hook.search}
+      />
+
+      <TableComponent
+        pagination
+        key="Patients"
+        ariaLabelTable="Lista de pacientes"
+        handleSetPage={hook.handleSetPage}
+        handleSetRowsPerPage={hook.handleSetRowsPerPage}
+        page={hook.page}
+        loading={false}
+        rowsPerPage={hook.rowsPerPage}
+        totalData={0}
+        emptyMessage="No hay pacientes registrados"
+        headers={TABLE_HEADER_PATIENTS}
+        body={
+          <RowPatient
+            patients={[]}
+            handleShowDeleteModal={hook.handleShowDeleteModal}
+            handleShowModalDetail={hook.handleShowModalDoctorDetail}
+          />
+        }
+      />
     </>
   );
 }

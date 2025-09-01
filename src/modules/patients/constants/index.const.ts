@@ -1,3 +1,4 @@
+import type { HeaderObject } from '@components/TableComponent/type';
 import type { INewPatientFormValues } from '../types/types';
 import type { ILink } from '@components/BreadCrumbs/type';
 
@@ -40,3 +41,10 @@ export const INITIAL_VALUES: INewPatientFormValues = {
   birth_date: null,
   gender: null,
 };
+
+export const TABLE_HEADER_PATIENTS: HeaderObject[] = [
+  { title: 'Nombre', key: 'name' },
+  { title: 'Edad', key: 'age', align: 'center' },
+  { title: 'Teléfono', key: 'phone', align: 'center' },
+  { title: 'Acciones', key: 'actions', align: 'center' },
+];
