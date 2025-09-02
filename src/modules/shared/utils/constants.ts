@@ -4,7 +4,6 @@ import type { IRadioButtonComponentOption } from '@components/RadioButtonCompone
 import {
   CONTACT_TYPE_ENUM,
   GENDER,
-  type IBasicIdNameDescription,
   type IContactForm,
   type IContentNotification,
 } from '@type/common.types';
@@ -82,10 +81,10 @@ const genderTranslations: Record<GENDER, string> = {
   [GENDER.OTHER]: 'Otro',
 };
 
-export const GENDER_OPTIONS: IBasicIdNameDescription[] = Object.entries(
-  GENDER,
-).map(([, value], index) => ({
-  id: index + 1,
+export const GENDER_OPTIONS: {
+  id: string;
+  name: string;
+}[] = Object.entries(GENDER).map(([, value], _index) => ({
+  id: value.toString(),
   name: genderTranslations[value as GENDER],
-  label: value,
 }));

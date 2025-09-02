@@ -72,24 +72,28 @@ const HealthHistoryBySystem = (props: IHealthHistoryBySystemProps) => {
           }}
         >
           <CheckboxComponent
+            id="snc"
             label="SNC"
             checked={props.snc.checked}
             onChange={props.snc.onChange}
             disabled={props.snc.disabled}
           />
           <CheckboxComponent
+            id="svc"
             label="SVC"
             checked={props.svc.checked}
             onChange={props.svc.onChange}
             disabled={props.svc.disabled}
           />
           <CheckboxComponent
+            id="se"
             label="SE"
             checked={props.se.checked}
             onChange={props.se.onChange}
             disabled={props.se.disabled}
           />
           <CheckboxComponent
+            id="sme"
             label="SME"
             checked={props.sme.checked}
             onChange={props.sme.onChange}
@@ -124,24 +128,28 @@ const HealthHistoryBySystem = (props: IHealthHistoryBySystemProps) => {
           }}
         >
           <CheckboxComponent
+            id="sr"
             label="SR"
             checked={props.sr.checked}
             onChange={props.sr.onChange}
             disabled={props.sr.disabled}
           />
           <CheckboxComponent
+            id="su"
             label="SU"
             checked={props.su.checked}
             onChange={props.su.onChange}
             disabled={props.su.disabled}
           />
           <CheckboxComponent
+            id="sgu"
             label="SGU"
             checked={props.sgu.checked}
             onChange={props.sgu.onChange}
             disabled={props.sgu.disabled}
           />
           <CheckboxComponent
+            id="sgi"
             label="SGI"
             checked={props.sgi.checked}
             onChange={props.sgi.onChange}

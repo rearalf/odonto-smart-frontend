@@ -9,6 +9,7 @@ export interface INewPatientFormValues {
   profile_picture?: string;
   personContact: IContactForm[];
   address?: string;
+  phone?: string;
   occupation?: string;
   complete_odontogram: boolean;
   birth_date: Dayjs | null;

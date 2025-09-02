@@ -5,6 +5,7 @@ import type {
   PickerChangeHandlerContext,
 } from '@mui/x-date-pickers/models';
 import type { GENDER } from '@type/common.types';
+import type { SyntheticEvent } from 'react';
 
 export interface ITextFields {
   id: string;
@@ -23,11 +24,17 @@ export interface IPersonalInformationSection {
   textFieldLastName: ITextFields;
   textFieldAddress?: ITextFields;
   textFieldOccupation?: ITextFields;
+  textFieldPhone?: ITextFields;
   selectGender?: {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value: GENDER | null;
+    disabled: boolean;
+    handleOnBlur: () => void;
+    helperText: string | undefined;
+    error: boolean | undefined;
   };
   birth_date?: {
+    disabled: boolean;
     error: boolean | undefined;
     value: PickerValue | undefined;
     helperText: string | undefined;
@@ -38,7 +45,8 @@ export interface IPersonalInformationSection {
     ) => void;
   };
   complete_odontogram?: {
+    disabled: boolean;
     checked: boolean;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (event: SyntheticEvent<Element, Event>, checked: boolean) => void;
   };
 }

@@ -1,12 +1,5 @@
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import { FiUser } from 'react-icons/fi';
-import {
-  Box,
-  Grid,
-  Paper,
-  Checkbox,
-  Typography,
-  FormControlLabel,
-} from '@mui/material';
 
 import {
   TextFieldBasic,
@@ -14,6 +7,7 @@ import {
   AvatarComponent,
   DatePickerComponent,
   SelectComponent,
+  CheckboxComponent,
 } from '@components/index';
 import { paperStylesBase } from '@styles/index';
 import type { IPersonalInformationSection } from './type';
@@ -24,6 +18,7 @@ const PersonalInformationSection = ({
   birth_date,
   selectGender,
   textFieldName,
+  textFieldPhone,
   textFieldAddress,
   textFieldLastName,
   textFieldMiddleName,
@@ -137,17 +132,24 @@ const PersonalInformationSection = ({
               onChange={birth_date.onChange}
               helperText={birth_date.helperText}
               handleOnBlur={birth_date.handleOnBlur}
+              disabled={birth_date.disabled}
             />
           </Grid>
         )}
-        <Grid size={{ xs: 12, md: 3, lg: 4 }}>
-          <TextFieldPhone
-            id="contact_value"
-            label={'Teléfono'}
-            value={''}
-            onChange={() => {}}
-          />
-        </Grid>
+        {textFieldPhone && (
+          <Grid size={{ xs: 12, md: 3, lg: 4 }}>
+            <TextFieldPhone
+              label="Teléfono"
+              id={textFieldPhone.id}
+              value={textFieldPhone.value}
+              onChange={textFieldPhone.handleChange}
+              handleOnBlur={textFieldPhone.handleOnBlur}
+              helperText={textFieldPhone.helperText}
+              error={textFieldPhone.error}
+              disabled={textFieldPhone.disabled}
+            />
+          </Grid>
+        )}
         {textFieldAddress && (
           <Grid size={{ xs: 12, md: 3, lg: 4 }}>
             <TextFieldBasic
@@ -184,25 +186,27 @@ const PersonalInformationSection = ({
         {selectGender && (
           <Grid size={{ xs: 12, md: 4, lg: 4 }}>
             <SelectComponent
+              required
               id="gender"
               label="Género"
               onChange={selectGender.onChange}
               options={GENDER_OPTIONS}
               value={selectGender.value || ''}
+              helperText={selectGender.helperText}
+              error={selectGender.error}
+              disabled={selectGender.disabled}
+              handleOnBlur={selectGender.handleOnBlur}
             />
           </Grid>
         )}
         {complete_odontogram && (
           <Grid size={{ xs: 12, md: 4, lg: 4 }}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  id="complete_odontogram"
-                  checked={complete_odontogram.checked}
-                  onChange={complete_odontogram.onChange}
-                />
-              }
+            <CheckboxComponent
+              id="complete_odontogram"
               label="Odontograma Completo"
+              checked={complete_odontogram.checked}
+              disabled={complete_odontogram.disabled}
+              onChange={complete_odontogram.onChange}
             />
           </Grid>
         )}

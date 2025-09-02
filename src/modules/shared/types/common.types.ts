@@ -7,7 +7,7 @@ export interface IContentNotification {
 }
 
 export interface IBasicIdNameDescription {
-  id: number;
+  id: number | string;
   name: string;
   description?: string;
   label?: string;

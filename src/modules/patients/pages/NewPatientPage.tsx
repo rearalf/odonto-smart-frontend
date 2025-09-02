@@ -1,25 +1,30 @@
 import type { PickerValue } from '@mui/x-date-pickers/internals';
+import { FiSave, FiXCircle } from 'react-icons/fi';
 import { Box, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
 
 import {
-  ContactInformationSection,
   BreadCrumbs,
+  ButtonComponent,
+  ContactInformationSection,
   PersonalInformationSection,
 } from '@components/index';
+import { btnGroupStyles } from '@styles/index';
 
-import { newPatientSchema } from '../validation/newPatient.schema';
-import type { INewPatientFormValues } from '../types/types';
-import useStyles from '../hooks/useStyles';
 import {
   INITIAL_VALUES,
   BREADCRUMBSNEWPATIENT,
 } from '../constants/index.const';
 import GeneralMedicalHistory from '../components/GeneralMedicalHistory';
 import HealthHistoryBySystem from '../components/HealthHistoryBySystem';
+import { newPatientSchema } from '../validation/newPatient.schema';
+import useNewPatient from '../hooks/useNewPatient';
+import useStyles from '../hooks/useStyles';
 
 function NewPatientPage() {
   const styles = useStyles();
+  const hook = useNewPatient();
+
   return (
     <>
       <BreadCrumbs links={BREADCRUMBSNEWPATIENT} loading={false} />
@@ -30,10 +35,10 @@ function NewPatientPage() {
         </Typography>
       </Box>
 
-      <Formik<INewPatientFormValues>
+      <Formik
         initialValues={INITIAL_VALUES}
         validationSchema={newPatientSchema}
-        onSubmit={() => {}}
+        onSubmit={hook.handleCreatePatient}
         validateOnChange={true}
         validateOnBlur={true}
       >
@@ -116,11 +121,28 @@ function NewPatientPage() {
                 error:
                   props.touched.occupation && Boolean(props.errors.occupation),
               }}
-              complete_odontogram={{
-                checked: props.values.complete_odontogram,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  props.setFieldValue('complete_odontogram', e.target.checked);
+              textFieldPhone={{
+                id: 'phone',
+                value: props.values.phone || '',
+                disabled: props.isSubmitting,
+                handleChange: (value) => {
+                  props.setFieldValue('phone', value);
                 },
+                handleOnBlur: () => {
+                  props.validateField('phone');
+                  props.setFieldTouched('phone', true);
+                },
+                helperText: props.touched.phone
+                  ? props.errors.phone
+                  : undefined,
+                error: props.touched.phone && Boolean(props.errors.phone),
+              }}
+              complete_odontogram={{
+                checked: props.values.complete_odontogram || false,
+                onChange: (_e, checked) => {
+                  props.setFieldValue('complete_odontogram', checked);
+                },
+                disabled: props.isSubmitting,
               }}
               birth_date={{
                 helperText: props.touched.birth_date
@@ -136,12 +158,22 @@ function NewPatientPage() {
                 onChange: (newValue: PickerValue) => {
                   props.setFieldValue('birth_date', newValue);
                 },
+                disabled: props.isSubmitting,
               }}
               selectGender={{
                 value: props.values.gender,
                 onChange: (e) => {
                   props.setFieldValue('gender', e.target.value);
                 },
+                helperText: props.touched.gender
+                  ? props.errors.gender
+                  : undefined,
+                error: props.touched.gender && Boolean(props.errors.gender),
+                handleOnBlur: () => {
+                  props.validateField('gender');
+                  props.setFieldTouched('gender', true);
+                },
+                disabled: props.isSubmitting,
               }}
             />
 
@@ -311,6 +343,27 @@ function NewPatientPage() {
               handleSetFieldValue={props.setFieldValue}
               personContact={props.values.personContact}
             />
+
+            <Box component="div" sx={btnGroupStyles}>
+              <ButtonComponent
+                color="error"
+                text="Cancelar"
+                position="left"
+                variant="outlined"
+                icon={<FiXCircle />}
+                loading={props.isSubmitting}
+              />
+              <ButtonComponent
+                type="submit"
+                text="Guardar"
+                color="success"
+                position="left"
+                icon={<FiSave />}
+                variant="contained"
+                loading={props.isSubmitting}
+                disabled={!props.isValid || !props.dirty || props.isSubmitting}
+              />
+            </Box>
           </Form>
         )}
       </Formik>
