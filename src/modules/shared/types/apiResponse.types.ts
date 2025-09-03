@@ -21,3 +21,11 @@ export interface IGetPaginationOptions {
   search?: string;
   specialtyId?: number;
 }
+
+export interface IPagination {
+  pagination?: boolean;
+  page?: number;
+  per_page?: number;
+  total_count?: number;
+  total_pages?: number;
+}

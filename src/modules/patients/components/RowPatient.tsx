@@ -12,8 +12,8 @@ interface IRowPatientProps {
   handleShowModalDetail: (id: number) => void;
 }
 
-const RowPatient = (props: IRowPatientProps) => {
-  return props.patients.map((row) => (
+const RowPatient = (props: IRowPatientProps) =>
+  props.patients.map((row) => (
     <TableRow hover key={row.id}>
       <TableCell align="left">{row.fullName}</TableCell>
       <TableCell align="center">{row.age}</TableCell>
@@ -46,6 +46,5 @@ const RowPatient = (props: IRowPatientProps) => {
       </TableCell>
     </TableRow>
   ));
-};
 
 export default RowPatient;

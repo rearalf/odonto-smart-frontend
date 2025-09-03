@@ -51,11 +51,11 @@ function PatientsListPage() {
       </Box>
 
       <FilterPatient
+        search={hook.search}
         themeStyle={styles.theme}
         handleClearFilter={hook.handleClearFilter}
         handleSearch={hook.handleSearch}
         handleSearchInput={hook.handleSearchInput}
-        search={hook.search}
       />
 
       <TableComponent
@@ -65,14 +65,16 @@ function PatientsListPage() {
         handleSetPage={hook.handleSetPage}
         handleSetRowsPerPage={hook.handleSetRowsPerPage}
         page={hook.page}
-        loading={false}
+        loading={hook.isLoading}
         rowsPerPage={hook.rowsPerPage}
-        totalData={0}
+        totalData={
+          hook.pagination && hook.pagination.total ? hook.pagination.total : 0
+        }
         emptyMessage="No hay pacientes registrados"
         headers={TABLE_HEADER_PATIENTS}
         body={
           <RowPatient
-            patients={[]}
+            patients={hook.patientsData}
             handleShowDeleteModal={hook.handleShowDeleteModal}
             handleShowModalDetail={hook.handleShowModalDoctorDetail}
           />
