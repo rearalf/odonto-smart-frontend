@@ -2,18 +2,22 @@ import type { FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router';
 
 import useNotificationStore from '@stores/useNotificationStore';
+import useLoadingStore from '@stores/useLoadingStore';
+
 import type { INewPatientFormValues } from '../types/types';
 import { useCreatePatient } from './usePatientQueries';
 
 function useNewPatient() {
   const navigate = useNavigate();
   const storeNotification = useNotificationStore();
+  const { toggleLoading } = useLoadingStore();
   const { mutate, isPending } = useCreatePatient();
 
   const handleCreatePatient = async (
     values: INewPatientFormValues,
     formikHelpers: FormikHelpers<INewPatientFormValues>,
   ) => {
+    toggleLoading();
     formikHelpers.setSubmitting(true);
     const formData = new FormData();
 
@@ -103,6 +107,7 @@ function useNewPatient() {
         });
       },
       onSettled: () => {
+        toggleLoading();
         formikHelpers.setSubmitting(false);
       },
     });
