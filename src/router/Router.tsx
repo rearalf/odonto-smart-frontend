@@ -4,10 +4,11 @@ import Private from '@modules/shared/Layouts/Private';
 import Public from '@modules/shared/Layouts/public';
 import App from '../App';
 
-import DoctorRoutes from '@modules/doctors/Doctor.route';
-import RoleRoutes from '@modules/role/Role.route';
+import AppointmentRoutes from '@modules/appointment/Appointment.route';
 import DashboardRoutes from '@modules/dashboard/Dashboard.route';
 import PatientRoutes from '@modules/patients/Patient.route';
+import DoctorRoutes from '@modules/doctors/Doctor.route';
+import RoleRoutes from '@modules/role/Role.route';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
           ...DoctorRoutes,
           ...RoleRoutes,
           ...PatientRoutes,
+          ...AppointmentRoutes,
         ],
       },
     ],
