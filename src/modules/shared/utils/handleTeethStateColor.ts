@@ -6,15 +6,11 @@ export const getStateColor = (state: TOOTH_STATE): string => {
     case TOOTH_STATE.HEALTHY:
       // return '#4CAF50'; // Green
       return 'inherit';
-    case TOOTH_STATE.DECAYED:
-      return '#F44336'; // Red
     case TOOTH_STATE.EXTRACTION:
-      return '#FF9800'; // Orange
+      return 'hsla(354, 100%, 62%, 1.00)';
     case TOOTH_STATE.EXTRACTION_DONE:
-      return '#9E9E9E'; // Gray
+      return 'hsla(208, 100%, 62%, 1.00)';
     case TOOTH_STATE.MISSING:
-      return '#BDBDBD'; // Light Gray
-    case TOOTH_STATE.FILLING:
       return '#2196F3'; // Blue
     case TOOTH_STATE.CROWN:
       return '#9C27B0'; // Purple
@@ -37,11 +33,9 @@ export const getFaceColor = (affection: TOOTH_FACE_AFFECTION): string => {
       // return '#E8F5E8'; // Light Green
       return 'transparent';
     case TOOTH_FACE_AFFECTION.DECAY:
-      return '#FFCDD2'; // Light Red
+      return 'hsla(354, 100%, 62%, 1.00)'; // Light Red
     case TOOTH_FACE_AFFECTION.FILLING:
-      return '#BBDEFB'; // Light Blue
-    case TOOTH_FACE_AFFECTION.CROWN:
-      return '#E1BEE7'; // Light Purple
+      return 'hsla(208, 100%, 62%, 1.00)'; // Light Blue
     case TOOTH_FACE_AFFECTION.FRACTURE:
       return '#FFAB91'; // Light Orange
     case TOOTH_FACE_AFFECTION.SEALANT:

@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { CONSTANTTEETHLIST } from '@modules/shared/constans/teeth';
+import {
+  ARRAY_FACE_AFFECTIONS,
+  CONSTANTTEETHLIST,
+} from '@modules/shared/constans/teeth';
 import {
   TOOTH_STATE,
   TOOTH_FACE_AFFECTION,
@@ -10,12 +13,13 @@ import {
   type TOOTH_STATE_TYPE,
   type TOOTH_FACE_AFFECTION_TYPE,
 } from '@type/teeth.type';
+import useAffectationState from '@stores/useAffectationState';
 
 const backendModifiedTeeth: IToothObject[] = [
   {
     id: 16,
     tooth_number: 16,
-    general_state: TOOTH_STATE.DECAYED,
+    general_state: TOOTH_STATE.HEALTHY,
     palatina: TOOTH_FACE_AFFECTION.DECAY,
     distal: TOOTH_FACE_AFFECTION.HEALTHY,
     mesial: TOOTH_FACE_AFFECTION.HEALTHY,
@@ -25,19 +29,20 @@ const backendModifiedTeeth: IToothObject[] = [
   {
     id: 26,
     tooth_number: 26,
-    general_state: TOOTH_STATE.MISSING,
+    general_state: TOOTH_STATE.EXTRACTION_DONE,
     palatina: TOOTH_FACE_AFFECTION.HEALTHY,
     distal: TOOTH_FACE_AFFECTION.HEALTHY,
     mesial: TOOTH_FACE_AFFECTION.HEALTHY,
-    vestibular: TOOTH_FACE_AFFECTION.EROSION,
+    vestibular: TOOTH_FACE_AFFECTION.HEALTHY,
     oclusal: TOOTH_FACE_AFFECTION.HEALTHY,
   },
 ];
 
 function useNewInstantAppoinment() {
   const [odontogramData, setOdontogramData] = useState(CONSTANTTEETHLIST);
-  const selectedAffection: TOOTH_STATE_TYPE | TOOTH_FACE_AFFECTION_TYPE =
-    TOOTH_FACE_AFFECTION.DECAY;
+
+  const selectedAffection: TOOTH_STATE_TYPE | TOOTH_FACE_AFFECTION_TYPE | null =
+    useAffectationState((state) => state.affectation);
 
   function combineTeethData(
     baseTeeth: ITeethList,
@@ -74,6 +79,32 @@ function useNewInstantAppoinment() {
     return updatedTeeth;
   }
 
+  const handleToothStateChange = (
+    quadrants: Record<string, IToothObject[]>,
+    key: string,
+    index: number,
+    face?: FACE_TYPE,
+  ) => {
+    if (
+      face &&
+      ARRAY_FACE_AFFECTIONS.includes(
+        (selectedAffection as TOOTH_FACE_AFFECTION_TYPE) || TOOTH_STATE,
+      )
+    ) {
+      quadrants[key][index][face] = selectedAffection as TOOTH_FACE_AFFECTION;
+    } else {
+      if (
+        !ARRAY_FACE_AFFECTIONS.includes(
+          selectedAffection as TOOTH_FACE_AFFECTION_TYPE,
+        )
+      ) {
+        quadrants[key][index].general_state = selectedAffection as TOOTH_STATE;
+      } else if (selectedAffection === 'healthy') {
+        quadrants[key][index].general_state = TOOTH_STATE.HEALTHY;
+      }
+    }
+  };
+
   const handleToothClick = (tooth: IToothObject, face?: FACE_TYPE) => {
     setOdontogramData((prevData) => {
       const newData = JSON.parse(JSON.stringify(prevData));
@@ -82,13 +113,7 @@ function useNewInstantAppoinment() {
         Object.keys(quadrants).forEach((key) => {
           quadrants[key].forEach((t, index) => {
             if (t.tooth_number === tooth.tooth_number) {
-              if (face) {
-                quadrants[key][index][face] =
-                  selectedAffection as TOOTH_FACE_AFFECTION;
-              } else {
-                quadrants[key][index].general_state =
-                  selectedAffection as TOOTH_STATE;
-              }
+              handleToothStateChange(quadrants, key, index, face);
             }
           });
         });

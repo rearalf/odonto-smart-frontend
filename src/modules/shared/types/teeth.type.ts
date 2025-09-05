@@ -1,11 +1,11 @@
 export enum TOOTH_STATE {
   HEALTHY = 'healthy', // El diente está en buen estado, sin caries ni restauraciones.
-  DECAYED = 'decayed', // El diente tiene caries (cavidades) y puede requerir tratamiento.
   EXTRACTION = 'extraction', // El diente está en proceso de extracción.
   EXTRACTION_DONE = 'extraction_done', // El diente ha sido extraído con éxito.
   MISSING = 'missing', // El diente está ausente, ya sea por causas naturales o por extracción previa.
-  FILLING = 'filling', // El diente tiene un empaste para restaurarlo.
   CROWN = 'crown', // El diente tiene una corona colocada para cubrirlo y protegerlo.
+  CROWN_GOOD = 'crown_good', // Corona en buen estado
+  CROWN_BAD = 'crown_bad', // Corona en mal estado
   ROOT_CANAL = 'root_canal', // El diente ha recibido tratamiento de conductos radiculares.
   IMPLANTED = 'implanted', // El diente ha sido reemplazado por un implante.
   BRIDGE_ABUTMENT = 'bridge_abutment', // El diente actúa como pilar para un puente dental.
@@ -16,7 +16,6 @@ export enum TOOTH_FACE_AFFECTION {
   HEALTHY = 'healthy', // La cara está en buen estado, sin caries ni restauraciones.
   DECAY = 'decay', // Caries en la cara específica del diente.
   FILLING = 'filling', // Relleno o empaste en la cara específica del diente.
-  CROWN = 'crown', // Corona colocada en la cara específica del diente.
   FRACTURE = 'fracture', // Fractura o fisura en la cara específica del diente.
   SEALANT = 'sealant', // Sellado en la cara específica (por ejemplo, sellante de fosas y fisuras).
   BRIDGE = 'bridge', // Reemplazo de diente con puente en la cara específica del diente.

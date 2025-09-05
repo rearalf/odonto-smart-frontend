@@ -4,13 +4,13 @@ import { BreadCrumbs } from '@components/index';
 import { headerStyles } from '@styles/index';
 
 import { BREADCRUMBSNEWINSTANTAPPOINTMENT } from '../constants/index.const';
+import AffectationForm from '../components/AffectationForm';
 import Tooth from '../components/Tooth';
 import { newInstantAppointmentStyles } from '../styles/styles';
 import useNewInstantAppoinment from '../hooks/useNewInstantAppoinment';
 
 function NewInstantAppointment() {
-  const { odontogramData, handleToothClick, handleSave } =
-    useNewInstantAppoinment();
+  const { odontogramData, handleToothClick } = useNewInstantAppoinment();
   return (
     <>
       <BreadCrumbs links={BREADCRUMBSNEWINSTANTAPPOINTMENT} loading={false} />
@@ -21,7 +21,7 @@ function NewInstantAppointment() {
         </Typography>
       </Box>
 
-      <button onClick={handleSave}>Guardar</button>
+      <AffectationForm />
 
       <Grid
         container

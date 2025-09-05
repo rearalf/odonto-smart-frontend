@@ -1,15 +1,30 @@
 import type { SxProps, Theme } from '@mui/material';
-import { TOOTH_FACE_AFFECTION, type TOOTH_STATE } from '@type/teeth.type';
+import { TOOTH_FACE_AFFECTION, TOOTH_STATE } from '@type/teeth.type';
 import { getFaceColor, getStateColor } from '@utils/handleTeethStateColor';
 
 type TeethStyles = {
   container: SxProps<Theme>;
-  teethNumberButton: (general_state: TOOTH_STATE) => SxProps<Theme>;
-  vestibularTeeth: (state: TOOTH_FACE_AFFECTION) => SxProps<Theme>;
-  mesialTeeth: (state: TOOTH_FACE_AFFECTION) => SxProps<Theme>;
-  distalTeeth: (state: TOOTH_FACE_AFFECTION) => SxProps<Theme>;
-  oclusalTeeth: (state: TOOTH_FACE_AFFECTION) => SxProps<Theme>;
-  palatinaTeeth: (state: TOOTH_FACE_AFFECTION) => SxProps<Theme>;
+  affectedTeeth: (general_state: TOOTH_STATE) => SxProps<Theme>;
+  vestibularTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
+  mesialTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
+  distalTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
+  oclusalTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
+  palatinaTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
 };
 
 type NewInstantAppointmentStyles = {
@@ -34,23 +49,56 @@ export const teethStyles: TeethStyles = {
       lg: 65,
     },
   },
-  teethNumberButton: (general_state) => () => ({
-    zIndex: 1,
-    top: '50%',
-    left: '50%',
-    minWidth: 0,
-    border: 'none',
-    cursor: 'pointer',
+  affectedTeeth: (general_state) => ({
+    transition: 'all 0.3s ease',
     position: 'absolute',
-    transform: 'translate(-50%, -50%)',
-    transition: 'font-size .5s ease-in-out',
-    width: { xs: '9px', sm: '11px', md: '14px', lg: '27px' },
-    height: { xs: '9px', sm: '11px', md: '14px', lg: '27px' },
-    fontSize: { xs: '10px', sm: '12px', md: '14px', lg: '16px' },
-    backgroundColor: getStateColor(general_state),
+    zIndex: 1,
+    top: 0,
+    right: 0,
+    fontSize: {
+      xs: 35,
+      sm: 45,
+      md: 55,
+      lg: 65,
+    },
+    fontWeight: 'lighter',
+    color: getStateColor(general_state),
+    transform:
+      general_state === TOOTH_STATE.MISSING
+        ? 'translate(-9%, 9%)'
+        : 'transform: translate(0, 0);',
+    minWidth:
+      general_state === TOOTH_STATE.MISSING
+        ? {
+            xs: 35,
+            sm: 45,
+            md: 55,
+            lg: 55,
+          }
+        : {
+            xs: 35,
+            sm: 45,
+            md: 55,
+            lg: 65,
+          },
+    height:
+      general_state === TOOTH_STATE.MISSING
+        ? {
+            xs: 35,
+            sm: 45,
+            md: 55,
+            lg: 55,
+          }
+        : {
+            xs: 35,
+            sm: 45,
+            md: 55,
+            lg: 65,
+          },
   }),
 
-  vestibularTeeth: (vestibular) => () => ({
+  vestibularTeeth: (vestibular, general_state) => () => ({
+    transition: 'all 0.3s ease',
     position: 'absolute',
     bottom: 0,
     left: '15%',
@@ -73,9 +121,11 @@ export const teethStyles: TeethStyles = {
     '&:hover': {
       filter: 'brightness(0.9)',
     },
+    opacity: general_state === TOOTH_STATE.MISSING ? 0.3 : 1,
   }),
 
-  mesialTeeth: (mesial) => () => ({
+  mesialTeeth: (mesial, general_state) => () => ({
+    transition: 'all 0.1s ease',
     position: 'absolute',
     left: 0,
     top: '20%',
@@ -98,9 +148,11 @@ export const teethStyles: TeethStyles = {
     '&:hover': {
       filter: 'brightness(0.9)',
     },
+    opacity: general_state === TOOTH_STATE.MISSING ? 0.3 : 1,
   }),
 
-  distalTeeth: (distal) => () => ({
+  distalTeeth: (distal, general_state) => () => ({
+    transition: 'all 0.3s ease',
     right: 0,
     top: '20%',
     padding: 0,
@@ -123,9 +175,11 @@ export const teethStyles: TeethStyles = {
     '&:hover': {
       filter: 'brightness(0.9)',
     },
+    opacity: general_state === TOOTH_STATE.MISSING ? 0.3 : 1,
   }),
 
-  palatinaTeeth: (palatina) => () => ({
+  palatinaTeeth: (palatina, general_state) => () => ({
+    transition: 'all 0.3s ease',
     position: 'absolute',
     top: 0,
     left: '15%',
@@ -148,9 +202,11 @@ export const teethStyles: TeethStyles = {
     '&:hover': {
       filter: 'brightness(0.9)',
     },
+    opacity: general_state === TOOTH_STATE.MISSING ? 0.3 : 1,
   }),
 
-  oclusalTeeth: (oclusal) => () => ({
+  oclusalTeeth: (oclusal, general_state) => () => ({
+    transition: 'all 0.3s ease',
     position: 'absolute',
     left: '50%',
     top: '50%',
@@ -169,6 +225,7 @@ export const teethStyles: TeethStyles = {
       md: '25px',
       lg: '27px',
     },
+    color: oclusal !== TOOTH_FACE_AFFECTION.HEALTHY ? '#fff' : '#19A7CE',
     backgroundColor: getFaceColor(oclusal),
     borderColor:
       oclusal !== TOOTH_FACE_AFFECTION.HEALTHY
@@ -177,6 +234,7 @@ export const teethStyles: TeethStyles = {
     '&:hover': {
       filter: 'brightness(0.9)',
     },
+    opacity: general_state === TOOTH_STATE.MISSING ? 0.3 : 1,
   }),
 };
 

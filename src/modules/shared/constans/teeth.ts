@@ -1,8 +1,26 @@
 import {
-  TOOTH_FACE_AFFECTION,
   TOOTH_STATE,
+  TOOTH_FACE_AFFECTION,
   type ITeethList,
+  type TOOTH_FACE_AFFECTION_TYPE,
 } from '@type/teeth.type';
+
+export const ARRAY_FACE_AFFECTIONS: TOOTH_FACE_AFFECTION_TYPE[] = [
+  'healthy',
+  'decay',
+  'filling',
+  'crown',
+  'fracture',
+  'sealant',
+  'bridge',
+  'implant',
+  'abscess',
+  'wear',
+  'erosion',
+  'stain',
+  'chipped',
+  'sensitive',
+];
 
 export const CONSTANTTEETHLIST: ITeethList = {
   permanent: {
