@@ -3,7 +3,7 @@ import {
   TOOTH_STATE,
   type FACE_TYPE,
   type IToothObject,
-} from '@type/teeth.type';
+} from '@modules/appointment/types/teeth.type';
 import { teethStyles } from '../styles/styles';
 
 interface IToothProps {

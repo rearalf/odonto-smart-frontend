@@ -1,5 +1,8 @@
 import type { SxProps, Theme } from '@mui/material';
-import { TOOTH_FACE_AFFECTION, TOOTH_STATE } from '@type/teeth.type';
+import {
+  TOOTH_FACE_AFFECTION,
+  TOOTH_STATE,
+} from '@modules/appointment/types/teeth.type';
 import { getFaceColor, getStateColor } from '@utils/handleTeethStateColor';
 
 type TeethStyles = {

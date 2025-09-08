@@ -3,7 +3,7 @@ import {
   TOOTH_FACE_AFFECTION,
   type ITeethList,
   type TOOTH_FACE_AFFECTION_TYPE,
-} from '@type/teeth.type';
+} from '@modules/appointment/types/teeth.type';
 
 export const ARRAY_FACE_AFFECTIONS: TOOTH_FACE_AFFECTION_TYPE[] = [
   'healthy',

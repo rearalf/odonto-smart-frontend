@@ -6,7 +6,7 @@ import {
   TOOTH_STATE,
   type TOOTH_FACE_AFFECTION_TYPE,
   type TOOTH_STATE_TYPE,
-} from '@type/teeth.type';
+} from '@modules/appointment/types/teeth.type';
 
 const AffectationForm = () => {
   const selectedAffection: TOOTH_STATE_TYPE | TOOTH_FACE_AFFECTION_TYPE | null =

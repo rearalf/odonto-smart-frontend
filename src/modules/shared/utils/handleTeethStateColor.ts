@@ -1,4 +1,7 @@
-import { TOOTH_FACE_AFFECTION, TOOTH_STATE } from '@type/teeth.type';
+import {
+  TOOTH_FACE_AFFECTION,
+  TOOTH_STATE,
+} from '@modules/appointment/types/teeth.type';
 
 // Color mapping for different states and affections
 export const getStateColor = (state: TOOTH_STATE): string => {

@@ -12,7 +12,7 @@ import {
   type IToothObject,
   type TOOTH_STATE_TYPE,
   type TOOTH_FACE_AFFECTION_TYPE,
-} from '@type/teeth.type';
+} from '../types/teeth.type';
 import useAffectationState from '@stores/useAffectationState';
 
 const backendModifiedTeeth: IToothObject[] = [

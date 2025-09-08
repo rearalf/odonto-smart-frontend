@@ -1,0 +1,38 @@
+import * as Yup from 'yup';
+import { TOOTH_FACE_AFFECTION, TOOTH_STATE } from '../types/teeth.type';
+
+export const newInstantAppointmentSchema = Yup.object().shape({
+  patient_id: Yup.number().required('El paciente es obligatorio'),
+  doctor_id: Yup.number().optional(),
+  appointment_date: Yup.string().required('La fecha de la cita es obligatoria'),
+  reason: Yup.string().required('El motivo es obligatorio'),
+  notes: Yup.string().optional(),
+  start_time: Yup.string().required('La hora de inicio es obligatoria'),
+  end_time: Yup.string().required('La hora de fin es obligatoria'),
+  teeth: Yup.array().of(
+    Yup.object().shape({
+      id: Yup.number().optional(),
+      tooth_number: Yup.number().required(
+        'El número del diente es obligatorio',
+      ),
+      general_state: Yup.string()
+        .oneOf(Object.values(TOOTH_STATE), 'Estado inválido')
+        .required('El estado general es obligatorio'),
+      palatina: Yup.string()
+        .oneOf(Object.values(TOOTH_FACE_AFFECTION), 'Afección inválida')
+        .required('La cara palatina es obligatoria'),
+      distal: Yup.string()
+        .oneOf(Object.values(TOOTH_FACE_AFFECTION), 'Afección inválida')
+        .required('La cara distal es obligatoria'),
+      mesial: Yup.string()
+        .oneOf(Object.values(TOOTH_FACE_AFFECTION), 'Afección inválida')
+        .required('La cara mesial es obligatoria'),
+      vestibular: Yup.string()
+        .oneOf(Object.values(TOOTH_FACE_AFFECTION), 'Afección inválida')
+        .required('La cara vestibular es obligatoria'),
+      oclusal: Yup.string()
+        .oneOf(Object.values(TOOTH_FACE_AFFECTION), 'Afección inválida')
+        .required('La cara oclusal es obligatoria'),
+    }),
+  ),
+});
