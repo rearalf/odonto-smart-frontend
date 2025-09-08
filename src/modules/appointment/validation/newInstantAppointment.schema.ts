@@ -1,10 +1,16 @@
 import * as Yup from 'yup';
 import { TOOTH_FACE_AFFECTION, TOOTH_STATE } from '../types/teeth.type';
+import dayjs from 'dayjs';
 
 export const newInstantAppointmentSchema = Yup.object().shape({
   patient_id: Yup.number().required('El paciente es obligatorio'),
   doctor_id: Yup.number().optional(),
-  appointment_date: Yup.string().required('La fecha de la cita es obligatoria'),
+  appointment_date: Yup.mixed<dayjs.Dayjs>()
+    .nullable()
+    .test('is-dayjs', 'La fecha debe ser válida', (value) => {
+      return value === null || (dayjs.isDayjs(value) && value.isValid());
+    })
+    .required('La fecha de la cita es obligatoria'),
   reason: Yup.string().required('El motivo es obligatorio'),
   notes: Yup.string().optional(),
   start_time: Yup.string().required('La hora de inicio es obligatoria'),
