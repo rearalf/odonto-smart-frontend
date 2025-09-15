@@ -1,4 +1,6 @@
 import { Box, Button } from '@mui/material';
+import { memo } from 'react';
+
 import {
   TOOTH_STATE,
   type FACE_TYPE,
@@ -72,4 +74,9 @@ const Tooth = ({ toothData, handleToothInvolvement }: IToothProps) => {
   );
 };
 
-export default Tooth;
+export default memo(Tooth, (prev, next) => {
+  return (
+    prev.toothData === next.toothData &&
+    prev.handleToothInvolvement === next.handleToothInvolvement
+  );
+});

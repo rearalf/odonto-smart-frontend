@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { memo } from 'react';
 
 import type { FACE_TYPE, ITeethList, IToothObject } from '../types/teeth.type';
 import { newInstantAppointmentStyles } from '../styles/styles';
@@ -39,4 +40,4 @@ const Odontogram = ({ odontogramData, handleToothClick }: IOdontogramProps) => {
   );
 };
 
-export default Odontogram;
+export default memo(Odontogram);

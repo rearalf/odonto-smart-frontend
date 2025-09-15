@@ -121,16 +121,16 @@ function NewInstantAppointment() {
                   : undefined,
               }}
             />
-
-            <AffectationForm />
-
-            <Odontogram
-              odontogramData={odontogramData}
-              handleToothClick={handleToothClick}
-            />
           </>
         )}
       </Formik>
+
+      <AffectationForm />
+
+      <Odontogram
+        odontogramData={odontogramData}
+        handleToothClick={handleToothClick}
+      />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { memo } from 'react';
 
 import type { FACE_TYPE, IToothObject } from '../types/teeth.type';
 import { newInstantAppointmentStyles } from '../styles/styles';
@@ -29,4 +30,10 @@ const OdontogramRow = ({
   );
 };
 
-export default OdontogramRow;
+export default memo(
+  OdontogramRow,
+  (prev, next) =>
+    prev.leftTeeth === next.leftTeeth &&
+    prev.rightTeeth === next.rightTeeth &&
+    prev.handleToothClick === next.handleToothClick,
+);

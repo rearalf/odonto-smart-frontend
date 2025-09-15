@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import { memo } from 'react';
 
 import type { FACE_TYPE, IToothObject } from '../types/teeth.type';
 import { newInstantAppointmentStyles } from '../styles/styles';
@@ -26,4 +27,9 @@ const OdontogramQuadrant = ({
   );
 };
 
-export default OdontogramQuadrant;
+export default memo(
+  OdontogramQuadrant,
+  (prev, next) =>
+    prev.teeth === next.teeth &&
+    prev.handleToothClick === next.handleToothClick,
+);

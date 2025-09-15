@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   ARRAY_FACE_AFFECTIONS,
@@ -105,26 +105,30 @@ function useNewInstantAppoinment() {
     }
   };
 
-  const handleToothClick = (tooth: IToothObject, face?: FACE_TYPE) => {
-    setOdontogramData((prevData) => {
-      const newData = JSON.parse(JSON.stringify(prevData));
+  const handleToothClick = useCallback(
+    (tooth: IToothObject, face?: FACE_TYPE) => {
+      setOdontogramData((prevData) => {
+        const newData = JSON.parse(JSON.stringify(prevData));
 
-      const updateQuadrants = (quadrants: Record<string, IToothObject[]>) => {
-        Object.keys(quadrants).forEach((key) => {
-          quadrants[key].forEach((t, index) => {
-            if (t.tooth_number === tooth.tooth_number) {
-              handleToothStateChange(quadrants, key, index, face);
-            }
+        const updateQuadrants = (quadrants: Record<string, IToothObject[]>) => {
+          Object.keys(quadrants).forEach((key) => {
+            quadrants[key].forEach((t, index) => {
+              if (t.tooth_number === tooth.tooth_number) {
+                handleToothStateChange(quadrants, key, index, face);
+              }
+            });
           });
-        });
-      };
+        };
 
-      updateQuadrants(newData.permanent);
-      updateQuadrants(newData.temporary);
+        updateQuadrants(newData.permanent);
+        updateQuadrants(newData.temporary);
 
-      return newData;
-    });
-  };
+        return newData;
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedAffection],
+  );
 
   const getModifiedTeeth = (): IToothObject[] => {
     const modifiedTeeth: IToothObject[] = [];
