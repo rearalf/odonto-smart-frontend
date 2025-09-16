@@ -101,6 +101,7 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
       >
         <TimePickerComponent
           required
+          minutesStep={30}
           id={props.start_time.id}
           label="Hora de la cita"
           value={props.start_time.value}
@@ -120,6 +121,7 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
         }}
       >
         <TimePickerComponent
+          minutesStep={30}
           id={props.end_time.id}
           label="Hora fin de la cita"
           value={props.end_time.value}
