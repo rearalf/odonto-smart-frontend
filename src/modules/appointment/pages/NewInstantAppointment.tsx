@@ -16,7 +16,8 @@ import AppointmentForm from '../components/AppointmentForm';
 import Odontogram from '../components/Odontogram';
 
 function NewInstantAppointment() {
-  const { odontogramData, handleToothClick } = useNewInstantAppoinment();
+  const { patientId, doctorsList, odontogramData, handleToothClick } =
+    useNewInstantAppoinment();
   return (
     <>
       <BreadCrumbs links={BREADCRUMBSNEWINSTANTAPPOINTMENT} loading={false} />
@@ -28,7 +29,10 @@ function NewInstantAppointment() {
       </Box>
 
       <Formik
-        initialValues={INITIAL_VALUES_NEW_INSTANT_APPOINTMENT}
+        initialValues={{
+          ...INITIAL_VALUES_NEW_INSTANT_APPOINTMENT,
+          patient_id: patientId ? parseInt(patientId, 10) : 0,
+        }}
         validationSchema={newInstantAppointmentSchema}
         onSubmit={() => {}}
         validateOnChange={true}
@@ -37,6 +41,27 @@ function NewInstantAppointment() {
         {(props) => (
           <>
             <AppointmentForm
+              doctorsList={doctorsList}
+              doctor={{
+                value: props.values.doctor_id || '',
+                onChange: (e) => {
+                  props.setFieldValue(
+                    'doctor_id',
+                    parseInt(e.target.value, 10),
+                  );
+                },
+                disabled: false,
+                handleOnBlur: () => {
+                  props.validateField('doctor_id');
+                  props.setFieldTouched('doctor_id', true);
+                },
+                helperText: props.touched.doctor_id
+                  ? props.errors.doctor_id
+                  : undefined,
+                error: props.touched.doctor_id
+                  ? Boolean(props.errors.doctor_id)
+                  : undefined,
+              }}
               appointment_date={{
                 id: 'appointment_date',
                 value: props.values.appointment_date,

@@ -9,11 +9,22 @@ import type {
 
 import {
   DatePickerComponent,
+  SelectComponent,
   TextFieldBasic,
   TimePickerComponent,
 } from '@components/index';
+import type { IBasicIdNameDescription } from '@type/common.types';
 
 interface IAppointmentFormProps {
+  doctorsList: IBasicIdNameDescription[];
+  doctor: {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    value: number | '';
+    disabled: boolean;
+    handleOnBlur: () => void;
+    helperText: string | undefined;
+    error: boolean | undefined;
+  };
   appointment_date: {
     id: string;
     value: PickerValue | null;
@@ -79,6 +90,25 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
           md: 4,
         }}
       >
+        <SelectComponent
+          required
+          id="doctor"
+          label="Doctor"
+          onChange={props.doctor.onChange}
+          options={props.doctorsList}
+          value={props.doctor.value}
+          helperText={props.doctor.helperText}
+          error={props.doctor.error}
+          disabled={props.doctor.disabled}
+          handleOnBlur={props.doctor.handleOnBlur}
+        />
+      </Grid>
+      <Grid
+        size={{
+          xs: 12,
+          md: 4,
+        }}
+      >
         <DatePickerComponent
           required
           id={props.appointment_date.id}
@@ -96,7 +126,7 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
         size={{
           xs: 12,
           sm: 6,
-          md: 4,
+          md: 2,
         }}
       >
         <TimePickerComponent
@@ -117,7 +147,7 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
         size={{
           xs: 12,
           sm: 6,
-          md: 4,
+          md: 2,
         }}
       >
         <TimePickerComponent

@@ -9,7 +9,7 @@ const AppointmentRoutes: RouteObject[] = [
     children: [
       {
         id: 'new-instant-appointment',
-        path: '/appointment/new-instant',
+        path: '/appointment/new-instant/:patientId?',
         element: <NewInstantAppointment />,
       },
     ],

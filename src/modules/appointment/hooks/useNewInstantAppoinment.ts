@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 import {
   ARRAY_FACE_AFFECTIONS,
@@ -14,6 +15,7 @@ import {
   type TOOTH_FACE_AFFECTION_TYPE,
 } from '../types/teeth.type';
 import useAffectationState from '@stores/useAffectationState';
+import { useGetDoctorList } from './useDoctorQueries';
 
 const backendModifiedTeeth: IToothObject[] = [
   {
@@ -39,7 +41,11 @@ const backendModifiedTeeth: IToothObject[] = [
 ];
 
 function useNewInstantAppoinment() {
+  const { patientId } = useParams();
+
   const [odontogramData, setOdontogramData] = useState(CONSTANTTEETHLIST);
+
+  const { data } = useGetDoctorList();
 
   const selectedAffection: TOOTH_STATE_TYPE | TOOTH_FACE_AFFECTION_TYPE | null =
     useAffectationState((state) => state.affectation);
@@ -177,6 +183,8 @@ function useNewInstantAppoinment() {
   }, []);
 
   return {
+    patientId,
+    doctorsList: data && data.data ? data.data : [],
     odontogramData,
     handleSave,
     getModifiedTeeth,
