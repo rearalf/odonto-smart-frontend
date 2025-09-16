@@ -7,7 +7,7 @@ interface IStyesProps {
 function useSideBarStyes({ sidebarOpen }: IStyesProps) {
   const backgroundSideBar: SxProps<Theme> = {
     zIndex: (theme) => theme.zIndex.drawer - 1,
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     width: '100vw',
     height: '100vh',
@@ -32,6 +32,8 @@ function useSideBarStyes({ sidebarOpen }: IStyesProps) {
         lg: 'width 0.2s ease-in-out',
       },
       width: {
+        xs: '12rem',
+        md: '12rem',
         lg: sidebarOpen ? '12rem' : '4rem',
       },
     },

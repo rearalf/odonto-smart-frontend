@@ -7,8 +7,9 @@ import { CiMedicalMask } from 'react-icons/ci';
 import { FaHeartbeat } from 'react-icons/fa';
 
 import { useSidebarStore } from 'src/modules/shared/stores/index';
-import SideBarItem from './SideBarItem';
+
 import useSideBarStyes from './styles';
+import SidebarItem from './SidebarItem';
 
 const SideBar = () => {
   const sidebarStore = useSidebarStore();
@@ -42,7 +43,7 @@ const SideBar = () => {
           </Box>
 
           <Box sx={styles.itemsContentStyles}>
-            <SideBarItem
+            <SidebarItem
               to="/doctor"
               text="Doctores"
               iconSize={24}
@@ -51,7 +52,7 @@ const SideBar = () => {
               itemTextStyles={styles.itemTextStyles}
               itemsIconStyles={styles.itemsIconStyles}
             />
-            <SideBarItem
+            <SidebarItem
               to="/rol"
               text="Roles"
               iconSize={24}
@@ -60,7 +61,7 @@ const SideBar = () => {
               itemTextStyles={styles.itemTextStyles}
               itemsIconStyles={styles.itemsIconStyles}
             />
-            <SideBarItem
+            <SidebarItem
               to="/patient"
               text="Pacientes"
               iconSize={24}
