@@ -5,6 +5,7 @@ export { default as RadioButtonComponent } from './RadioButtonComponent';
 export { default as TimePickerComponent } from './TimePickerComponent';
 export { default as DatePickerComponent } from './DatePickerComponent';
 export { default as CheckboxComponent } from './CheckboxComponent';
+export { default as ButtonsGroupForm } from './ButtonsGroupForm';
 export { default as AvatarComponent } from './AvatarComponent';
 export { default as LoadingProgress } from './LoadingProgress';
 export { default as ButtonComponent } from './ButtonComponent';

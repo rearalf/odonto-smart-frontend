@@ -1,11 +1,6 @@
 import type { PickerValue } from '@mui/x-date-pickers/internals';
-import type { ChangeEvent } from 'react';
+import { useFormikContext } from 'formik';
 import { Grid } from '@mui/material';
-import type {
-  DateValidationError,
-  TimeValidationError,
-  PickerChangeHandlerContext,
-} from '@mui/x-date-pickers/models';
 
 import {
   DatePickerComponent,
@@ -14,74 +9,25 @@ import {
   TimePickerComponent,
 } from '@components/index';
 import type { IBasicIdNameDescription } from '@type/common.types';
+import type { IAppointmentInstant } from '../types/index.types';
 
 interface IAppointmentFormProps {
   doctorsList: IBasicIdNameDescription[];
-  doctor: {
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    value: number | '';
-    disabled: boolean;
-    handleOnBlur: () => void;
-    helperText: string | undefined;
-    error: boolean | undefined;
-  };
-  appointment_date: {
-    id: string;
-    value: PickerValue | null;
-    disabled: boolean;
-    handleChange: (
-      newValue: PickerValue,
-      context: PickerChangeHandlerContext<DateValidationError>,
-    ) => void;
-    handleOnBlur: () => void;
-    helperText: string | undefined;
-    error: boolean | undefined;
-  };
-  start_time: {
-    id: string;
-    value: PickerValue | null;
-    disabled: boolean;
-    handleChange: (
-      value: PickerValue,
-      context: PickerChangeHandlerContext<TimeValidationError>,
-    ) => void;
-    handleOnBlur: () => void;
-    helperText: string | undefined;
-    error: boolean | undefined;
-  };
-  end_time: {
-    id: string;
-    value: PickerValue | null;
-    disabled: boolean;
-    handleChange: (
-      newValue: PickerValue,
-      context: PickerChangeHandlerContext<TimeValidationError>,
-    ) => void;
-    handleOnBlur: () => void;
-    helperText: string | undefined;
-    error: boolean | undefined;
-  };
-  reason: {
-    id: string;
-    value: string;
-    disabled: boolean;
-    handleChange: (newValue: ChangeEvent<HTMLInputElement>) => void;
-    handleOnBlur: () => void;
-    helperText: string | undefined;
-    error: boolean | undefined;
-  };
-  notes: {
-    id: string;
-    value: string | null;
-    disabled: boolean;
-    handleChange: (newValue: ChangeEvent<HTMLInputElement>) => void;
-    handleOnBlur: () => void;
-    helperText: string | undefined;
-    error: boolean | undefined;
-  };
+  disabled_appointment_date: boolean;
+  disabled_start_time: boolean;
+  disabled_end_time: boolean;
 }
 
 const AppointmentForm = (props: IAppointmentFormProps) => {
+  const {
+    values,
+    errors,
+    touched,
+    isSubmitting,
+    setFieldValue,
+    validateField,
+    setFieldTouched,
+  } = useFormikContext<IAppointmentInstant>();
   return (
     <Grid container spacing={4} sx={{ mb: 4 }}>
       <Grid
@@ -92,17 +38,23 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
       >
         <SelectComponent
           required
-          id="doctor"
+          id="doctor_id"
           label="Doctor"
-          onChange={props.doctor.onChange}
+          disabled={isSubmitting}
           options={props.doctorsList}
-          value={props.doctor.value}
-          helperText={props.doctor.helperText}
-          error={props.doctor.error}
-          disabled={props.doctor.disabled}
-          handleOnBlur={props.doctor.handleOnBlur}
+          value={values.doctor_id || ''}
+          helperText={touched.doctor_id ? errors.doctor_id : undefined}
+          error={touched.doctor_id ? Boolean(errors.doctor_id) : undefined}
+          onChange={(e) =>
+            setFieldValue('doctor_id', parseInt(e.target.value, 10))
+          }
+          handleOnBlur={() => {
+            validateField('doctor_id');
+            setFieldTouched('doctor_id', true);
+          }}
         />
       </Grid>
+
       <Grid
         size={{
           xs: 12,
@@ -111,14 +63,21 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
       >
         <DatePickerComponent
           required
-          id={props.appointment_date.id}
-          value={props.appointment_date.value}
-          error={props.appointment_date.error}
+          id="appointment_date"
           label="Fecha de la cita"
-          onChange={props.appointment_date.handleChange}
-          helperText={props.appointment_date.helperText}
-          handleOnBlur={props.appointment_date.handleOnBlur}
-          disabled={props.appointment_date.disabled}
+          value={values.appointment_date}
+          disabled={isSubmitting || props.disabled_appointment_date}
+          onChange={(newValue) => setFieldValue('appointment_date', newValue)}
+          helperText={
+            touched.appointment_date ? errors.appointment_date : undefined
+          }
+          error={
+            touched.appointment_date ? Boolean(errors.appointment_date) : false
+          }
+          handleOnBlur={() => {
+            validateField('appointment_date');
+            setFieldTouched('appointment_date', true);
+          }}
         />
       </Grid>
 
@@ -132,14 +91,19 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
         <TimePickerComponent
           required
           minutesStep={30}
-          id={props.start_time.id}
+          id="start_time"
           label="Hora de la cita"
-          value={props.start_time.value}
-          error={props.start_time.error}
-          onChange={props.start_time.handleChange}
-          helperText={props.start_time.helperText}
-          handleOnBlur={props.start_time.handleOnBlur}
-          disabled={props.start_time.disabled}
+          value={values.start_time}
+          disabled={isSubmitting || props.disabled_start_time}
+          helperText={touched.start_time ? errors.start_time : undefined}
+          error={errors.end_time ? Boolean(errors.start_time) : undefined}
+          onChange={(newValue: PickerValue) =>
+            setFieldValue('start_time', newValue)
+          }
+          handleOnBlur={() => {
+            validateField('start_time');
+            setFieldTouched('start_time', true);
+          }}
         />
       </Grid>
 
@@ -152,14 +116,19 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
       >
         <TimePickerComponent
           minutesStep={30}
-          id={props.end_time.id}
+          id="end_time"
           label="Hora fin de la cita"
-          value={props.end_time.value}
-          error={props.end_time.error}
-          onChange={props.end_time.handleChange}
-          helperText={props.end_time.helperText}
-          handleOnBlur={props.end_time.handleOnBlur}
-          disabled={props.end_time.disabled}
+          value={values.end_time}
+          disabled={isSubmitting || props.disabled_end_time}
+          helperText={touched.end_time ? errors.end_time : undefined}
+          error={touched.end_time ? Boolean(errors.end_time) : undefined}
+          onChange={(newValue: PickerValue) =>
+            setFieldValue('end_time', newValue)
+          }
+          handleOnBlur={() => {
+            validateField('end_time');
+            setFieldTouched('end_time', true);
+          }}
         />
       </Grid>
 
@@ -172,16 +141,19 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
         <TextFieldBasic
           multiline
           type="text"
-          id={props.reason.id}
+          id="reason"
           label="Razón de la cita"
           ariaLabel="Razón de la cita"
           placeholder="Ejemplo: Dolor de muelas, chequeo anual..."
-          onChange={props.reason.handleChange}
-          value={props.reason.value}
-          disabled={props.reason.disabled}
-          handleOnBlur={props.reason.handleOnBlur}
-          helperText={props.reason.helperText}
-          error={props.reason.error}
+          value={values.reason}
+          disabled={isSubmitting}
+          helperText={touched.reason ? errors.reason : undefined}
+          error={touched.reason ? Boolean(errors.reason) : undefined}
+          onChange={(e) => setFieldValue('reason', e.target.value)}
+          handleOnBlur={() => {
+            validateField('reason');
+            setFieldTouched('reason', true);
+          }}
         />
       </Grid>
 
@@ -194,16 +166,19 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
         <TextFieldBasic
           multiline
           type="text"
-          id={props.notes.id}
+          id="notes"
           label="Notas"
           ariaLabel="Notas"
           placeholder="Ejemplo: Paciente con antecedentes de hipertensión."
-          onChange={props.notes.handleChange}
-          value={props.notes.value || ''}
-          disabled={props.notes.disabled}
-          handleOnBlur={props.notes.handleOnBlur}
-          helperText={props.notes.helperText}
-          error={props.notes.error}
+          disabled={isSubmitting}
+          value={values.notes || ''}
+          helperText={touched.notes ? errors.notes : undefined}
+          error={touched.notes ? Boolean(errors.notes) : undefined}
+          onChange={(e) => setFieldValue('notes', e.target.value)}
+          handleOnBlur={() => {
+            validateField('notes');
+            setFieldTouched('notes', true);
+          }}
         />
       </Grid>
     </Grid>
