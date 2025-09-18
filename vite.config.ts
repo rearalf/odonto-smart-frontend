@@ -18,6 +18,7 @@ export default defineConfig({
       '@stores': path.resolve(__dirname, 'src/modules/shared/stores'),
       '@styles': path.resolve(__dirname, 'src/modules/shared/styles'),
       '@modules': path.resolve(__dirname, 'src/modules'),
+      '@config': path.resolve(__dirname, 'src/config'),
       src: path.resolve(__dirname, 'src'),
     },
   },

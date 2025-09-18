@@ -36,7 +36,8 @@
       "@stores/*": ["src/modules/shared/stores/*"],
       "@styles/*": ["src/modules/shared/styles/*"],
       // New estructure
-      "@modules/*": ["src/modules/*"]
+      "@modules/*": ["src/modules/*"],
+      "@config/*": ["src/config/*"]
     }
   },
   "include": ["src"]

@@ -10,6 +10,7 @@ import {
 } from '@components/index';
 import type { IBasicIdNameDescription } from '@type/common.types';
 import type { IAppointmentInstant } from '../types/index.types';
+import { MODULES } from '@config/modules';
 
 interface IAppointmentFormProps {
   doctorsList: IBasicIdNameDescription[];
@@ -30,30 +31,32 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
   } = useFormikContext<IAppointmentInstant>();
   return (
     <Grid container spacing={4} sx={{ mb: 4 }}>
-      <Grid
-        size={{
-          xs: 12,
-          md: 4,
-        }}
-      >
-        <SelectComponent
-          required
-          id="doctor_id"
-          label="Doctor"
-          disabled={isSubmitting}
-          options={props.doctorsList}
-          value={values.doctor_id || ''}
-          helperText={touched.doctor_id ? errors.doctor_id : undefined}
-          error={touched.doctor_id ? Boolean(errors.doctor_id) : undefined}
-          onChange={(e) =>
-            setFieldValue('doctor_id', parseInt(e.target.value, 10))
-          }
-          handleOnBlur={() => {
-            validateField('doctor_id');
-            setFieldTouched('doctor_id', true);
+      {MODULES.doctors && (
+        <Grid
+          size={{
+            xs: 12,
+            md: 4,
           }}
-        />
-      </Grid>
+        >
+          <SelectComponent
+            id="doctor_id"
+            label="Doctor"
+            disabled={isSubmitting}
+            required={MODULES.doctors}
+            options={props.doctorsList}
+            value={values.doctor_id || ''}
+            helperText={touched.doctor_id ? errors.doctor_id : undefined}
+            error={touched.doctor_id ? Boolean(errors.doctor_id) : undefined}
+            onChange={(e) =>
+              setFieldValue('doctor_id', parseInt(e.target.value, 10))
+            }
+            handleOnBlur={() => {
+              validateField('doctor_id');
+              setFieldTouched('doctor_id', true);
+            }}
+          />
+        </Grid>
+      )}
 
       <Grid
         size={{

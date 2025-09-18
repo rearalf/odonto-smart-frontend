@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router';
 
 import Private from '@modules/shared/Layouts/Private';
 import Public from '@modules/shared/Layouts/public';
+import { MODULES } from '@config/modules';
 import App from '../App';
 
 import AppointmentRoutes from '@modules/appointment/Appointment.route';
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
         element: <Private />,
         children: [
           ...DashboardRoutes,
-          ...DoctorRoutes,
+          ...(MODULES.doctors ? DoctorRoutes : []),
           ...RoleRoutes,
           ...PatientRoutes,
           ...AppointmentRoutes,

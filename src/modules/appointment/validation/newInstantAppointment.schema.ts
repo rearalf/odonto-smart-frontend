@@ -1,10 +1,15 @@
 import * as Yup from 'yup';
-import { TOOTH_FACE_AFFECTION, TOOTH_STATE } from '../types/teeth.type';
 import dayjs from 'dayjs';
+
+import { TOOTH_FACE_AFFECTION, TOOTH_STATE } from '../types/teeth.type';
+import { MODULES } from '@config/modules';
 
 export const newInstantAppointmentSchema = Yup.object().shape({
   patient_id: Yup.number().required('El paciente es obligatorio'),
-  doctor_id: Yup.number().optional(),
+  doctor_id: MODULES.doctors
+    ? Yup.number().required('El doctor es obligatorio')
+    : Yup.number().optional(),
+
   appointment_date: Yup.mixed<dayjs.Dayjs>()
     .nullable()
     .test('is-dayjs', 'La fecha debe ser válida', (value) => {
@@ -13,8 +18,10 @@ export const newInstantAppointmentSchema = Yup.object().shape({
     .required('La fecha de la cita es obligatoria'),
   reason: Yup.string().required('El motivo es obligatorio'),
   notes: Yup.string().optional(),
+
   start_time: Yup.string().required('La hora de inicio es obligatoria'),
   end_time: Yup.string().required('La hora de fin es obligatoria'),
+
   teeth: Yup.array().of(
     Yup.object().shape({
       id: Yup.number().optional(),

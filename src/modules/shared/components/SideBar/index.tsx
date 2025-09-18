@@ -10,6 +10,7 @@ import { useSidebarStore } from 'src/modules/shared/stores/index';
 
 import useSideBarStyes from './styles';
 import SidebarItem from './SidebarItem';
+import { MODULES } from '@config/modules';
 
 const SideBar = () => {
   const sidebarStore = useSidebarStore();
@@ -43,15 +44,17 @@ const SideBar = () => {
           </Box>
 
           <Box sx={styles.itemsContentStyles}>
-            <SidebarItem
-              to="/doctor"
-              text="Doctores"
-              iconSize={24}
-              icon={CiMedicalMask}
-              itemStyles={styles.itemStyles}
-              itemTextStyles={styles.itemTextStyles}
-              itemsIconStyles={styles.itemsIconStyles}
-            />
+            {MODULES.doctors && (
+              <SidebarItem
+                to="/doctor"
+                text="Doctores"
+                iconSize={24}
+                icon={CiMedicalMask}
+                itemStyles={styles.itemStyles}
+                itemTextStyles={styles.itemTextStyles}
+                itemsIconStyles={styles.itemsIconStyles}
+              />
+            )}
             <SidebarItem
               to="/rol"
               text="Roles"
