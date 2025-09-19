@@ -8,7 +8,7 @@ import {
 import { useGetDoctorList } from '@modules/doctors/hooks/useDoctorsQueries';
 import { useGetPatientByIdQuery } from '@modules/patients/hooks/usePatientQueries';
 import useLoadingStore from '@stores/useLoadingStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const backendModifiedTeeth: IToothObject[] = [
   {
@@ -42,6 +42,12 @@ function useNewInstantAppoinment() {
   const { data: patientData, isLoading: patientIsLoading } =
     useGetPatientByIdQuery(patientId || '');
 
+  const [patientDialog, setPatientDialog] = useState<boolean>(false);
+
+  const handleOpenPatientDialog = () => {
+    setPatientDialog(!patientDialog);
+  };
+
   const handleSave = () => {
     // const modifiedTeeth = getModifiedTeeth();
   };
@@ -56,12 +62,14 @@ function useNewInstantAppoinment() {
 
   return {
     patientId,
+    patientDialog,
     doctorIsLoading,
     patientIsLoading,
     patientData: patientData && patientData.data ? patientData.data : null,
     backendModifiedTeeth,
     doctorsList: doctorData && doctorData.data ? doctorData.data : [],
     handleSave,
+    handleOpenPatientDialog,
   };
 }
 

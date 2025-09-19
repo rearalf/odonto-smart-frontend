@@ -17,14 +17,17 @@ import useNewInstantAppoinment from '../hooks/useNewInstantAppoinment';
 
 import AppointmentForm from '../components/AppointmentForm';
 import CompleteOdontogram from '@modules/odontogram/View/CompleteOdontogram';
+import DialogPatient from '@modules/patients/components/DialogPatient';
 
 function NewInstantAppointment() {
   const {
     patientId,
     doctorsList,
-    backendModifiedTeeth,
     patientData,
+    patientDialog,
     patientIsLoading,
+    backendModifiedTeeth,
+    handleOpenPatientDialog,
   } = useNewInstantAppoinment();
   return (
     <>
@@ -36,15 +39,26 @@ function NewInstantAppointment() {
         </Typography>
       </Box>
 
-      <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
-        <Typography variant="h6" component="h2">
-          Paciente:{' '}
-          {patientData && !patientIsLoading
-            ? patientData.fullName
-            : 'Cargando...'}
-        </Typography>
-        <ButtonComponent text="Saber más" variant="contained" />
-      </Box>
+      {patientData && !patientIsLoading && (
+        <Box
+          sx={{
+            mb: 4,
+            gap: 4,
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h6" component="h2">
+            {'Paciente: ' + patientData.fullName}
+          </Typography>
+          <ButtonComponent
+            text="Saber más"
+            variant="contained"
+            onClick={handleOpenPatientDialog}
+          />
+        </Box>
+      )}
 
       <Formik
         initialValues={{
@@ -69,6 +83,14 @@ function NewInstantAppointment() {
           <ButtonsGroupForm />
         </Form>
       </Formik>
+
+      {patientData && !patientIsLoading && (
+        <DialogPatient
+          showDialog={patientDialog}
+          patient={patientData}
+          handleClose={handleOpenPatientDialog}
+        />
+      )}
     </>
   );
 }

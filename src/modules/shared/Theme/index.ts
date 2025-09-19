@@ -219,6 +219,22 @@ const themeLight = createTheme({
             letterSpacing: '-0.02em',
           },
         },
+        {
+          props: { variant: 'h5', component: 'h2' },
+          style: {
+            fontWeight: 500,
+            color: '#1283B1',
+            letterSpacing: '-0.02em',
+          },
+        },
+        {
+          props: { variant: 'h6', component: 'h3' },
+          style: {
+            fontWeight: 400,
+            color: '#0C6394',
+            letterSpacing: '-0.02em',
+          },
+        },
       ],
     },
   },
