@@ -12,7 +12,7 @@ import {
 import useNewInstantAppoinment from '../hooks/useNewInstantAppoinment';
 import AffectationForm from '../components/AffectationForm';
 import AppointmentForm from '../components/AppointmentForm';
-import Odontogram from '../components/Odontogram';
+import Odontogram from '@modules/odontogram/components/Odontogram';
 
 function NewInstantAppointment() {
   const { patientId, doctorsList, odontogramData, handleToothClick } =

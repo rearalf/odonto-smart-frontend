@@ -1,9 +1,10 @@
 import { Grid } from '@mui/material';
 import { memo } from 'react';
 
-import type { FACE_TYPE, ITeethList, IToothObject } from '../types/teeth.type';
-import { newInstantAppointmentStyles } from '../styles/styles';
+import type { FACE_TYPE, ITeethList, IToothObject } from '../types/type';
+
 import OdontogramRow from './OdontogramRow';
+import { odontogramQuadrantsContainerStyles } from '../styles/styles';
 
 interface IOdontogramProps {
   odontogramData: ITeethList;
@@ -12,7 +13,11 @@ interface IOdontogramProps {
 
 const Odontogram = ({ odontogramData, handleToothClick }: IOdontogramProps) => {
   return (
-    <Grid container spacing={3} sx={newInstantAppointmentStyles.teethContainer}>
+    <Grid
+      container
+      spacing={3}
+      sx={odontogramQuadrantsContainerStyles.teethContainer}
+    >
       <OdontogramRow
         leftTeeth={odontogramData.permanent['1']}
         rightTeeth={odontogramData.permanent['2']}

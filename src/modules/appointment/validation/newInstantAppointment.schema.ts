@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import dayjs from 'dayjs';
 
-import { TOOTH_FACE_AFFECTION, TOOTH_STATE } from '../types/teeth.type';
+import { TOOTH_FACE_AFFECTION, TOOTH_STATE } from '../../odontogram/types/type';
 import { MODULES } from '@config/modules';
 
 export const newInstantAppointmentSchema = Yup.object().shape({

@@ -1,5 +1,5 @@
 import type { PickerValue } from '@mui/x-date-pickers/internals';
-import type { IToothObject } from './teeth.type';
+import type { IToothObject } from '../../odontogram/types/type';
 
 export interface IAppointmentInstant {
   patient_id: number;

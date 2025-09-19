@@ -1,3 +1,5 @@
+import type { SxProps, Theme } from '@mui/material';
+
 export enum TOOTH_STATE {
   HEALTHY = 'healthy', // El diente está en buen estado, sin caries ni restauraciones.
   EXTRACTION = 'extraction', // El diente está en proceso de extracción.
@@ -84,3 +86,34 @@ export interface ITeethList {
   permanent: Record<QuadrantKey, Quadrant>;
   temporary: Record<TemporaryQuadrantKey, Quadrant>;
 }
+
+export type TeethStyles = {
+  container: SxProps<Theme>;
+  affectedTeeth: (general_state: TOOTH_STATE) => SxProps<Theme>;
+  vestibularTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
+  mesialTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
+  distalTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
+  oclusalTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
+  palatinaTeeth: (
+    state: TOOTH_FACE_AFFECTION,
+    general_state?: TOOTH_STATE,
+  ) => SxProps<Theme>;
+};
+
+export type IOdontogramQuadrantsContainerStyles = {
+  rowContainer: SxProps<Theme>;
+  teethContainer: SxProps<Theme>;
+  roowToothContainer: SxProps<Theme>;
+};

@@ -1,7 +1,7 @@
 import type {
   TOOTH_STATE_TYPE,
   TOOTH_FACE_AFFECTION_TYPE,
-} from '@modules/appointment/types/teeth.type';
+} from '@modules/odontogram/types/type';
 import { create } from 'zustand';
 
 interface IAffectationState {

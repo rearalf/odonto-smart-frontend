@@ -13,7 +13,7 @@ import {
   type IToothObject,
   type TOOTH_STATE_TYPE,
   type TOOTH_FACE_AFFECTION_TYPE,
-} from '../types/teeth.type';
+} from '../../odontogram/types/type';
 import useAffectationState from '@stores/useAffectationState';
 import { useGetDoctorList } from '@modules/doctors/hooks/useDoctorsQueries';
 

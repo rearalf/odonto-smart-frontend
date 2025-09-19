@@ -5,7 +5,7 @@ import {
   TOOTH_STATE,
   type FACE_TYPE,
   type IToothObject,
-} from '@modules/appointment/types/teeth.type';
+} from '@modules/odontogram/types/type';
 import { teethStyles } from '../styles/styles';
 
 interface IToothProps {
