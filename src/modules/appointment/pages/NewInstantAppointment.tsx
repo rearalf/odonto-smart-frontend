@@ -10,12 +10,12 @@ import {
   INITIAL_VALUES_NEW_INSTANT_APPOINTMENT,
 } from '../constants/index.const';
 import useNewInstantAppoinment from '../hooks/useNewInstantAppoinment';
-import AffectationForm from '../components/AffectationForm';
+
 import AppointmentForm from '../components/AppointmentForm';
-import Odontogram from '@modules/odontogram/components/Odontogram';
+import CompleteOdontogram from '@modules/odontogram/View/CompleteOdontogram';
 
 function NewInstantAppointment() {
-  const { patientId, doctorsList, odontogramData, handleToothClick } =
+  const { patientId, doctorsList, backendModifiedTeeth } =
     useNewInstantAppoinment();
   return (
     <>
@@ -45,12 +45,7 @@ function NewInstantAppointment() {
             disabled_end_time={true}
           />
 
-          <AffectationForm />
-
-          <Odontogram
-            odontogramData={odontogramData}
-            handleToothClick={handleToothClick}
-          />
+          <CompleteOdontogram backendModifiedTeeth={backendModifiedTeeth} />
 
           <ButtonsGroupForm />
         </Form>
