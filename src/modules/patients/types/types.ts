@@ -29,3 +29,30 @@ export interface INewPatientFormValues {
   sgi?: boolean;
   systemNotes2?: string;
 }
+
+export interface IPatient {
+  id: number;
+  address: string | null;
+  age: number;
+  allergic_reactions: string | null;
+  birth_date: string;
+  complete_odontogram: boolean;
+  current_systemic_treatment: string | null;
+  fullName: string;
+  gender: GENDER;
+  lab_results: string | null;
+  medical_history: string | null;
+  occupation: string | null;
+  person_id: number;
+  phone: string | null;
+  se: boolean;
+  sgi: boolean;
+  sgu: boolean;
+  sme: boolean;
+  snc: boolean;
+  sr: boolean;
+  su: boolean;
+  svc: boolean;
+  systemNotes1: string | null;
+  systemNotes2: string | null;
+}

@@ -6,6 +6,9 @@ import {
   type IToothObject,
 } from '../../odontogram/types/type';
 import { useGetDoctorList } from '@modules/doctors/hooks/useDoctorsQueries';
+import { useGetPatientByIdQuery } from '@modules/patients/hooks/usePatientQueries';
+import useLoadingStore from '@stores/useLoadingStore';
+import { useEffect } from 'react';
 
 const backendModifiedTeeth: IToothObject[] = [
   {
@@ -33,16 +36,31 @@ const backendModifiedTeeth: IToothObject[] = [
 function useNewInstantAppoinment() {
   const { patientId } = useParams();
 
-  const { data } = useGetDoctorList();
+  const { setLoading } = useLoadingStore();
+
+  const { data: doctorData, isLoading: doctorIsLoading } = useGetDoctorList();
+  const { data: patientData, isLoading: patientIsLoading } =
+    useGetPatientByIdQuery(patientId || '');
 
   const handleSave = () => {
     // const modifiedTeeth = getModifiedTeeth();
   };
 
+  useEffect(() => {
+    setLoading(patientIsLoading);
+  }, [patientIsLoading, setLoading]);
+
+  useEffect(() => {
+    setLoading(doctorIsLoading);
+  }, [doctorIsLoading, setLoading]);
+
   return {
     patientId,
+    doctorIsLoading,
+    patientIsLoading,
+    patientData: patientData && patientData.data ? patientData.data : null,
     backendModifiedTeeth,
-    doctorsList: data && data.data ? data.data : [],
+    doctorsList: doctorData && doctorData.data ? doctorData.data : [],
     handleSave,
   };
 }

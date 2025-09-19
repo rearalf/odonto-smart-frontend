@@ -3,6 +3,7 @@ import type { AxiosError } from 'axios';
 
 import { handleError } from '@utils/handleError';
 import type { IPagination } from '@type/apiResponse.types';
+import type { IPatient } from '../types/types';
 
 export const createPatient = async (data: FormData) => {
   try {
@@ -49,6 +50,15 @@ export const findAllPatients = async (
           }
         : null,
     };
+  } catch (error) {
+    throw handleError(error as AxiosError<{ message?: string }>);
+  }
+};
+
+export const findOnePatient = async (id: string) => {
+  try {
+    const response = await axiosInstance.get<IPatient>(`/patient/${id}`);
+    return response;
   } catch (error) {
     throw handleError(error as AxiosError<{ message?: string }>);
   }

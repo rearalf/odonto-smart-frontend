@@ -1,7 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createPatient, findAllPatients } from '../services/patient.service';
-import type { IPagination } from '@type/apiResponse.types';
 import { useDeferredValue } from 'react';
+
+import {
+  createPatient,
+  findOnePatient,
+  findAllPatients,
+} from '../services/patient.service';
+import type { IPagination } from '@type/apiResponse.types';
 
 export const useCreatePatient = () => {
   return useMutation({
@@ -23,5 +28,13 @@ export const useGetAllPatientsQuery = (
     enabled: true,
     queryKey: ['patients', queryOptions],
     queryFn: async () => findAllPatients(queryOptions),
+  });
+};
+
+export const useGetPatientByIdQuery = (id: string) => {
+  return useQuery({
+    queryKey: ['patient', id],
+    queryFn: async () => findOnePatient(id),
+    enabled: !!id,
   });
 };
