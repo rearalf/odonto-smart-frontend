@@ -13,6 +13,11 @@ export interface IBasicIdNameDescription {
   label?: string;
 }
 
+export interface ISelectOptions {
+  id: number | string;
+  name: string;
+}
+
 export interface IPermissionGrouped {
   id: number;
   name: string;

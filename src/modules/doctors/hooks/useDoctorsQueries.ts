@@ -5,6 +5,7 @@ import {
   createDoctor,
   getOneDoctor,
   getAllDoctors,
+  getDoctorsList,
 } from '../services/doctors.service';
 
 import type { IGetPaginationOptions } from '@modules/shared/types/apiResponse.types';
@@ -37,5 +38,13 @@ export const useGetOneDoctor = (id: number | null) => {
     queryKey: ['doctor', id],
     queryFn: () => (id !== null ? getOneDoctor(id) : undefined),
     enabled: id !== null,
+  });
+};
+
+export const useGetDoctorList = () => {
+  return useQuery({
+    queryKey: ['doctors'],
+    queryFn: getDoctorsList,
+    enabled: true,
   });
 };

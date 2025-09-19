@@ -8,12 +8,12 @@ import {
   TextFieldBasic,
   TimePickerComponent,
 } from '@components/index';
-import type { IBasicIdNameDescription } from '@type/common.types';
+import type { ISelectOptions } from '@type/common.types';
 import type { IAppointmentInstant } from '../types/index.types';
 import { MODULES } from '@config/modules';
 
 interface IAppointmentFormProps {
-  doctorsList: IBasicIdNameDescription[];
+  doctorsList: ISelectOptions[];
   disabled_appointment_date: boolean;
   disabled_start_time: boolean;
   disabled_end_time: boolean;

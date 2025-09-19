@@ -6,6 +6,7 @@ import type {
   IDoctorDetail,
   IListDoctors,
 } from '@modules/doctors/types/doctor.type';
+import type { ISelectOptions } from '@type/common.types';
 
 export const createDoctor = async (doctorData: FormData) => {
   try {
@@ -72,6 +73,15 @@ export const getOneDoctor = async (id: number) => {
     const response = await axiosInstance.get<IDoctorDetail>(
       '/doctor' + '/' + id,
     );
+    return response;
+  } catch (error) {
+    throw handleError(error as AxiosError<{ message?: string }>);
+  }
+};
+
+export const getDoctorsList = async () => {
+  try {
+    const response = await axiosInstance.get<ISelectOptions[]>('/doctor/list');
     return response;
   } catch (error) {
     throw handleError(error as AxiosError<{ message?: string }>);

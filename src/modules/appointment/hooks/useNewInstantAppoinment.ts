@@ -15,7 +15,7 @@ import {
   type TOOTH_FACE_AFFECTION_TYPE,
 } from '../types/teeth.type';
 import useAffectationState from '@stores/useAffectationState';
-import { useGetDoctorList } from './useDoctorQueries';
+import { useGetDoctorList } from '@modules/doctors/hooks/useDoctorsQueries';
 
 const backendModifiedTeeth: IToothObject[] = [
   {
