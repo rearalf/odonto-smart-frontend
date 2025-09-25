@@ -18,6 +18,7 @@ import useNewInstantAppoinment from '../hooks/useNewInstantAppoinment';
 import AppointmentForm from '../components/AppointmentForm';
 import CompleteOdontogram from '@modules/odontogram/View/CompleteOdontogram';
 import DialogPatient from '@modules/patients/components/DialogPatient';
+import { MODULES } from '@config/modules';
 
 function NewInstantAppointment() {
   const {
@@ -78,7 +79,9 @@ function NewInstantAppointment() {
             disabled_end_time={true}
           />
 
-          <CompleteOdontogram backendModifiedTeeth={backendModifiedTeeth} />
+          {MODULES.ODONTOGRAM && (
+            <CompleteOdontogram backendModifiedTeeth={backendModifiedTeeth} />
+          )}
 
           <ButtonsGroupForm />
         </Form>
