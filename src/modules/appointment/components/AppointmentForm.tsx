@@ -142,6 +142,7 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
         }}
       >
         <TextFieldBasic
+          required
           multiline
           type="text"
           id="reason"

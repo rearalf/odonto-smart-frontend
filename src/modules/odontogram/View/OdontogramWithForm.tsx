@@ -2,7 +2,7 @@ import { AffectationForm, Odontogram } from '../components';
 import useOdontogramForm from '../hook/useOdontogramForm';
 import type { IToothObject } from '../types/type';
 
-const CompleteOdontogram = ({
+const OdontogramWithForm = ({
   backendModifiedTeeth,
 }: {
   backendModifiedTeeth: IToothObject[];
@@ -21,4 +21,4 @@ const CompleteOdontogram = ({
   );
 };
 
-export default CompleteOdontogram;
+export default OdontogramWithForm;

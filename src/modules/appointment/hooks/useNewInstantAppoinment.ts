@@ -1,14 +1,19 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+
+import type { IAppointmentInstant } from '../types/index.types';
+import type { FormikHelpers } from 'formik';
+
+import { useGetPatientByIdQuery } from '@modules/patients/hooks/usePatientQueries';
+import { useGetDoctorList } from '@modules/doctors/hooks/useDoctorsQueries';
+// import useOdontogramStore from '@stores/useOdontogramStore';
 
 import {
   TOOTH_STATE,
-  TOOTH_FACE_AFFECTION,
   type IToothObject,
+  TOOTH_FACE_AFFECTION,
 } from '../../odontogram/types/type';
-import { useGetDoctorList } from '@modules/doctors/hooks/useDoctorsQueries';
-import { useGetPatientByIdQuery } from '@modules/patients/hooks/usePatientQueries';
 import useLoadingStore from '@stores/useLoadingStore';
-import { useEffect, useState } from 'react';
 
 const backendModifiedTeeth: IToothObject[] = [
   {
@@ -37,6 +42,9 @@ function useNewInstantAppoinment() {
   const { patientId } = useParams();
 
   const { setLoading } = useLoadingStore();
+  // const getModifiedTeeth = useOdontogramStore(
+  //   (state) => state.getModifiedTeeth,
+  // );
 
   const { data: doctorData, isLoading: doctorIsLoading } = useGetDoctorList();
   const { data: patientData, isLoading: patientIsLoading } =
@@ -48,7 +56,10 @@ function useNewInstantAppoinment() {
     setPatientDialog(!patientDialog);
   };
 
-  const handleSave = () => {
+  const handleSave = (
+    _values: IAppointmentInstant,
+    _formikHelpers: FormikHelpers<IAppointmentInstant>,
+  ) => {
     // const modifiedTeeth = getModifiedTeeth();
   };
 

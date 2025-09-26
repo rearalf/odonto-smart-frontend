@@ -16,7 +16,7 @@ import {
 import useNewInstantAppoinment from '../hooks/useNewInstantAppoinment';
 
 import AppointmentForm from '../components/AppointmentForm';
-import CompleteOdontogram from '@modules/odontogram/View/CompleteOdontogram';
+import OdontogramWithForm from '@modules/odontogram/View/OdontogramWithForm';
 import DialogPatient from '@modules/patients/components/DialogPatient';
 import { MODULES } from '@config/modules';
 
@@ -28,6 +28,7 @@ function NewInstantAppointment() {
     patientDialog,
     patientIsLoading,
     backendModifiedTeeth,
+    handleSave,
     handleOpenPatientDialog,
   } = useNewInstantAppoinment();
   return (
@@ -67,7 +68,7 @@ function NewInstantAppointment() {
           patient_id: patientId ? parseInt(patientId, 10) : 0,
         }}
         validationSchema={newInstantAppointmentSchema}
-        onSubmit={() => {}}
+        onSubmit={handleSave}
         validateOnChange={true}
         validateOnBlur={true}
       >
@@ -80,7 +81,7 @@ function NewInstantAppointment() {
           />
 
           {MODULES.ODONTOGRAM && (
-            <CompleteOdontogram backendModifiedTeeth={backendModifiedTeeth} />
+            <OdontogramWithForm backendModifiedTeeth={backendModifiedTeeth} />
           )}
 
           <ButtonsGroupForm />

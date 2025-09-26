@@ -79,8 +79,8 @@ export interface IToothObject {
 
 type Quadrant = IToothObject[];
 
-type QuadrantKey = '1' | '2' | '3' | '4';
-type TemporaryQuadrantKey = '5' | '6' | '7' | '8';
+export type QuadrantKey = '1' | '2' | '3' | '4';
+export type TemporaryQuadrantKey = '5' | '6' | '7' | '8';
 
 export interface ITeethList {
   permanent: Record<QuadrantKey, Quadrant>;
