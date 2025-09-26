@@ -44,7 +44,7 @@ const SideBar = () => {
           </Box>
 
           <Box sx={styles.itemsContentStyles}>
-            {MODULES.doctors && (
+            {MODULES.DOCTORS && (
               <SidebarItem
                 to="/doctor"
                 text="Doctores"

@@ -6,7 +6,7 @@ import { MODULES } from '@config/modules';
 
 export const newInstantAppointmentSchema = Yup.object().shape({
   patient_id: Yup.number().required('El paciente es obligatorio'),
-  doctor_id: MODULES.doctors
+  doctor_id: MODULES.DOCTORS
     ? Yup.number().required('El doctor es obligatorio')
     : Yup.number().optional(),
 

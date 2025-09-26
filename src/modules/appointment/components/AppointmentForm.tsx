@@ -31,7 +31,7 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
   } = useFormikContext<IAppointmentInstant>();
   return (
     <Grid container spacing={4} sx={{ mb: 4 }}>
-      {MODULES.doctors && (
+      {MODULES.DOCTORS && (
         <Grid
           size={{
             xs: 12,
@@ -42,7 +42,7 @@ const AppointmentForm = (props: IAppointmentFormProps) => {
             id="doctor_id"
             label="Doctor"
             disabled={isSubmitting}
-            required={MODULES.doctors}
+            required={MODULES.DOCTORS}
             options={props.doctorsList}
             value={values.doctor_id || ''}
             helperText={touched.doctor_id ? errors.doctor_id : undefined}

@@ -26,9 +26,9 @@ const router = createBrowserRouter([
         element: <Private />,
         children: [
           ...DashboardRoutes,
-          ...(MODULES.doctors ? DoctorRoutes : []),
+          ...(MODULES.DOCTORS ? DoctorRoutes : []),
           ...RoleRoutes,
-          ...PatientRoutes,
+          ...(MODULES.PATIENTS ? PatientRoutes : []),
           ...AppointmentRoutes,
         ],
       },
