@@ -13,6 +13,7 @@ import { useGetDoctorList } from '@modules/doctors/hooks/useDoctorsQueries';
 
 import { combineTeethData } from '@modules/odontogram/utils/combineTeethData';
 import { CONSTANTTEETHLIST } from '@modules/shared/constans/teeth';
+import { MODULES } from '@config/modules';
 
 function useNewInstantAppoinment() {
   const { patientId } = useParams();
@@ -39,7 +40,9 @@ function useNewInstantAppoinment() {
     _values: IAppointmentInstant,
     _formikHelpers: FormikHelpers<IAppointmentInstant>,
   ) => {
-    // const modifiedTeeth = getModifiedTeeth();
+    if (MODULES.ODONTOGRAM) {
+      // const modifiedTeeth = getModifiedTeeth();
+    }
   };
 
   useEffect(() => {
@@ -51,15 +54,17 @@ function useNewInstantAppoinment() {
   }, [doctorIsLoading, setLoading]);
 
   useEffect(() => {
-    setLoading(odontogramIsLoading);
+    if (MODULES.ODONTOGRAM) setLoading(odontogramIsLoading);
   }, [odontogramIsLoading, setLoading]);
 
   useEffect(() => {
-    const updatedData = combineTeethData(
-      CONSTANTTEETHLIST,
-      odontogramData && odontogramData.data ? odontogramData.data.tooth : [],
-    );
-    setOdontogramData(updatedData);
+    if (MODULES.ODONTOGRAM) {
+      const updatedData = combineTeethData(
+        CONSTANTTEETHLIST,
+        odontogramData && odontogramData.data ? odontogramData.data.tooth : [],
+      );
+      setOdontogramData(updatedData);
+    }
   }, [odontogramData, setOdontogramData]);
 
   return {
