@@ -27,7 +27,6 @@ function NewInstantAppointment() {
     patientData,
     patientDialog,
     patientIsLoading,
-    backendModifiedTeeth,
     handleSave,
     handleOpenPatientDialog,
   } = useNewInstantAppoinment();
@@ -80,9 +79,7 @@ function NewInstantAppointment() {
             disabled_end_time={true}
           />
 
-          {MODULES.ODONTOGRAM && (
-            <OdontogramWithForm backendModifiedTeeth={backendModifiedTeeth} />
-          )}
+          {MODULES.ODONTOGRAM && <OdontogramWithForm />}
 
           <ButtonsGroupForm />
         </Form>

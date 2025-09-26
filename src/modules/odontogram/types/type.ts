@@ -129,12 +129,12 @@ export interface IOdontogramResponse {
       id: number;
       odontogram_id: number;
       tooth_number: number;
-      general_state: TOOTH_STATE_TYPE;
-      palatina: TOOTH_FACE_AFFECTION_TYPE;
-      distal: TOOTH_FACE_AFFECTION_TYPE;
-      mesial: TOOTH_FACE_AFFECTION_TYPE;
-      vestibular: TOOTH_FACE_AFFECTION_TYPE;
-      oclusal: TOOTH_FACE_AFFECTION_TYPE;
+      general_state: TOOTH_STATE;
+      palatina: TOOTH_FACE_AFFECTION;
+      distal: TOOTH_FACE_AFFECTION;
+      mesial: TOOTH_FACE_AFFECTION;
+      vestibular: TOOTH_FACE_AFFECTION;
+      oclusal: TOOTH_FACE_AFFECTION;
     },
   ];
 }

@@ -1,14 +1,8 @@
 import { AffectationForm, Odontogram } from '../components';
 import useOdontogramForm from '../hook/useOdontogramForm';
-import type { IToothObject } from '../types/type';
 
-const OdontogramWithForm = ({
-  backendModifiedTeeth,
-}: {
-  backendModifiedTeeth: IToothObject[];
-}) => {
-  const { odontogramData, handleToothClick } =
-    useOdontogramForm(backendModifiedTeeth);
+const OdontogramWithForm = () => {
+  const { odontogramData, handleToothClick } = useOdontogramForm();
   return (
     <>
       <AffectationForm />

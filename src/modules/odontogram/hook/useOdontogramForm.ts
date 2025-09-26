@@ -1,10 +1,6 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
-import { combineTeethData } from '../utils/combineTeethData';
-import {
-  CONSTANTTEETHLIST,
-  ARRAY_FACE_AFFECTIONS,
-} from '@modules/shared/constans/teeth';
+import { ARRAY_FACE_AFFECTIONS } from '@modules/shared/constans/teeth';
 import {
   TOOTH_STATE,
   type FACE_TYPE,
@@ -20,7 +16,7 @@ import {
 import useAffectationState from '@stores/useAffectationState';
 import useOdontogramStore from '@stores/useOdontogramStore';
 
-function useOdontogramForm(backendModifiedTeeth: IToothObject[]) {
+function useOdontogramForm() {
   const { odontogramData, setOdontogramData } = useOdontogramStore();
 
   const selectedAffection: TOOTH_STATE_TYPE | TOOTH_FACE_AFFECTION_TYPE | null =
@@ -118,15 +114,6 @@ function useOdontogramForm(backendModifiedTeeth: IToothObject[]) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedAffection, setOdontogramData],
   );
-
-  useEffect(() => {
-    const updatedData = combineTeethData(
-      CONSTANTTEETHLIST,
-      backendModifiedTeeth,
-    );
-
-    setOdontogramData(updatedData);
-  }, [backendModifiedTeeth, setOdontogramData]);
 
   return {
     odontogramData,
