@@ -9,5 +9,5 @@ export interface IAppointmentInstant {
   notes?: string;
   start_time: PickerValue | null;
   end_time: PickerValue | null;
-  teeth: IToothObject[];
+  teeth?: IToothObject[];
 }
