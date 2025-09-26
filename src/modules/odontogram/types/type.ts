@@ -117,3 +117,24 @@ export type IOdontogramQuadrantsContainerStyles = {
   teethContainer: SxProps<Theme>;
   roowToothContainer: SxProps<Theme>;
 };
+
+export interface IOdontogramResponse {
+  id: number;
+  patient_id: number;
+  appointment_id: number;
+  created_at: string;
+  updated_at: string;
+  tooth: [
+    {
+      id: number;
+      odontogram_id: number;
+      tooth_number: number;
+      general_state: TOOTH_STATE_TYPE;
+      palatina: TOOTH_FACE_AFFECTION_TYPE;
+      distal: TOOTH_FACE_AFFECTION_TYPE;
+      mesial: TOOTH_FACE_AFFECTION_TYPE;
+      vestibular: TOOTH_FACE_AFFECTION_TYPE;
+      oclusal: TOOTH_FACE_AFFECTION_TYPE;
+    },
+  ];
+}

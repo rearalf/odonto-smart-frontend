@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import type { IAppointmentInstant } from '../types/index.types';
 import type { FormikHelpers } from 'formik';
 
+import { useGetOdontogramByPatientId } from '@modules/odontogram/hook/useOdontogramQueries';
 import { useGetPatientByIdQuery } from '@modules/patients/hooks/usePatientQueries';
 import { useGetDoctorList } from '@modules/doctors/hooks/useDoctorsQueries';
 // import useOdontogramStore from '@stores/useOdontogramStore';
@@ -49,6 +50,11 @@ function useNewInstantAppoinment() {
   const { data: doctorData, isLoading: doctorIsLoading } = useGetDoctorList();
   const { data: patientData, isLoading: patientIsLoading } =
     useGetPatientByIdQuery(patientId || '');
+  const {
+    data: odontogramData,
+    isLoading: odontogramIsLoading,
+    error: odontogramError,
+  } = useGetOdontogramByPatientId(Number(patientId));
 
   const [patientDialog, setPatientDialog] = useState<boolean>(false);
 
@@ -75,9 +81,12 @@ function useNewInstantAppoinment() {
     patientId,
     patientDialog,
     doctorIsLoading,
+    odontogramError,
     patientIsLoading,
-    patientData: patientData && patientData.data ? patientData.data : null,
+    odontogramIsLoading,
     backendModifiedTeeth,
+    odontogramData: odontogramData || [],
+    patientData: patientData && patientData.data ? patientData.data : null,
     doctorsList: doctorData && doctorData.data ? doctorData.data : [],
     handleSave,
     handleOpenPatientDialog,
