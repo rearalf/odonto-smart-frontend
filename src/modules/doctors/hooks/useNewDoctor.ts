@@ -54,7 +54,7 @@ function useNewDoctor() {
 
     if (values.person.personContact.length > 0)
       formData.append(
-        'personContact',
+        'person_contacts',
         JSON.stringify(values.person.personContact),
       );
 
