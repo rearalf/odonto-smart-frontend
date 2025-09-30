@@ -4,6 +4,8 @@ import { CONSTANTTEETHLIST } from '../constans/teeth';
 
 interface IOdontogramState {
   odontogramData: ITeethList;
+  originalOdontogram: IToothObject[];
+  setOriginalOdontogram: (data: IToothObject[]) => void;
   setOdontogramData: (data: ITeethList) => void;
   resetOdontogram: () => void;
   getModifiedTeeth: () => IToothObject[];
@@ -11,40 +13,61 @@ interface IOdontogramState {
 
 const useOdontogramStore = create<IOdontogramState>((set, get) => ({
   odontogramData: CONSTANTTEETHLIST,
+  originalOdontogram: [],
 
   setOdontogramData: (data) => set({ odontogramData: data }),
+  setOriginalOdontogram: (data) => set({ originalOdontogram: data }),
 
   resetOdontogram: () => set({ odontogramData: CONSTANTTEETHLIST }),
 
   getModifiedTeeth: () => {
     const modifiedTeeth: IToothObject[] = [];
-    const { odontogramData } = get();
+    const { odontogramData, originalOdontogram } = get();
 
-    const compareQuadrants = (
-      original: Record<string, IToothObject[]>,
-      updated: Record<string, IToothObject[]>,
-    ) => {
-      Object.keys(original).forEach((key) => {
-        original[key].forEach((origTooth, index) => {
-          const updatedTooth = updated[key][index];
+    // Crear un mapa del odontograma original por tooth_number
+    const originalMap = new Map<number, IToothObject>();
+    originalOdontogram.forEach((tooth) => {
+      originalMap.set(tooth.tooth_number, tooth);
+    });
 
-          const isDifferent =
-            origTooth.general_state !== updatedTooth.general_state ||
-            origTooth.palatina !== updatedTooth.palatina ||
-            origTooth.distal !== updatedTooth.distal ||
-            origTooth.mesial !== updatedTooth.mesial ||
-            origTooth.vestibular !== updatedTooth.vestibular ||
-            origTooth.oclusal !== updatedTooth.oclusal;
+    // Revisar todos los dientes actuales
+    Object.values(odontogramData.permanent).forEach((quadrant) => {
+      quadrant.forEach((updatedTooth) => {
+        const origTooth = originalMap.get(updatedTooth.tooth_number);
+        if (!origTooth) return; // No existe en el original, lo ignoramos
 
-          if (isDifferent) {
-            modifiedTeeth.push(updatedTooth);
-          }
-        });
+        const isDifferent =
+          origTooth.general_state !== updatedTooth.general_state ||
+          origTooth.palatina !== updatedTooth.palatina ||
+          origTooth.distal !== updatedTooth.distal ||
+          origTooth.mesial !== updatedTooth.mesial ||
+          origTooth.vestibular !== updatedTooth.vestibular ||
+          origTooth.oclusal !== updatedTooth.oclusal;
+
+        if (isDifferent) {
+          modifiedTeeth.push(updatedTooth);
+        }
       });
-    };
+    });
 
-    compareQuadrants(CONSTANTTEETHLIST.permanent, odontogramData.permanent);
-    compareQuadrants(CONSTANTTEETHLIST.temporary, odontogramData.temporary);
+    Object.values(odontogramData.temporary).forEach((quadrant) => {
+      quadrant.forEach((updatedTooth) => {
+        const origTooth = originalMap.get(updatedTooth.tooth_number);
+        if (!origTooth) return;
+
+        const isDifferent =
+          origTooth.general_state !== updatedTooth.general_state ||
+          origTooth.palatina !== updatedTooth.palatina ||
+          origTooth.distal !== updatedTooth.distal ||
+          origTooth.mesial !== updatedTooth.mesial ||
+          origTooth.vestibular !== updatedTooth.vestibular ||
+          origTooth.oclusal !== updatedTooth.oclusal;
+
+        if (isDifferent) {
+          modifiedTeeth.push(updatedTooth);
+        }
+      });
+    });
 
     return modifiedTeeth;
   },

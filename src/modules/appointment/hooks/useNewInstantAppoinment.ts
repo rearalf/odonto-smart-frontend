@@ -24,7 +24,8 @@ function useNewInstantAppoinment() {
 
   const { setLoading } = useLoadingStore();
   const storeNotification = useNotificationStore();
-  const { setOdontogramData, getModifiedTeeth } = useOdontogramStore();
+  const { setOdontogramData, setOriginalOdontogram, getModifiedTeeth } =
+    useOdontogramStore();
 
   const { data: doctorData, isLoading: doctorIsLoading } = useGetDoctorList();
   const { data: patientData, isLoading: patientIsLoading } =
@@ -84,7 +85,7 @@ function useNewInstantAppoinment() {
           formikHelpers.resetForm();
           formikHelpers.setSubmitting(false);
           storeNotification.handleShowNotification({
-            text: 'Doctor creado exitosamente.',
+            text: 'Cita creada con exitosamente.',
             show: true,
             severity: 'success',
           });
@@ -115,8 +116,11 @@ function useNewInstantAppoinment() {
         odontogramData && odontogramData.data ? odontogramData.data.tooth : [],
       );
       setOdontogramData(updatedData);
+      setOriginalOdontogram(
+        odontogramData && odontogramData.data ? odontogramData.data.tooth : [],
+      );
     }
-  }, [odontogramData, setOdontogramData]);
+  }, [odontogramData, setOdontogramData, setOriginalOdontogram]);
 
   return {
     patientId,
