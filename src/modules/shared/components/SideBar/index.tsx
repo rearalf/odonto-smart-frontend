@@ -4,7 +4,7 @@ import { NavLink } from 'react-router';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { FiChevronsLeft } from 'react-icons/fi';
 import { CiMedicalMask } from 'react-icons/ci';
-import { FaHeartbeat } from 'react-icons/fa';
+import { FaHeartbeat, FaRegCalendarAlt } from 'react-icons/fa';
 
 import { useSidebarStore } from 'src/modules/shared/stores/index';
 
@@ -69,6 +69,15 @@ const SideBar = () => {
               text="Pacientes"
               iconSize={24}
               icon={FaHeartbeat}
+              itemStyles={styles.itemStyles}
+              itemTextStyles={styles.itemTextStyles}
+              itemsIconStyles={styles.itemsIconStyles}
+            />
+            <SidebarItem
+              to="/appointment"
+              text="Citas"
+              iconSize={24}
+              icon={FaRegCalendarAlt}
               itemStyles={styles.itemStyles}
               itemTextStyles={styles.itemTextStyles}
               itemsIconStyles={styles.itemsIconStyles}
