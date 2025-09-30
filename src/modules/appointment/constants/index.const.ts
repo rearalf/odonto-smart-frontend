@@ -1,6 +1,8 @@
-import type { ILink } from '@components/BreadCrumbs/type';
-import type { IAppointmentInstant } from '../types/index.types';
 import dayjs, { type Dayjs } from 'dayjs';
+
+import type { HeaderObject } from '@components/TableComponent/type';
+import type { IAppointmentInstant } from '../types/index.types';
+import type { ILink } from '@components/BreadCrumbs/type';
 
 export const BREADCRUMBSNEWINSTANTAPPOINTMENT: ILink[] = [
   {
@@ -15,6 +17,33 @@ export const BREADCRUMBSNEWINSTANTAPPOINTMENT: ILink[] = [
     link_name: 'Crear cita instantanea',
     link_to: '/appointment/new-instant',
   },
+];
+
+export const BREADCRUMBSAPPOINTMENTLIST: ILink[] = [
+  {
+    link_name: 'Dashboard',
+    link_to: '/',
+  },
+  {
+    link_name: 'Citas',
+    link_to: '/appointment',
+  },
+];
+
+export const TABLE_HEADER_APPOINTMENTS: HeaderObject[] = [
+  { title: 'Nombre completo', key: 'full_name' },
+  { title: 'Edad', key: 'age', align: 'center' },
+  {
+    title: 'Fecha',
+    key: 'appointment_date',
+    align: 'center',
+  },
+  {
+    title: 'Estado',
+    key: 'status',
+    align: 'center',
+  },
+  { title: 'Acciones', key: 'actions', align: 'center' },
 ];
 
 const roundToNext30Minutes = (time: Dayjs) => {
